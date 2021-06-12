@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/trainings")
-class TrainingDetailsController {
+public class TrainingDetailsController {
 
     private TrainingDetailsService trainingDetailsService;
 
