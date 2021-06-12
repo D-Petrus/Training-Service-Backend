@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,10 +33,11 @@ class TrainingDetailsServiceIT {
                 Instant.now(),
                 BigDecimal.valueOf(3000));
         //when
-        List<TrainingDetails> savedTrainings = trainingDetailsService.saveNewTraining(Arrays.asList(training1, training2));
+        TrainingDetails savedTraining1 = trainingDetailsService.saveNewTraining(training1);
+        TrainingDetails savedTraining2 = trainingDetailsService.saveNewTraining(training2);
 
         //then
-        assertThat(savedTrainings).isEqualTo(trainingDetailsService.getAllTrainingList());
+        assertThat(List.of(savedTraining1,savedTraining2)).isEqualTo(trainingDetailsService.getAllTrainingList());
     }
 
     @Test
@@ -50,10 +50,10 @@ class TrainingDetailsServiceIT {
                 BigDecimal.valueOf(2000));
 
         //when
-        List<TrainingDetails> savedTraining = trainingDetailsService.saveNewTraining(List.of(training1));
+        TrainingDetails savedTraining = trainingDetailsService.saveNewTraining(training1);
 
         //then
-        assertThat(savedTraining).isNotEmpty();
+        assertThat(savedTraining).isEqualTo(training1);
     }
 
     @Test
@@ -66,10 +66,10 @@ class TrainingDetailsServiceIT {
                 BigDecimal.valueOf(2000));
 
         //when
-        List<TrainingDetails> savedTraining = trainingDetailsService.saveNewTraining(List.of(training1));
+        TrainingDetails trainingDetails = trainingDetailsService.saveNewTraining(training1);
 
         //then
-        assertThat(savedTraining).isEqualTo(trainingDetailsService.findByName("Spring Boot w Javie"));
+        assertThat(trainingDetails).isEqualTo(trainingDetailsService.findByName("Spring Boot w Javie"));
     }
 
 }

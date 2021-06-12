@@ -15,15 +15,15 @@ public class TrainingDetailsService {
         this.trainingDetailsRepository = trainingDetailsRepository;
     }
 
-    public List<TrainingDetails> saveNewTraining(Iterable<TrainingDetails> trainingDetails) {
-        return trainingDetailsRepository.saveAll(trainingDetails);
+    public TrainingDetails saveNewTraining(TrainingDetails trainingDetails) {
+        return trainingDetailsRepository.save(trainingDetails);
     }
 
     public List<TrainingDetails> getAllTrainingList() {
         return trainingDetailsRepository.findAll();
     }
 
-    public List<TrainingDetails> findByName(String nameDetails) {
+    public TrainingDetails findByName(String nameDetails) {
         return trainingDetailsRepository.findByNameDetails(nameDetails);
     }
 }
