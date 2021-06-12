@@ -4,7 +4,9 @@ import com.inqoo.trainingservice.app.models.TrainingDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface TrainingDetailsRepository extends JpaRepository<TrainingDetails, Long> {
-    TrainingDetails findByNameDetails(String nameDetails);
+    Optional<TrainingDetails> findByNameDetails(String nameDetails);
 }
