@@ -1,6 +1,8 @@
 package com.inqoo.trainingservice.app.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Category {
@@ -11,6 +13,9 @@ public class Category {
     private String name;
     @Column(length = 300)
     private String description;
+
+    @OneToMany(cascade = {CascadeType.MERGE , CascadeType.PERSIST})
+    private final List<Subcategory> subcategoryList = new ArrayList<>();
 
 
     public Category(String name, String description) {
@@ -43,5 +48,13 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void addSubcategory(Subcategory subcategory) {
+        subcategoryList.add(subcategory);
+    }
+
+    public List<Subcategory> getSubcategoryList() {
+        return subcategoryList;
     }
 }

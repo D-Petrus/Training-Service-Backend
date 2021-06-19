@@ -2,6 +2,7 @@ package com.inqoo.trainingservice.app.service;
 
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
 import com.inqoo.trainingservice.app.models.Category;
+import com.inqoo.trainingservice.app.models.Subcategory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,6 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CategoryServiceIT {
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private SubcategoryService subcategoryService;
 
     @Test
     public void shouldReturnListOfCategory() {
@@ -34,7 +38,7 @@ class CategoryServiceIT {
         Category savedCategory2 = categoryService.saveNewCategory(category2);
 
         //then
-        assertThat(List.of(savedCategory1,savedCategory2)).isEqualTo(categoryService.getAllCategoryList());
+        assertThat(List.of(savedCategory1, savedCategory2)).isEqualTo(categoryService.getAllCategoryList());
     }
 
     @Test
@@ -50,6 +54,7 @@ class CategoryServiceIT {
         //then
         assertThat(savedCategory).isEqualTo(category);
     }
+
     @Test
     public void shouldReturnCategoryGivenByName() {
         //given
@@ -63,6 +68,7 @@ class CategoryServiceIT {
         //then
         assertThat(savedCategory).isEqualTo(categoryService.findByName("JavaBasic").get());
     }
+
     @Test
     public void shouldSaveIfDescriptionOfCategoryIsTooLong() {
         //given
@@ -78,6 +84,7 @@ class CategoryServiceIT {
         //then
         assertThat(savedCategory).isEqualTo(category);
     }
+
     @Test
     public void shouldThrowExceptionIfNameCategoryAlreadyTaken() {
         //given
@@ -92,4 +99,41 @@ class CategoryServiceIT {
         });
     }
 
+    @Test
+    public void shouldReturnSubcategoryForCategory() {
+        //given
+        Category category = new Category("It", "test");
+        Subcategory subcategory = new Subcategory("Java", "test");
+
+        //when
+        Category savedCat = categoryService.saveNewCategory(category);
+        Subcategory savedSubcat = subcategoryService.saveNewSubcategory(subcategory);
+        boolean savedRelation = categoryService.saveNewRelation(savedCat.getId(), savedSubcat.getId());
+
+        //then
+        assertThat(savedRelation).isTrue();
+    }
+    @Test
+    public void shouldReturnSubcategoriesForCategory() {
+        //given
+        Category category = new Category("It", "test");
+        Subcategory subcategory = new Subcategory("Java", "test");
+        Subcategory subcategory2 = new Subcategory("Java2", "test2");
+
+        //when
+        Category savedCat = categoryService.saveNewCategory(category);
+        Subcategory savedSubcat = subcategoryService.saveNewSubcategory(subcategory);
+        Subcategory savedSubcat2 = subcategoryService.saveNewSubcategory(subcategory2);
+        boolean savedRelation = categoryService.saveNewRelation(savedCat.getId(), savedSubcat.getId());
+        boolean savedRelation2 = categoryService.saveNewRelation(savedCat.getId(), savedSubcat2.getId());
+
+        //then
+//        assertThat(savedRelation).isTrue();
+//        assertThat(savedRelation2).isTrue();
+        Optional<Category> it = categoryService.findByName("It");
+        assertThat(it.isPresent()).isTrue();
+        List<Subcategory> subcategoryList = it.get().getSubcategoryList();
+        assertThat(subcategoryList).containsExactlyInAnyOrder(subcategory, subcategory2);
+//        assertThat(List.of(savedSubcat,savedSubcat2)).isEqualTo(it (subcategoryService.getAllSubcategoryList()));
+    }
 }

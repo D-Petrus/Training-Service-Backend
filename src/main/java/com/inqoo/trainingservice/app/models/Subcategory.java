@@ -4,14 +4,13 @@ import javax.persistence.*;
 
 @Entity
 public class Subcategory {
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private long id;
-        @Column(unique = true)
-        private String name;
-        @Column(length = 300)
-        private String description;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column(unique = true)
+    private String name;
+    @Column(length = 300)
+    private String description;
 
     public Subcategory(String name, String description) {
         this.name = name;
