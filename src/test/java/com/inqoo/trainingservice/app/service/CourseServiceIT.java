@@ -28,13 +28,13 @@ class CourseServiceIT {
         Course course1 = new Course(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
-                Instant.now(),
+                2L,
                 BigDecimal.valueOf(2000));
 
         Course course2 = new Course(
                 "Hibernate w Javie",
                 "Kurs na temat Hibernate w Javie",
-                Instant.now(),
+                2L,
                 BigDecimal.valueOf(3000));
         //when
         Course savedCourse1 = trainingDetailsService.saveNewCourse(course1);
@@ -50,7 +50,7 @@ class CourseServiceIT {
         Course course = new Course(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
-                Instant.now(),
+                2L,
                 BigDecimal.valueOf(2000));
 
         //when
@@ -66,7 +66,7 @@ class CourseServiceIT {
         Course course = new Course(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
-                Instant.now(),
+                2L,
                 BigDecimal.valueOf(2000));
 
         //when
@@ -86,7 +86,7 @@ class CourseServiceIT {
         Course course = new Course(
                 "Spring Boot w Javie",
                 txt,
-                Instant.now(),
+                2L,
                 BigDecimal.valueOf(2000));
         //when
         Course savedCourse = trainingDetailsService.saveNewCourse(course);
@@ -100,7 +100,7 @@ class CourseServiceIT {
         Course course = new Course(
                 "Spring Boot w Javie",
                 generatedTxt,
-                Instant.now(),
+                2L,
                 BigDecimal.valueOf(2000));
 
         //then
@@ -115,7 +115,7 @@ class CourseServiceIT {
         Course course = new Course(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
-                Instant.now(),
+                2L,
                 BigDecimal.valueOf(2000));
 
         //then

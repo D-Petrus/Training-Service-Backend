@@ -9,11 +9,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/main")
 public class CategoryController {
+    private CategoryService categoryService;
+
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
-    private CategoryService categoryService;
     @GetMapping
     private List<Category> getList() {
         return categoryService.getAllCategoryList();

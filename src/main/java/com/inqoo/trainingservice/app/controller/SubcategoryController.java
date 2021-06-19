@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categories")
 public class SubcategoryController {
+    private SubcategoryService subcategoryService;
+
     public SubcategoryController(SubcategoryService subcategoryService) {
         this.subcategoryService = subcategoryService;
     }
 
-    private SubcategoryService subcategoryService;
     @GetMapping
     private List<Subcategory> getList() {
         return subcategoryService.getAllSubcategoryList();

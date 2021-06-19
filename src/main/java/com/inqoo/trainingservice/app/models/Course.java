@@ -13,10 +13,10 @@ public class Course {
     private String name;
     @Column(length = 200)
     private String description;
-    private Instant duration;
+    private Long duration;
     private BigDecimal price;
 
-    public Course(String name, String description, Instant duration, BigDecimal price) {
+    public Course(String name, String description, Long duration, BigDecimal price) {
         this.name = name;
         this.description = description;
         this.duration = duration;
@@ -42,11 +42,11 @@ public class Course {
         this.description = description;
     }
 
-    public Instant getDuration() {
+    public Long getDuration() {
         return duration;
     }
 
-    public void setDuration(Instant duration) {
+    public void setDuration(Long duration) {
         this.duration = duration;
     }
 
