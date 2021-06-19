@@ -1,25 +1,24 @@
 package com.inqoo.trainingservice.app.models;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.time.Instant;
+
 @Entity
-public class TrainingCategory {
+public class Subcategory {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private long id;
         @Column(unique = true)
-        private String nameCategory;
+        private String name;
         @Column(length = 300)
         private String description;
 
 
-    public TrainingCategory(String nameCategory, String description) {
-        this.nameCategory = nameCategory;
+    public Subcategory(String name, String description) {
+        this.name = name;
         this.description = description;
     }
 
-    public TrainingCategory() {
+    public Subcategory() {
     }
 
     public long getId() {
@@ -30,12 +29,12 @@ public class TrainingCategory {
         this.id = id;
     }
 
-    public String getNameCategory() {
-        return nameCategory;
+    public String getName() {
+        return name;
     }
 
-    public void setNameCategory(String nameCategory) {
-        this.nameCategory = nameCategory;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {

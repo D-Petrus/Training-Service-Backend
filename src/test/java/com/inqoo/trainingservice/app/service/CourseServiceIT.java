@@ -2,7 +2,7 @@ package com.inqoo.trainingservice.app.service;
 
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
 import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
-import com.inqoo.trainingservice.app.models.TrainingDetails;
+import com.inqoo.trainingservice.app.models.Course;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,62 +18,62 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
-class TrainingDetailsServiceIT {
+class CourseServiceIT {
     @Autowired
-    private TrainingDetailsService trainingDetailsService;
+    private CourseService trainingDetailsService;
 
     @Test
     public void shouldReturnListOfTrainings() {
         //given
-        TrainingDetails training1 = new TrainingDetails(
+        Course course1 = new Course(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
                 Instant.now(),
                 BigDecimal.valueOf(2000));
 
-        TrainingDetails training2 = new TrainingDetails(
+        Course course2 = new Course(
                 "Hibernate w Javie",
                 "Kurs na temat Hibernate w Javie",
                 Instant.now(),
                 BigDecimal.valueOf(3000));
         //when
-        TrainingDetails savedTraining1 = trainingDetailsService.saveNewTraining(training1);
-        TrainingDetails savedTraining2 = trainingDetailsService.saveNewTraining(training2);
+        Course savedCourse1 = trainingDetailsService.saveNewCourse(course1);
+        Course savedCourse2 = trainingDetailsService.saveNewCourse(course2);
 
         //then
-        assertThat(List.of(savedTraining1,savedTraining2)).isEqualTo(trainingDetailsService.getAllTrainingList());
+        assertThat(List.of(savedCourse1,savedCourse2)).isEqualTo(trainingDetailsService.getAllCoursesList());
     }
 
     @Test
     public void shouldCheckIfTrainingIsSavedToDatabase() {
         //given
-        TrainingDetails training1 = new TrainingDetails(
+        Course course = new Course(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
                 Instant.now(),
                 BigDecimal.valueOf(2000));
 
         //when
-        TrainingDetails savedTraining = trainingDetailsService.saveNewTraining(training1);
+        Course savedCourse = trainingDetailsService.saveNewCourse(course);
 
         //then
-        assertThat(savedTraining).isEqualTo(training1);
+        assertThat(savedCourse).isEqualTo(course);
     }
 
     @Test
     public void shouldReturnTrainingGivenByName() {
         //given
-        TrainingDetails training1 = new TrainingDetails(
+        Course course = new Course(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
                 Instant.now(),
                 BigDecimal.valueOf(2000));
 
         //when
-        TrainingDetails trainingDetails = trainingDetailsService.saveNewTraining(training1);
+        Course savedCourse = trainingDetailsService.saveNewCourse(course);
 
         //then
-        assertThat(trainingDetails).isEqualTo(trainingDetailsService.findByName("Spring Boot w Javie").get());
+        assertThat(savedCourse).isEqualTo(trainingDetailsService.findByName("Spring Boot w Javie").get());
     }
     @Test
     public void shouldSaveIfDescriptionTooLong() {
@@ -83,21 +83,21 @@ class TrainingDetailsServiceIT {
         for (int i = 0; i < numberOfChars; i++) {
             txt += "a";
         }
-        TrainingDetails training1 = new TrainingDetails(
+        Course course = new Course(
                 "Spring Boot w Javie",
                 txt,
                 Instant.now(),
                 BigDecimal.valueOf(2000));
         //when
-        TrainingDetails trainingDetails = trainingDetailsService.saveNewTraining(training1);
+        Course savedCourse = trainingDetailsService.saveNewCourse(course);
         //then
-        assertThat(trainingDetails).isEqualTo(training1);
+        assertThat(savedCourse).isEqualTo(course);
     }
     @Test
     public void shouldNotSaveIfDescriptionTooLong() {
         //given
         String generatedTxt = RandomStringUtils.randomAlphanumeric(201);
-        TrainingDetails training1 = new TrainingDetails(
+        Course course = new Course(
                 "Spring Boot w Javie",
                 generatedTxt,
                 Instant.now(),
@@ -105,23 +105,23 @@ class TrainingDetailsServiceIT {
 
         //then
         Assertions.assertThrows(TooLongDescriptionException.class, () -> {
-            trainingDetailsService.saveNewTraining(training1);
+            trainingDetailsService.saveNewCourse(course);
         });
     }
 
     @Test
     public void shouldThrowExceptionIfNameAlreadyTaken() {
         //given
-        TrainingDetails training1 = new TrainingDetails(
+        Course course = new Course(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
                 Instant.now(),
                 BigDecimal.valueOf(2000));
 
         //then
-        trainingDetailsService.saveNewTraining(training1);
+        trainingDetailsService.saveNewCourse(course);
         Assertions.assertThrows(NameAlreadyTakenException.class, () -> {
-           trainingDetailsService.saveNewTraining(training1);
+           trainingDetailsService.saveNewCourse(course);
         });
     }
 
