@@ -1,69 +1,67 @@
 package com.inqoo.trainingservice.app.service;
 
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
-import com.inqoo.trainingservice.app.models.TrainingCategory;
-import com.inqoo.trainingservice.app.models.TrainingDetails;
+import com.inqoo.trainingservice.app.models.Category;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
-import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 @Transactional
-class TrainingCategoryServiceIT {
+class CategoryServiceIT {
     @Autowired
-    private TrainingCategoryService trainingCategoryService;
+    private CategoryService categoryService;
 
     @Test
     public void shouldReturnListOfCategory() {
         //given
-        TrainingCategory training1 = new TrainingCategory(
+        Category category1 = new Category(
                 "JavaBasic",
                 "Podstawy Javy");
 
 
-        TrainingCategory training2 = new TrainingCategory(
+        Category category2 = new Category(
                 "Java Advanced",
                 "Java dla zaawansowanych");
         //when
-        TrainingCategory savedTraining1 = trainingCategoryService.saveNewCategory(training1);
-        TrainingCategory savedTraining2 = trainingCategoryService.saveNewCategory(training2);
+        Category savedCategory1 = categoryService.saveNewCategory(category1);
+        Category savedCategory2 = categoryService.saveNewCategory(category2);
 
         //then
-        assertThat(List.of(savedTraining1,savedTraining2)).isEqualTo(trainingCategoryService.getAllTrainingList());
+        assertThat(List.of(savedCategory1,savedCategory2)).isEqualTo(categoryService.getAllCategoryList());
     }
 
     @Test
     public void shouldCheckIfCatgoryIsSavedToDatabase() {
         //given
-        TrainingCategory training1 = new TrainingCategory(
+        Category category = new Category(
                 "JavaBasic",
                 "Podstawy Javy");
 
         //when
-        TrainingCategory savedTraining = trainingCategoryService.saveNewCategory(training1);
+        Category savedCategory = categoryService.saveNewCategory(category);
 
         //then
-        assertThat(savedTraining).isEqualTo(training1);
+        assertThat(savedCategory).isEqualTo(category);
     }
     @Test
     public void shouldReturnCategoryGivenByName() {
         //given
-        TrainingCategory training1 = new TrainingCategory(
+        Category category = new Category(
                 "JavaBasic",
                 "Podstawy Javy");
 
         //when
-        TrainingCategory trainingCategory = trainingCategoryService.saveNewCategory(training1);
+        Category savedCategory = categoryService.saveNewCategory(category);
 
         //then
-        assertThat(trainingCategory).isEqualTo(trainingCategoryService.findByName("JavaBasic").get());
+        assertThat(savedCategory).isEqualTo(categoryService.findByName("JavaBasic").get());
     }
     @Test
     public void shouldSaveIfDescriptionOfCategoryIsTooLong() {
@@ -73,24 +71,24 @@ class TrainingCategoryServiceIT {
         for (int i = 0; i < numberOfChars; i++) {
             txt += "a";
         }
-        TrainingCategory training1 = new TrainingCategory(
+        Category category = new Category(
                 "JavaBasic", txt);
         //when
-        TrainingCategory trainingCategory = trainingCategoryService.saveNewCategory(training1);
+        Category savedCategory = categoryService.saveNewCategory(category);
         //then
-        assertThat(trainingCategory).isEqualTo(training1);
+        assertThat(savedCategory).isEqualTo(category);
     }
     @Test
     public void shouldThrowExceptionIfNameCategoryAlreadyTaken() {
         //given
-        TrainingCategory training1 = new TrainingCategory(
+        Category category = new Category(
                 "JavaBasic",
                 "Podstawy Javy");
 
         //then
-        trainingCategoryService.saveNewCategory(training1);
+        categoryService.saveNewCategory(category);
         Assertions.assertThrows(NameAlreadyTakenException.class, () -> {
-            trainingCategoryService.saveNewCategory(training1);
+            categoryService.saveNewCategory(category);
         });
     }
 
