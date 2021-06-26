@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/trainings")
+@RequestMapping("/courses")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CourseController {
 
     private CourseService courseService;
