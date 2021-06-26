@@ -2,7 +2,9 @@ package com.inqoo.trainingservice.app.service;
 
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
 import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
+import com.inqoo.trainingservice.app.models.Category;
 import com.inqoo.trainingservice.app.models.Subcategory;
+import com.inqoo.trainingservice.app.repository.CategoryRepository;
 import com.inqoo.trainingservice.app.repository.SubcategoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +14,22 @@ import java.util.Optional;
 @Service
 public class SubcategoryService {
     private SubcategoryRepository subcategoryRepository;
+    private CategoryRepository categoryRepository;
 
-    public SubcategoryService(SubcategoryRepository subcategoryRepository) {
+    public SubcategoryService(SubcategoryRepository subcategoryRepository, CategoryRepository categoryRepository) {
         this.subcategoryRepository = subcategoryRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     public Subcategory saveNewSubcategory(Subcategory subcategory) {
         validateInputs(subcategory, subcategory.getName());
-        return subcategoryRepository.save(subcategory);
+        Optional<Category> category = categoryRepository.findByName(subcategory.getCategory().getName());
+
+        if(category.isPresent()) {
+            category.get().addSubcategory(subcategory);
+            categoryRepository.save(category.get());
+        }
+        return subcategory;
     }
 
     private void validateInputs(Subcategory subcategory, String name) {

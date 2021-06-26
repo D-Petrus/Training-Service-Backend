@@ -103,7 +103,7 @@ class CategoryServiceIT {
     public void shouldReturnSubcategoryForCategory() {
         //given
         Category category = new Category("It", "test");
-        Subcategory subcategory = new Subcategory("Java", "test");
+        Subcategory subcategory = new Subcategory("Java", "test", category);
 
         //when
         Category savedCat = categoryService.saveNewCategory(category);
@@ -117,8 +117,8 @@ class CategoryServiceIT {
     public void shouldReturnSubcategoriesForCategory() {
         //given
         Category category = new Category("It", "test");
-        Subcategory subcategory = new Subcategory("Java", "test");
-        Subcategory subcategory2 = new Subcategory("Java2", "test2");
+        Subcategory subcategory = new Subcategory("Java", "test", category);
+        Subcategory subcategory2 = new Subcategory("Java2", "test2", category);
 
         //when
         Category savedCat = categoryService.saveNewCategory(category);
@@ -128,12 +128,9 @@ class CategoryServiceIT {
         boolean savedRelation2 = categoryService.saveNewRelation(savedCat.getId(), savedSubcat2.getId());
 
         //then
-//        assertThat(savedRelation).isTrue();
-//        assertThat(savedRelation2).isTrue();
         Optional<Category> it = categoryService.findByName("It");
         assertThat(it.isPresent()).isTrue();
         List<Subcategory> subcategoryList = it.get().getSubcategoryList();
         assertThat(subcategoryList).containsExactlyInAnyOrder(subcategory, subcategory2);
-//        assertThat(List.of(savedSubcat,savedSubcat2)).isEqualTo(it (subcategoryService.getAllSubcategoryList()));
     }
 }
