@@ -2,7 +2,6 @@ package com.inqoo.trainingservice.app.models;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.Instant;
 
 @Entity
 public class Course {
@@ -15,7 +14,7 @@ public class Course {
     private String description;
     private Long duration;
     private BigDecimal price;
-
+    
     public Course(String name, String description, Long duration, BigDecimal price) {
         this.name = name;
         this.description = description;

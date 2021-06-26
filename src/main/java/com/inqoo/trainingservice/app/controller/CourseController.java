@@ -23,7 +23,7 @@ public class CourseController {
     }
 
     @PostMapping
-    private Course saveNew(@RequestBody Course course) {
-       return courseService.saveNewCourse(course);
+    private Course saveNew(@RequestBody Course course, String subcategoryName) {
+       return courseService.saveNewCourse(subcategoryName, course);
     }
 }
