@@ -1,9 +1,12 @@
 package com.inqoo.trainingservice.app.service;
 
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
+import com.inqoo.trainingservice.app.exception.SubcategoryNotFoundException;
 import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
 import com.inqoo.trainingservice.app.models.Course;
+import com.inqoo.trainingservice.app.models.Subcategory;
 import com.inqoo.trainingservice.app.repository.CourseRepository;
+import com.inqoo.trainingservice.app.repository.SubcategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,13 +17,24 @@ public class CourseService {
 
     private CourseRepository courseRepository;
 
-    public CourseService(CourseRepository courseRepository) {
+    private SubcategoryRepository subcategoryRepository;
+
+    public CourseService(CourseRepository courseRepository, SubcategoryRepository subcategoryRepository) {
         this.courseRepository = courseRepository;
+        this.subcategoryRepository = subcategoryRepository;
     }
 
-    public Course saveNewCourse(Course course) {
-        validateInputs(course, course.getName());
-        return courseRepository.save(course);
+    public Course saveNewCourse(String subcategoryName, Course course) {
+        Optional<Subcategory> byName = subcategoryRepository.findByName(subcategoryName);
+        if (byName.isPresent()) {
+            validateInputs(course, course.getName());
+            Subcategory subcategory = byName.get();
+            subcategory.addCourse(course);
+            subcategoryRepository.save(subcategory);
+            return courseRepository.findByName(course.getName()).get();
+        } else {
+            throw new SubcategoryNotFoundException("Subcategory not found");
+        }
     }
 
     private void validateInputs(Course course, String name) {
