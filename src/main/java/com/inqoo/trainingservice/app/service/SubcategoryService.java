@@ -1,5 +1,6 @@
 package com.inqoo.trainingservice.app.service;
 
+import com.inqoo.trainingservice.app.exception.CategoryNotFoundException;
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
 import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
 import com.inqoo.trainingservice.app.models.Category;
@@ -28,6 +29,8 @@ public class SubcategoryService {
         if(category.isPresent()) {
             category.get().addSubcategory(subcategory);
             categoryRepository.save(category.get());
+        } else {
+            throw new CategoryNotFoundException("Category Not Found");
         }
         return subcategory;
     }

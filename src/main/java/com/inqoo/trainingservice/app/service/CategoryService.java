@@ -25,7 +25,7 @@ public class CategoryService {
     }
 
     public Category saveNewCategory(Category category) {
-//        validateInputs(category, category.getName());
+        validateInputs(category, category.getName());
         return categoryRepository.save(category);
     }
 
