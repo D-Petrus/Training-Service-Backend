@@ -28,11 +28,16 @@ public class SubcategoryService {
 
         if(category.isPresent()) {
             category.get().addSubcategory(subcategory);
-            categoryRepository.save(category.get());
+            Category savedCategory = categoryRepository.save(category.get());
+            return savedCategory.getSubcategoryList()
+                    .stream()
+                    .filter(subcategory1 -> subcategory1.getName().equals(subcategory.getName()))
+                    .findFirst()
+                    .get();
         } else {
             throw new CategoryNotFoundException("Category Not Found");
         }
-        return subcategory;
+
     }
 
     private void validateInputs(Subcategory subcategory, String name) {
