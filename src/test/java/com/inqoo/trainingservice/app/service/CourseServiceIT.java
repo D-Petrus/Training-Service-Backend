@@ -32,8 +32,9 @@ class CourseServiceIT {
         //given
         Category category = new Category("Java", "Kurs Java");
         categoryService.saveNewCategory(category);
-        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring", category);
-        subcategoryService.saveNewSubcategory(subcategory);        Course course1 = new Course(
+        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring");
+        subcategoryService.saveNewSubcategory(subcategory, category.getName());
+        Course course1 = new Course(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
                 2L,
@@ -57,8 +58,8 @@ class CourseServiceIT {
         //given
         Category category = new Category("Java", "Kurs Java");
         categoryService.saveNewCategory(category);
-        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring", category);
-        subcategoryService.saveNewSubcategory(subcategory);
+        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring");
+        subcategoryService.saveNewSubcategory(subcategory, category.getName());
         Course course = new Course(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
@@ -77,8 +78,8 @@ class CourseServiceIT {
         //given
         Category category = new Category("Java", "Kurs Java");
         categoryService.saveNewCategory(category);
-        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring", category);
-        subcategoryService.saveNewSubcategory(subcategory);
+        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring");
+        subcategoryService.saveNewSubcategory(subcategory, category.getName());
         Course course = new Course(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
@@ -96,8 +97,8 @@ class CourseServiceIT {
         //given
         Category category = new Category("Java", "Kurs Java");
         categoryService.saveNewCategory(category);
-        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring", category);
-        subcategoryService.saveNewSubcategory(subcategory);
+        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring");
+        subcategoryService.saveNewSubcategory(subcategory, category.getName());
         String txt = "";
         int numberOfChars = 200;
         for (int i = 0; i < numberOfChars; i++) {
@@ -119,8 +120,8 @@ class CourseServiceIT {
         //given
         Category category = new Category("Java", "Kurs Java");
         categoryService.saveNewCategory(category);
-        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring", category);
-        subcategoryService.saveNewSubcategory(subcategory);
+        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring");
+        subcategoryService.saveNewSubcategory(subcategory, category.getName());
         String generatedTxt = RandomStringUtils.randomAlphanumeric(201);
         Course course = new Course(
                 "Spring Boot w Javie",
@@ -139,8 +140,8 @@ class CourseServiceIT {
         //given
         Category category = new Category("Java", "Kurs Java");
         categoryService.saveNewCategory(category);
-        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring", category);
-        subcategoryService.saveNewSubcategory(subcategory);
+        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring");
+        subcategoryService.saveNewSubcategory(subcategory, category.getName());
         Course course = new Course(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
@@ -159,8 +160,8 @@ class CourseServiceIT {
         //given
         Category category = new Category("Java", "Kurs Java");
         categoryService.saveNewCategory(category);
-        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring", category);
-        subcategoryService.saveNewSubcategory(subcategory);
+        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring");
+        subcategoryService.saveNewSubcategory(subcategory, category.getName());
         Course course = new Course("Kurs", "Opis", 250L, BigDecimal.valueOf(2000));
         courseService.saveNewCourse("Spring", course);
 
