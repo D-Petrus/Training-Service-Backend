@@ -3,6 +3,7 @@ package com.inqoo.trainingservice.app.models;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -68,5 +69,18 @@ public class Category {
 
     public void setUuidCategory(UUID uuidCategory) {
         this.uuidCategory = uuidCategory;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return id == category.id && Objects.equals(name, category.name) && Objects.equals(description, category.description) && Objects.equals(uuidCategory, category.uuidCategory) && Objects.equals(subcategoryList, category.subcategoryList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, uuidCategory, subcategoryList);
     }
 }

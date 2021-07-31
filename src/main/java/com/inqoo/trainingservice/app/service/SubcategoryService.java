@@ -22,9 +22,9 @@ public class SubcategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public Subcategory saveNewSubcategory(Subcategory subcategory) {
+    public Subcategory saveNewSubcategory(Subcategory subcategory, String categoryName) {
         validateInputs(subcategory, subcategory.getName());
-        Optional<Category> category = categoryRepository.findByName(subcategory.getCategory().getName());
+        Optional<Category> category = categoryRepository.findByName(categoryName);
 
         if(category.isPresent()) {
             category.get().addSubcategory(subcategory);

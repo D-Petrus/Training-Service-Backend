@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
@@ -25,19 +26,19 @@ class SubcategoryServiceIT {
     @Test
     public void shouldReturnListOfCategory() {
         //given
-        Category category = new Category( "test", "test", uuidCategory);
+        Category category = new Category( "test", "test", UUID.randomUUID());
         categoryService.saveNewCategory(category);
         Subcategory subcategory1 = new Subcategory(
                 "JavaBasic",
-                "Podstawy Javy", category);
+                "Podstawy Javy");
 
 
         Subcategory subcategory2 = new Subcategory(
                 "Java Advanced",
-                "Java dla zaawansowanych", category);
+                "Java dla zaawansowanych");
         //when
-        Subcategory savedSubcategory1 = subcategoryService.saveNewSubcategory(subcategory1);
-        Subcategory savedSubcategory2 = subcategoryService.saveNewSubcategory(subcategory2);
+        Subcategory savedSubcategory1 = subcategoryService.saveNewSubcategory(subcategory1, category.getName());
+        Subcategory savedSubcategory2 = subcategoryService.saveNewSubcategory(subcategory2, category.getName());
 
         //then
         assertThat(List.of(savedSubcategory1,savedSubcategory2)).isEqualTo(subcategoryService.getAllSubcategoryList());
@@ -47,14 +48,14 @@ class SubcategoryServiceIT {
     @Test
     public void shouldReturnCategoryGivenByName() {
         //given
-        Category category = new Category( "test", "test", uuidCategory);
+        Category category = new Category( "test", "test", UUID.randomUUID());
         categoryService.saveNewCategory(category);
         Subcategory subcategory = new Subcategory(
                 "JavaBasic",
-                "Podstawy Javy", category);
+                "Podstawy Javy");
 
         //when
-        Subcategory savedSubcategory = subcategoryService.saveNewSubcategory(subcategory);
+        Subcategory savedSubcategory = subcategoryService.saveNewSubcategory(subcategory, category.getName());
 
         //then
         assertThat(savedSubcategory.getName()).isEqualTo(subcategory.getName());
@@ -62,7 +63,7 @@ class SubcategoryServiceIT {
     @Test
     public void shouldSaveIfDescriptionOfCategoryIsTooLong() {
         //given
-        Category category = new Category( "test", "test", uuidCategory);
+        Category category = new Category( "test", "test", UUID.randomUUID());
         categoryService.saveNewCategory(category);
         String txt = "";
         int numberOfChars = 300;
@@ -70,37 +71,37 @@ class SubcategoryServiceIT {
             txt += "a";
         }
         Subcategory subcategory = new Subcategory(
-                "JavaBasic", txt, category);
+                "JavaBasic", txt);
         //when
-        Subcategory savedSubcategory = subcategoryService.saveNewSubcategory(subcategory);
+        Subcategory savedSubcategory = subcategoryService.saveNewSubcategory(subcategory, category.getName());
         //then
         assertThat(savedSubcategory.getDescription()).isEqualTo(subcategory.getDescription());
     }
     @Test
     public void shouldThrowExceptionIfNameCategoryAlreadyTaken() {
         //given
-        Category category = new Category( "test", "test", uuidCategory);
+        Category category = new Category( "test", "test", UUID.randomUUID());
         categoryService.saveNewCategory(category);
         Subcategory subcategory = new Subcategory(
                 "JavaBasic",
-                "Podstawy Javy", category);
+                "Podstawy Javy");
 
         //then
-        subcategoryService.saveNewSubcategory(subcategory);
+        subcategoryService.saveNewSubcategory(subcategory, category.getName());
         Assertions.assertThrows(NameAlreadyTakenException.class, () -> {
-            subcategoryService.saveNewSubcategory(subcategory);
+            subcategoryService.saveNewSubcategory(subcategory, category.getName());
         });
     }
 
     @Test
     public void shouldCheckIfSubcategoryIsAssignToCategory() {
         //given
-        Category category = new Category("Java", "Java Courses", uuidCategory);
+        Category category = new Category("Java", "Java Courses", UUID.randomUUID());
         categoryService.saveNewCategory(category);
-        Subcategory subcategory = new Subcategory("Spring", "Spring Courses", category);
+        Subcategory subcategory = new Subcategory("Spring", "Spring Courses");
 
         //when
-        subcategoryService.saveNewSubcategory(subcategory);
+        subcategoryService.saveNewSubcategory(subcategory, category.getName());
 
         //then
         Optional<String> first = categoryService.findByName("Java").map(Category::getSubcategoryList)

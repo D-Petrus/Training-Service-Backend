@@ -22,8 +22,8 @@ public class CourseController {
         return courseService.getAllCoursesList();
     }
 
-    @PostMapping
-    private Course saveNew(@RequestBody Course course, String subcategoryName) {
+    @PostMapping("{subcategoryName}")
+    private Course saveNew(@RequestBody Course course, @PathVariable String subcategoryName) {
        return courseService.saveNewCourse(subcategoryName, course);
     }
 }

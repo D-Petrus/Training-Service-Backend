@@ -13,16 +13,13 @@ public class Subcategory {
     private String name;
     @Column(length = 300)
     private String description;
-    @ManyToOne
-    private Category category;
 
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Course> courseList = new ArrayList<>();
 
-    public Subcategory(String name, String description, Category category) {
+    public Subcategory(String name, String description) {
         this.name = name;
         this.description = description;
-        this.category = category;
     }
 
     public Subcategory() {
@@ -50,10 +47,6 @@ public class Subcategory {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Category getCategory() {
-        return category;
     }
 
     public void addCourse(Course course) {

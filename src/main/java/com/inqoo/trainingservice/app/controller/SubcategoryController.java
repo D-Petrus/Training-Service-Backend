@@ -21,9 +21,9 @@ public class SubcategoryController {
         return subcategoryService.getAllSubcategoryList();
     }
 
-    @PostMapping
-    private Subcategory saveNew(@RequestBody Subcategory subcategory) {
-        return subcategoryService.saveNewSubcategory(subcategory);
+    @PostMapping("{categoryName}")
+    private Subcategory saveNew(@RequestBody Subcategory subcategory, @PathVariable String categoryName) {
+        return subcategoryService.saveNewSubcategory(subcategory, categoryName);
     }
 
 }
