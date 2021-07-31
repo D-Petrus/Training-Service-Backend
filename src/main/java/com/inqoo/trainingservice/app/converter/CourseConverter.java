@@ -12,7 +12,7 @@ public class CourseConverter {
                 course.getDescription(),
                 course.getDuration(),
                 course.getPrice(),
-                course.getUuidCourse()
+                course.getCourseUUID()
         );
 
         return courseDTO;
@@ -24,7 +24,7 @@ public class CourseConverter {
         course.setDescription(courseDTO.getDescription());
         course.setDuration(courseDTO.getDuration());
         course.setPrice(courseDTO.getPrice());
-        course.setUuidCourse(courseDTO.getUuidCourse());
+        course.setCourseUUID(courseDTO.getCourseUUID());
         return course;
     }
 }

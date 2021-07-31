@@ -5,12 +5,12 @@ import java.util.UUID;
 public class CategoryDTO {
     private final String name;
     private final String description;
-    private final UUID uuidCategory;
+    private final UUID categoryUUID;
 
-    public CategoryDTO(String name, String description, UUID uuidCategory) {
+    public CategoryDTO(String name, String description, UUID categoryUUID) {
         this.name = name;
         this.description = description;
-        this.uuidCategory = uuidCategory;
+        this.categoryUUID = categoryUUID;
     }
 
     public String getName() {
@@ -21,7 +21,7 @@ public class CategoryDTO {
         return description;
     }
 
-    public UUID getUuidCategory() {
-        return uuidCategory;
+    public UUID getCategoryUUID() {
+        return categoryUUID;
     }
 }

@@ -10,7 +10,7 @@ public class CategoryConverter {
         CategoryDTO categoryDTO = new CategoryDTO(
         category.getName(),
         category.getDescription(),
-        category.getUuidCategory()
+        category.getCategoryUUID()
         );
 
         return categoryDTO;
@@ -20,7 +20,7 @@ public class CategoryConverter {
         Category category = new Category();
         category.setName(categoryDTO.getName());
         category.setDescription(categoryDTO.getDescription());
-        category.setUuidCategory(categoryDTO.getUuidCategory());
+        category.setCategoryUUID(categoryDTO.getCategoryUUID());
         return category;
     }
 }

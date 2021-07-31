@@ -16,16 +16,16 @@ public class Category {
     @Column(length = 300)
     private String description;
     @Column
-    private UUID uuidCategory;
+    private UUID categoryUUID;
 
     @OneToMany(cascade = {CascadeType.MERGE , CascadeType.PERSIST})
     private final List<Subcategory> subcategoryList = new ArrayList<>();
 
 
-    public Category(String name, String description, UUID uuidCategory) {
+    public Category(String name, String description, UUID categoryUUID) {
         this.name = name;
         this.description = description;
-        this.uuidCategory = uuidCategory;
+        this.categoryUUID = categoryUUID;
     }
 
     public Category() {
@@ -63,12 +63,12 @@ public class Category {
         return subcategoryList;
     }
 
-    public UUID getUuidCategory() {
-        return uuidCategory;
+    public UUID getCategoryUUID() {
+        return categoryUUID;
     }
 
-    public void setUuidCategory(UUID uuidCategory) {
-        this.uuidCategory = uuidCategory;
+    public void setCategoryUUID(UUID categoryUUID) {
+        this.categoryUUID = categoryUUID;
     }
 
     @Override
@@ -76,11 +76,11 @@ public class Category {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return id == category.id && Objects.equals(name, category.name) && Objects.equals(description, category.description) && Objects.equals(uuidCategory, category.uuidCategory) && Objects.equals(subcategoryList, category.subcategoryList);
+        return id == category.id && Objects.equals(name, category.name) && Objects.equals(description, category.description) && Objects.equals(categoryUUID, category.categoryUUID) && Objects.equals(subcategoryList, category.subcategoryList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, uuidCategory, subcategoryList);
+        return Objects.hash(id, name, description, categoryUUID, subcategoryList);
     }
 }

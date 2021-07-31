@@ -30,12 +30,14 @@ class CategoryServiceIT {
         //given
         CategoryDTO category1 = new CategoryDTO(
                 "JavaBasic",
-                "Podstawy Javy", UUID.randomUUID());
+                "Podstawy Javy",
+                UUID.randomUUID());
 
 
         CategoryDTO category2 = new CategoryDTO(
                 "Java Advanced",
-                "Java dla zaawansowanych", UUID.randomUUID());
+                "Java dla zaawansowanych",
+                UUID.randomUUID());
         //when
         Category savedCategory1 = categoryService.saveNewCategory(categoryConverter.dtoToEntity(category1));
         Category savedCategory2 = categoryService.saveNewCategory(categoryConverter.dtoToEntity(category2));
@@ -49,7 +51,8 @@ class CategoryServiceIT {
         //given
         CategoryDTO category = new CategoryDTO(
                 "JavaBasic",
-                "Podstawy Javy", UUID.randomUUID());
+                "Podstawy Javy",
+                UUID.randomUUID());
 
         //when
         Category savedCategory = categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
@@ -63,7 +66,8 @@ class CategoryServiceIT {
         //given
         CategoryDTO category = new CategoryDTO(
                 "JavaBasic",
-                "Podstawy Javy", UUID.randomUUID());
+                "Podstawy Javy",
+                UUID.randomUUID());
 
         //when
         Category savedCategory = categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
@@ -81,7 +85,9 @@ class CategoryServiceIT {
             txt += "a";
         }
         CategoryDTO category = new CategoryDTO(
-                "JavaBasic", txt, UUID.randomUUID());
+                "JavaBasic",
+                txt,
+                UUID.randomUUID());
         //when
         Category savedCategory = categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
         //then
@@ -93,7 +99,8 @@ class CategoryServiceIT {
         //given
         CategoryDTO category = new CategoryDTO(
                 "JavaBasic",
-                "Podstawy Javy", UUID.randomUUID());
+                "Podstawy Javy",
+                UUID.randomUUID());
 
         //then
         categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));

@@ -16,14 +16,14 @@ public class Course {
     private Long duration;
     private BigDecimal price;
     @Column
-    private UUID uuidCourse;
+    private UUID courseUUID;
     
-    public Course(String name, String description, Long duration, BigDecimal price, UUID uuidCourse) {
+    public Course(String name, String description, Long duration, BigDecimal price, UUID courseUUID) {
         this.name = name;
         this.description = description;
         this.duration = duration;
         this.price = price;
-        this.uuidCourse = uuidCourse;
+        this.courseUUID = courseUUID;
     }
 
     public Course() {
@@ -69,11 +69,11 @@ public class Course {
         this.name = name;
     }
 
-    public UUID getUuidCourse() {
-        return uuidCourse;
+    public UUID getCourseUUID() {
+        return courseUUID;
     }
 
-    public void setUuidCourse(UUID uuidCourse) {
-        this.uuidCourse = uuidCourse;
+    public void setCourseUUID(UUID courseUUID) {
+        this.courseUUID = courseUUID;
     }
 }
