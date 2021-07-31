@@ -7,6 +7,7 @@ import com.inqoo.trainingservice.app.models.Category;
 import com.inqoo.trainingservice.app.models.Course;
 import com.inqoo.trainingservice.app.models.Subcategory;
 import com.inqoo.trainingservice.app.models.Trainer;
+import com.sun.xml.bind.v2.TODO;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -74,8 +75,8 @@ public class TrainerServiceIT {
         });
     }
 
-    @Test
-    public void shouldUpdateInformationAboutTrainer(){
-
-    }
+//    @Test
+//    public void shouldUpdateInformationAboutTrainer(){
+//
+//    }
 }

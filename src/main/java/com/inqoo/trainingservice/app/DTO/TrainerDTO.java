@@ -3,9 +3,10 @@ package com.inqoo.trainingservice.app.DTO;
 import java.util.Objects;
 
 public class TrainerDTO {
-    public String firstName;
-    public String lastName;
-    public String experience;
+    private final String firstName;
+    private final String lastName;
+    private final String experience;
+
 
     public TrainerDTO(String firstName, String lastName, String experience) {
         this.firstName = firstName;
@@ -17,28 +18,14 @@ public class TrainerDTO {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getExperience() {
         return experience;
     }
 
-    public void setExperience(String experience) {
-        this.experience = experience;
-    }
-
-    public TrainerDTO() {
-    }
 
     @Override
     public boolean equals(Object o) {

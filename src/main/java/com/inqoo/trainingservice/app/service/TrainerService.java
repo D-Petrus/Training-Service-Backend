@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TrainerService {
+class TrainerService {
     private final TrainerRepository trainerRepository;
 
     public TrainerService(TrainerRepository trainerRepository) {

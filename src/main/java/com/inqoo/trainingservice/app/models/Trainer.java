@@ -6,8 +6,6 @@ import java.util.List;
 
 @Entity
 public class Trainer {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -33,7 +31,6 @@ public class Trainer {
 
     public Trainer() {
     }
-
     public long getId() {
         return id;
     }
