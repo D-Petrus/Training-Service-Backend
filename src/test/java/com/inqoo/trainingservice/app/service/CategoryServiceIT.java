@@ -1,5 +1,6 @@
 package com.inqoo.trainingservice.app.service;
 
+import com.inqoo.trainingservice.app.DTO.CategoryDTO;
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
 import com.inqoo.trainingservice.app.models.Category;
 import com.inqoo.trainingservice.app.models.Subcategory;
@@ -42,7 +43,7 @@ class CategoryServiceIT {
     }
 
     @Test
-    public void shouldCheckIfCatgoryIsSavedToDatabase() {
+    public void shouldCheckIfCategoryIsSavedToDatabase() {
         //given
         Category category = new Category(
                 "JavaBasic",
