@@ -7,7 +7,6 @@ public class TrainerDTO {
     private final String lastName;
     private final String experience;
 
-
     public TrainerDTO(String firstName, String lastName, String experience) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,7 +24,6 @@ public class TrainerDTO {
     public String getExperience() {
         return experience;
     }
-
 
     @Override
     public boolean equals(Object o) {
