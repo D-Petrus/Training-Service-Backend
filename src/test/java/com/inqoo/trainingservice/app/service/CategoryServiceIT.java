@@ -1,8 +1,8 @@
 package com.inqoo.trainingservice.app.service;
 
+import com.inqoo.trainingservice.app.DTO.CategoryDTO;
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
 import com.inqoo.trainingservice.app.models.Category;
-import com.inqoo.trainingservice.app.models.Subcategory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,17 +25,17 @@ class CategoryServiceIT {
     @Test
     public void shouldReturnListOfCategory() {
         //given
-        Category category1 = new Category(
+        CategoryDTO category1 = new CategoryDTO(
                 "JavaBasic",
-                "Podstawy Javy");
+                "Podstawy Javy", UUID.randomUUID());
 
 
-        Category category2 = new Category(
+        CategoryDTO category2 = new CategoryDTO(
                 "Java Advanced",
-                "Java dla zaawansowanych");
+                "Java dla zaawansowanych", UUID.randomUUID());
         //when
-        Category savedCategory1 = categoryService.saveNewCategory(category1);
-        Category savedCategory2 = categoryService.saveNewCategory(category2);
+        CategoryDTO savedCategory1 = categoryService.saveNewCategory(category1);
+        CategoryDTO savedCategory2 = categoryService.saveNewCategory(category2);
 
         //then
         assertThat(List.of(savedCategory1, savedCategory2)).isEqualTo(categoryService.getAllCategoryList());
@@ -46,7 +46,7 @@ class CategoryServiceIT {
         //given
         Category category = new Category(
                 "JavaBasic",
-                "Podstawy Javy");
+                "Podstawy Javy", uuidCategory);
 
         //when
         Category savedCategory = categoryService.saveNewCategory(category);
@@ -60,7 +60,7 @@ class CategoryServiceIT {
         //given
         Category category = new Category(
                 "JavaBasic",
-                "Podstawy Javy");
+                "Podstawy Javy", uuidCategory);
 
         //when
         Category savedCategory = categoryService.saveNewCategory(category);
@@ -78,7 +78,7 @@ class CategoryServiceIT {
             txt += "a";
         }
         Category category = new Category(
-                "JavaBasic", txt);
+                "JavaBasic", txt, uuidCategory);
         //when
         Category savedCategory = categoryService.saveNewCategory(category);
         //then
@@ -90,7 +90,7 @@ class CategoryServiceIT {
         //given
         Category category = new Category(
                 "JavaBasic",
-                "Podstawy Javy");
+                "Podstawy Javy", uuidCategory);
 
         //then
         categoryService.saveNewCategory(category);

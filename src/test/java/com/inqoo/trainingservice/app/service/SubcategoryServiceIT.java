@@ -25,7 +25,7 @@ class SubcategoryServiceIT {
     @Test
     public void shouldReturnListOfCategory() {
         //given
-        Category category = new Category( "test", "test");
+        Category category = new Category( "test", "test", uuidCategory);
         categoryService.saveNewCategory(category);
         Subcategory subcategory1 = new Subcategory(
                 "JavaBasic",
@@ -47,7 +47,7 @@ class SubcategoryServiceIT {
     @Test
     public void shouldReturnCategoryGivenByName() {
         //given
-        Category category = new Category( "test", "test");
+        Category category = new Category( "test", "test", uuidCategory);
         categoryService.saveNewCategory(category);
         Subcategory subcategory = new Subcategory(
                 "JavaBasic",
@@ -62,7 +62,7 @@ class SubcategoryServiceIT {
     @Test
     public void shouldSaveIfDescriptionOfCategoryIsTooLong() {
         //given
-        Category category = new Category( "test", "test");
+        Category category = new Category( "test", "test", uuidCategory);
         categoryService.saveNewCategory(category);
         String txt = "";
         int numberOfChars = 300;
@@ -79,7 +79,7 @@ class SubcategoryServiceIT {
     @Test
     public void shouldThrowExceptionIfNameCategoryAlreadyTaken() {
         //given
-        Category category = new Category( "test", "test");
+        Category category = new Category( "test", "test", uuidCategory);
         categoryService.saveNewCategory(category);
         Subcategory subcategory = new Subcategory(
                 "JavaBasic",
@@ -95,7 +95,7 @@ class SubcategoryServiceIT {
     @Test
     public void shouldCheckIfSubcategoryIsAssignToCategory() {
         //given
-        Category category = new Category("Java", "Java Courses");
+        Category category = new Category("Java", "Java Courses", uuidCategory);
         categoryService.saveNewCategory(category);
         Subcategory subcategory = new Subcategory("Spring", "Spring Courses", category);
 

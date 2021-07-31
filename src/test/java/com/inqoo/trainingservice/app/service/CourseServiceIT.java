@@ -30,20 +30,20 @@ class CourseServiceIT {
     @Test
     public void shouldReturnListOfCourses() {
         //given
-        Category category = new Category("Java", "Kurs Java");
+        Category category = new Category("Java", "Kurs Java", uuidCategory);
         categoryService.saveNewCategory(category);
         Subcategory subcategory = new Subcategory("Spring", "Kurs Spring", category);
         subcategoryService.saveNewSubcategory(subcategory);        Course course1 = new Course(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
                 2L,
-                BigDecimal.valueOf(2000));
+                BigDecimal.valueOf(2000), uuidCourse);
 
         Course course2 = new Course(
                 "Hibernate w Javie",
                 "Kurs na temat Hibernate w Javie",
                 2L,
-                BigDecimal.valueOf(3000));
+                BigDecimal.valueOf(3000), uuidCourse);
         //when
         Course savedCourse1 = courseService.saveNewCourse(subcategory.getName(), course1);
         Course savedCourse2 = courseService.saveNewCourse(subcategory.getName(), course2);
@@ -55,7 +55,7 @@ class CourseServiceIT {
     @Test
     public void shouldCheckIfCourseIsSavedToDatabase() {
         //given
-        Category category = new Category("Java", "Kurs Java");
+        Category category = new Category("Java", "Kurs Java", uuidCategory);
         categoryService.saveNewCategory(category);
         Subcategory subcategory = new Subcategory("Spring", "Kurs Spring", category);
         subcategoryService.saveNewSubcategory(subcategory);
@@ -63,7 +63,7 @@ class CourseServiceIT {
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
                 2L,
-                BigDecimal.valueOf(2000));
+                BigDecimal.valueOf(2000), uuidCourse);
 
         //when
         Course savedCourse = courseService.saveNewCourse(subcategory.getName(), course);
@@ -75,7 +75,7 @@ class CourseServiceIT {
     @Test
     public void shouldReturnCourseGivenByName() {
         //given
-        Category category = new Category("Java", "Kurs Java");
+        Category category = new Category("Java", "Kurs Java", uuidCategory);
         categoryService.saveNewCategory(category);
         Subcategory subcategory = new Subcategory("Spring", "Kurs Spring", category);
         subcategoryService.saveNewSubcategory(subcategory);
@@ -83,7 +83,7 @@ class CourseServiceIT {
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
                 2L,
-                BigDecimal.valueOf(2000));
+                BigDecimal.valueOf(2000), uuidCourse);
 
         //when
         Course savedCourse = courseService.saveNewCourse(subcategory.getName(), course);
@@ -94,7 +94,7 @@ class CourseServiceIT {
     @Test
     public void shouldSaveIfDescriptionTooLong() {
         //given
-        Category category = new Category("Java", "Kurs Java");
+        Category category = new Category("Java", "Kurs Java", uuidCategory);
         categoryService.saveNewCategory(category);
         Subcategory subcategory = new Subcategory("Spring", "Kurs Spring", category);
         subcategoryService.saveNewSubcategory(subcategory);
@@ -107,7 +107,7 @@ class CourseServiceIT {
                 "Spring Boot w Javie",
                 txt,
                 2L,
-                BigDecimal.valueOf(2000));
+                BigDecimal.valueOf(2000), uuidCourse);
         //when
         Course savedCourse = courseService.saveNewCourse(subcategory.getName(), course);
 
@@ -117,7 +117,7 @@ class CourseServiceIT {
     @Test
     public void shouldNotSaveIfDescriptionTooLong() {
         //given
-        Category category = new Category("Java", "Kurs Java");
+        Category category = new Category("Java", "Kurs Java", uuidCategory);
         categoryService.saveNewCategory(category);
         Subcategory subcategory = new Subcategory("Spring", "Kurs Spring", category);
         subcategoryService.saveNewSubcategory(subcategory);
@@ -126,7 +126,7 @@ class CourseServiceIT {
                 "Spring Boot w Javie",
                 generatedTxt,
                 2L,
-                BigDecimal.valueOf(2000));
+                BigDecimal.valueOf(2000), uuidCourse);
 
         //then
         Assertions.assertThrows(TooLongDescriptionException.class, () -> {
@@ -137,7 +137,7 @@ class CourseServiceIT {
     @Test
     public void shouldThrowExceptionIfNameAlreadyTaken() {
         //given
-        Category category = new Category("Java", "Kurs Java");
+        Category category = new Category("Java", "Kurs Java", uuidCategory);
         categoryService.saveNewCategory(category);
         Subcategory subcategory = new Subcategory("Spring", "Kurs Spring", category);
         subcategoryService.saveNewSubcategory(subcategory);
@@ -145,7 +145,7 @@ class CourseServiceIT {
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
                 2L,
-                BigDecimal.valueOf(2000));
+                BigDecimal.valueOf(2000), uuidCourse);
 
         //then
         courseService.saveNewCourse(subcategory.getName(), course);
@@ -157,11 +157,11 @@ class CourseServiceIT {
     @Test
     public void shouldCheckIfCourseIsAssignToSubcategory() {
         //given
-        Category category = new Category("Java", "Kurs Java");
+        Category category = new Category("Java", "Kurs Java", uuidCategory);
         categoryService.saveNewCategory(category);
         Subcategory subcategory = new Subcategory("Spring", "Kurs Spring", category);
         subcategoryService.saveNewSubcategory(subcategory);
-        Course course = new Course("Kurs", "Opis", 250L, BigDecimal.valueOf(2000));
+        Course course = new Course("Kurs", "Opis", 250L, BigDecimal.valueOf(2000), uuidCourse);
         courseService.saveNewCourse("Spring", course);
 
         //then

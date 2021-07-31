@@ -2,6 +2,7 @@ package com.inqoo.trainingservice.app.models;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Entity
 public class Course {
@@ -14,12 +15,15 @@ public class Course {
     private String description;
     private Long duration;
     private BigDecimal price;
+    @Column
+    private UUID uuidCourse;
     
-    public Course(String name, String description, Long duration, BigDecimal price) {
+    public Course(String name, String description, Long duration, BigDecimal price, UUID uuidCourse) {
         this.name = name;
         this.description = description;
         this.duration = duration;
         this.price = price;
+        this.uuidCourse = uuidCourse;
     }
 
     public Course() {
@@ -63,5 +67,13 @@ public class Course {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public UUID getUuidCourse() {
+        return uuidCourse;
+    }
+
+    public void setUuidCourse(UUID uuidCourse) {
+        this.uuidCourse = uuidCourse;
     }
 }

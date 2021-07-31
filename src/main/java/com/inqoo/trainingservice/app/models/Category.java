@@ -3,6 +3,7 @@ package com.inqoo.trainingservice.app.models;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class Category {
@@ -13,14 +14,17 @@ public class Category {
     private String name;
     @Column(length = 300)
     private String description;
+    @Column
+    private UUID uuidCategory;
 
     @OneToMany(cascade = {CascadeType.MERGE , CascadeType.PERSIST})
     private final List<Subcategory> subcategoryList = new ArrayList<>();
 
 
-    public Category(String name, String description) {
+    public Category(String name, String description, UUID uuidCategory) {
         this.name = name;
         this.description = description;
+        this.uuidCategory = uuidCategory;
     }
 
     public Category() {
@@ -56,5 +60,13 @@ public class Category {
 
     public List<Subcategory> getSubcategoryList() {
         return subcategoryList;
+    }
+
+    public UUID getUuidCategory() {
+        return uuidCategory;
+    }
+
+    public void setUuidCategory(UUID uuidCategory) {
+        this.uuidCategory = uuidCategory;
     }
 }
