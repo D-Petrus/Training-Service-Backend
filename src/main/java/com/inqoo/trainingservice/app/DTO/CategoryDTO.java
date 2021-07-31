@@ -11,6 +11,10 @@ public class CategoryDTO {
         this.description = description;
     }
 
+    public CategoryDTO() {
+
+    }
+
     public String getName() {
         return name;
     }
