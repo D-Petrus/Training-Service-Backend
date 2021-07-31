@@ -74,6 +74,8 @@ public class TrainerServiceIT {
         });
     }
 
-//    @Test
-//    public void shouldUpdateInformationAboutTrainer()
+    @Test
+    public void shouldUpdateInformationAboutTrainer(){
+
+    }
 }

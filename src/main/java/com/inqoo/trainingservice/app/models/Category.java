@@ -3,6 +3,8 @@ package com.inqoo.trainingservice.app.models;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 public class Category {
@@ -13,14 +15,17 @@ public class Category {
     private String name;
     @Column(length = 300)
     private String description;
+    @Column
+    private UUID categoryUUID;
 
     @OneToMany(cascade = {CascadeType.MERGE , CascadeType.PERSIST})
     private final List<Subcategory> subcategoryList = new ArrayList<>();
 
 
-    public Category(String name, String description) {
+    public Category(String name, String description, UUID categoryUUID) {
         this.name = name;
         this.description = description;
+        this.categoryUUID = categoryUUID;
     }
 
     public Category() {
@@ -56,5 +61,26 @@ public class Category {
 
     public List<Subcategory> getSubcategoryList() {
         return subcategoryList;
+    }
+
+    public UUID getCategoryUUID() {
+        return categoryUUID;
+    }
+
+    public void setCategoryUUID(UUID categoryUUID) {
+        this.categoryUUID = categoryUUID;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return id == category.id && Objects.equals(name, category.name) && Objects.equals(description, category.description) && Objects.equals(categoryUUID, category.categoryUUID) && Objects.equals(subcategoryList, category.subcategoryList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, categoryUUID, subcategoryList);
     }
 }
