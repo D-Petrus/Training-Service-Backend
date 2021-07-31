@@ -85,7 +85,8 @@ class CourseServiceIT {
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
                 2L,
-                BigDecimal.valueOf(2000), UUID.randomUUID());
+                BigDecimal.valueOf(2000),
+                UUID.randomUUID());
 
         //when
         Course savedCourse = courseService.saveNewCourse(subcategory.getName(), courseConverter.dtoToEntity(course));
@@ -140,7 +141,8 @@ class CourseServiceIT {
                 "Spring Boot w Javie",
                 txt,
                 2L,
-                BigDecimal.valueOf(2000), UUID.randomUUID());
+                BigDecimal.valueOf(2000),
+                UUID.randomUUID());
         //when
         Course savedCourse = courseService.saveNewCourse(subcategory.getName(), courseConverter.dtoToEntity(course));
 
