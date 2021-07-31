@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class CategoryConverter {
     public CategoryDTO entityToDTO(Category category) {
-        CategoryDTO categoryDTO = new CategoryDTO();
-        categoryDTO.setName(category.getName());
-        categoryDTO.setDescription(category.getDescription());
-        return categoryDTO;
+        return new CategoryDTO(
+                category.getName(),
+                category.getDescription()
+        );
     }
 
     public Category dtoToEntity(CategoryDTO categoryDTO) {
