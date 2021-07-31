@@ -2,13 +2,19 @@ package com.inqoo.trainingservice.app.service;
 
 import com.inqoo.trainingservice.app.DTO.TrainerDTO;
 import com.inqoo.trainingservice.app.converter.TrainerConverter;
+import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
 import com.inqoo.trainingservice.app.models.Category;
+import com.inqoo.trainingservice.app.models.Course;
+import com.inqoo.trainingservice.app.models.Subcategory;
 import com.inqoo.trainingservice.app.models.Trainer;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -51,4 +57,23 @@ public class TrainerServiceIT {
         //then
         assertThat(savedTrainer1DTO).isEqualTo(trainerService.findByFirstAndLastName("Jan", "Kowalski").get());
     }
+
+    @Test
+    public void shouldNotSaveIfDescriptionOfExperienceIsToLong(){
+        //given
+
+        String generatedTxt = RandomStringUtils.randomAlphanumeric(4001);
+        TrainerDTO trainer1 = new TrainerDTO(
+                "Jan",
+                "Kowalski",
+                generatedTxt);
+
+        //then
+        Assertions.assertThrows(TooLongDescriptionException.class, () -> {
+            trainerService.saveNewTrainer(trainerConverter.dtoToEntity(trainer1));
+        });
+    }
+
+//    @Test
+//    public void shouldUpdateInformationAboutTrainer()
 }

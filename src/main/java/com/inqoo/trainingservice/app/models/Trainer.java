@@ -11,12 +11,13 @@ public class Trainer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(unique = true)
     private String firstName;
-    @Column(unique = true)
     private String lastName;
+    @Column(length = 4000)
     private String experience;
+    @Column(unique = true)
     private Long phoneNumber;
+    @Column(unique = true)
     private String emailAddress;
 
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})

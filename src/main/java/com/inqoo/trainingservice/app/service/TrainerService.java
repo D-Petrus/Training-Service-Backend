@@ -1,6 +1,7 @@
 package com.inqoo.trainingservice.app.service;
 
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
+import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
 import com.inqoo.trainingservice.app.models.Trainer;
 import com.inqoo.trainingservice.app.repository.TrainerRepository;
 import org.springframework.stereotype.Service;
@@ -30,9 +31,12 @@ public class TrainerService {
     }
 
     private void validateInputs( Trainer trainer) {
-        if (trainerRepository.findByFirstNameAndLastName(trainer.getFirstName(),trainer.getLastName()).isPresent())
-        {
+        if (trainerRepository.findByFirstNameAndLastName(trainer.getFirstName(), trainer.getLastName()).isPresent()) {
             throw new NameAlreadyTakenException("This trainer is already saved");
+        }
+
+        if (trainer.getExperience().length() > 4000) {
+            throw new TooLongDescriptionException("This description of experience is too long");
         }
     }
 }
