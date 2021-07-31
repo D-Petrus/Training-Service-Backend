@@ -1,5 +1,9 @@
 package com.inqoo.trainingservice.app.service;
 
+import com.inqoo.trainingservice.app.DTO.CategoryDTO;
+import com.inqoo.trainingservice.app.DTO.CourseDTO;
+import com.inqoo.trainingservice.app.converter.CategoryConverter;
+import com.inqoo.trainingservice.app.converter.CourseConverter;
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
 import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
 import com.inqoo.trainingservice.app.models.Category;
@@ -14,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,28 +31,39 @@ class CourseServiceIT {
     private CategoryService categoryService;
     @Autowired
     private SubcategoryService subcategoryService;
+    @Autowired
+    private CategoryConverter categoryConverter;
+    @Autowired
+    private CourseConverter courseConverter;
 
     @Test
     public void shouldReturnListOfCourses() {
         //given
-        Category category = new Category("Java", "Kurs Java");
-        categoryService.saveNewCategory(category);
-        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring");
+        CategoryDTO category = new CategoryDTO(
+                "Java",
+                "Kurs Java",
+                UUID.randomUUID());
+        categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
+        Subcategory subcategory = new Subcategory(
+                "Spring",
+                "Kurs Spring");
         subcategoryService.saveNewSubcategory(subcategory, category.getName());
-        Course course1 = new Course(
+        CourseDTO course1 = new CourseDTO(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
                 2L,
-                BigDecimal.valueOf(2000));
+                BigDecimal.valueOf(2000),
+                UUID.randomUUID());
 
-        Course course2 = new Course(
+        CourseDTO course2 = new CourseDTO(
                 "Hibernate w Javie",
                 "Kurs na temat Hibernate w Javie",
                 2L,
-                BigDecimal.valueOf(3000));
+                BigDecimal.valueOf(3000),
+                UUID.randomUUID());
         //when
-        Course savedCourse1 = courseService.saveNewCourse(subcategory.getName(), course1);
-        Course savedCourse2 = courseService.saveNewCourse(subcategory.getName(), course2);
+        Course savedCourse1 = courseService.saveNewCourse(subcategory.getName(), courseConverter.dtoToEntity(course1));
+        Course savedCourse2 = courseService.saveNewCourse(subcategory.getName(), courseConverter.dtoToEntity(course2));
 
         //then
         assertThat(List.of(savedCourse1,savedCourse2)).isEqualTo(courseService.getAllCoursesList());
@@ -56,18 +72,24 @@ class CourseServiceIT {
     @Test
     public void shouldCheckIfCourseIsSavedToDatabase() {
         //given
-        Category category = new Category("Java", "Kurs Java");
-        categoryService.saveNewCategory(category);
-        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring");
+        CategoryDTO category = new CategoryDTO(
+                "Java",
+                "Kurs Java",
+                UUID.randomUUID());
+        categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
+        Subcategory subcategory = new Subcategory(
+                "Spring",
+                "Kurs Spring");
         subcategoryService.saveNewSubcategory(subcategory, category.getName());
-        Course course = new Course(
+        CourseDTO course = new CourseDTO(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
                 2L,
-                BigDecimal.valueOf(2000));
+                BigDecimal.valueOf(2000),
+                UUID.randomUUID());
 
         //when
-        Course savedCourse = courseService.saveNewCourse(subcategory.getName(), course);
+        Course savedCourse = courseService.saveNewCourse(subcategory.getName(), courseConverter.dtoToEntity(course));
 
         //then
         assertThat(savedCourse.getName()).isEqualTo(course.getName());
@@ -76,18 +98,24 @@ class CourseServiceIT {
     @Test
     public void shouldReturnCourseGivenByName() {
         //given
-        Category category = new Category("Java", "Kurs Java");
-        categoryService.saveNewCategory(category);
-        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring");
+        CategoryDTO category = new CategoryDTO(
+                "Java",
+                "Kurs Java",
+                UUID.randomUUID());
+        categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
+        Subcategory subcategory = new Subcategory(
+                "Spring",
+                "Kurs Spring");
         subcategoryService.saveNewSubcategory(subcategory, category.getName());
-        Course course = new Course(
+        CourseDTO course = new CourseDTO(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
                 2L,
-                BigDecimal.valueOf(2000));
+                BigDecimal.valueOf(2000),
+                UUID.randomUUID());
 
         //when
-        Course savedCourse = courseService.saveNewCourse(subcategory.getName(), course);
+        Course savedCourse = courseService.saveNewCourse(subcategory.getName(), courseConverter.dtoToEntity(course));
 
         //then
         assertThat(savedCourse).isEqualTo(courseService.findByName("Spring Boot w Javie").get());
@@ -95,22 +123,28 @@ class CourseServiceIT {
     @Test
     public void shouldSaveIfDescriptionTooLong() {
         //given
-        Category category = new Category("Java", "Kurs Java");
-        categoryService.saveNewCategory(category);
-        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring");
+        CategoryDTO category = new CategoryDTO(
+                "Java",
+                "Kurs Java",
+                UUID.randomUUID());
+        categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
+        Subcategory subcategory = new Subcategory(
+                "Spring",
+                "Kurs Spring");
         subcategoryService.saveNewSubcategory(subcategory, category.getName());
         String txt = "";
         int numberOfChars = 200;
         for (int i = 0; i < numberOfChars; i++) {
             txt += "a";
         }
-        Course course = new Course(
+        CourseDTO course = new CourseDTO(
                 "Spring Boot w Javie",
                 txt,
                 2L,
-                BigDecimal.valueOf(2000));
+                BigDecimal.valueOf(2000),
+                UUID.randomUUID());
         //when
-        Course savedCourse = courseService.saveNewCourse(subcategory.getName(), course);
+        Course savedCourse = courseService.saveNewCourse(subcategory.getName(), courseConverter.dtoToEntity(course));
 
         //then
         assertThat(savedCourse.getDescription()).isEqualTo(course.getDescription());
@@ -118,52 +152,76 @@ class CourseServiceIT {
     @Test
     public void shouldNotSaveIfDescriptionTooLong() {
         //given
-        Category category = new Category("Java", "Kurs Java");
-        categoryService.saveNewCategory(category);
-        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring");
+        CategoryDTO category = new CategoryDTO(
+                "Java",
+                "Kurs Java",
+                UUID.randomUUID());
+        categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
+        Subcategory subcategory = new Subcategory(
+                "Spring",
+                "Kurs Spring");
         subcategoryService.saveNewSubcategory(subcategory, category.getName());
         String generatedTxt = RandomStringUtils.randomAlphanumeric(201);
-        Course course = new Course(
+        CourseDTO course = new CourseDTO(
                 "Spring Boot w Javie",
                 generatedTxt,
                 2L,
-                BigDecimal.valueOf(2000));
+                BigDecimal.valueOf(2000),
+                UUID.randomUUID());
 
         //then
         Assertions.assertThrows(TooLongDescriptionException.class, () -> {
-            courseService.saveNewCourse(subcategory.getName(), course);
+            courseService.saveNewCourse(subcategory.getName(), courseConverter.dtoToEntity(course));
         });
     }
 
     @Test
     public void shouldThrowExceptionIfNameAlreadyTaken() {
         //given
-        Category category = new Category("Java", "Kurs Java");
-        categoryService.saveNewCategory(category);
-        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring");
+        CategoryDTO category = new CategoryDTO(
+                "Java",
+                "Kurs Java",
+                UUID.randomUUID());
+        categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
+        Subcategory subcategory = new Subcategory(
+                "Spring",
+                "Kurs Spring");
         subcategoryService.saveNewSubcategory(subcategory, category.getName());
-        Course course = new Course(
+        CourseDTO course = new CourseDTO(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
                 2L,
-                BigDecimal.valueOf(2000));
+                BigDecimal.valueOf(2000),
+                UUID.randomUUID());
 
         //then
-        courseService.saveNewCourse(subcategory.getName(), course);
+        courseService.saveNewCourse(subcategory.getName(), courseConverter.dtoToEntity(course));
         Assertions.assertThrows(NameAlreadyTakenException.class, () -> {
-           courseService.saveNewCourse(subcategory.getName(), course);
+           courseService.saveNewCourse(subcategory.getName(), courseConverter.dtoToEntity(course));
         });
     }
 
     @Test
     public void shouldCheckIfCourseIsAssignToSubcategory() {
         //given
-        Category category = new Category("Java", "Kurs Java");
-        categoryService.saveNewCategory(category);
-        Subcategory subcategory = new Subcategory("Spring", "Kurs Spring");
+        CategoryDTO category = new CategoryDTO(
+                "Java",
+                "Kurs Java",
+                UUID.randomUUID());
+        categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
+        Subcategory subcategory = new Subcategory(
+                "Spring",
+                "Kurs Spring");
         subcategoryService.saveNewSubcategory(subcategory, category.getName());
-        Course course = new Course("Kurs", "Opis", 250L, BigDecimal.valueOf(2000));
-        courseService.saveNewCourse("Spring", course);
+        CourseDTO course = new CourseDTO(
+                "Kurs",
+                "Opis",
+                250L,
+                BigDecimal.valueOf(2000),
+                UUID.randomUUID());
+        courseService.saveNewCourse(
+                "Spring",
+                courseConverter.dtoToEntity(course));
 
         //then
         assertThat(courseService.findByName("Kurs")).isPresent();
