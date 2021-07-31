@@ -39,7 +39,9 @@ class CategoryServiceIT {
                 "Java dla zaawansowanych");
         //when
         Category savedCategory1 = categoryService.saveNewCategory(categoryConverter.dtoToEntity(category1));
-        Category savedCategory2 = categoryService.saveNewCategory(categoryConverter.dtoToEntity(category2));
+        Category savedCategory2 = categoryService.saveNewCategory(categoryConverter.dtoToEntity(category2
+
+        ));
 
         //then
         assertThat(List.of(savedCategory1, savedCategory2)).isEqualTo(categoryService.getAllCategoryList());
