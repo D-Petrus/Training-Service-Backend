@@ -7,7 +7,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/customer")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class CustomerController {
+class CustomerController {
     private CustomerService customerService;
 
     public CustomerController(CustomerService customerService) {

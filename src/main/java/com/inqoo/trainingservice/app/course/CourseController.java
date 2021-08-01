@@ -7,7 +7,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/courses")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class CourseController {
+class CourseController {
 
     private CourseService courseService;
 
