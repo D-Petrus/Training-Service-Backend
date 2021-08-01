@@ -26,7 +26,8 @@ public class Customer {
         this.homeNumber = homeNumber;
     }
 
-    public Customer(String name, String mobileNumber, String homeNumber, String emailAddress, UUID customerUUID) {
+    public Customer(long id, String name, String mobileNumber, String homeNumber, String emailAddress, UUID customerUUID) {
+        this.id = id;
         this.name = name;
         this.mobileNumber = mobileNumber;
         this.homeNumber = homeNumber;
@@ -67,5 +68,9 @@ public class Customer {
 
     public void setCustomerUUID(UUID customerUUID) {
         this.customerUUID = customerUUID;
+    }
+
+    public long getId() {
+        return id;
     }
 }
