@@ -1,4 +1,4 @@
-package com.inqoo.trainingservice.app.DTO;
+package com.inqoo.trainingservice.app.trainer;
 
 import java.util.Objects;
 

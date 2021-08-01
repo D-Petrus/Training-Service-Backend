@@ -1,16 +1,14 @@
-package com.inqoo.trainingservice.app.service;
+package com.inqoo.trainingservice.app.trainer;
 
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
 import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
-import com.inqoo.trainingservice.app.models.Trainer;
-import com.inqoo.trainingservice.app.repository.TrainerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-class TrainerService {
+public class TrainerService {
     private final TrainerRepository trainerRepository;
 
     public TrainerService(TrainerRepository trainerRepository) {
@@ -22,7 +20,8 @@ class TrainerService {
         return trainerRepository.save(trainer);
 
     }
-    Optional<Trainer> findByFirstAndLastName(String firstName, String lastName) {
+
+    public Optional<Trainer> findByFirstAndLastName(String firstName, String lastName) {
         return trainerRepository.findByFirstNameAndLastName(firstName, lastName);
     }
 
@@ -30,7 +29,7 @@ class TrainerService {
         return trainerRepository.findAll();
     }
 
-    private void validateInputs( Trainer trainer) {
+    private void validateInputs(Trainer trainer) {
         if (trainerRepository.findByFirstNameAndLastName(trainer.getFirstName(), trainer.getLastName()).isPresent()) {
             throw new NameAlreadyTakenException("This trainer is already saved");
         }

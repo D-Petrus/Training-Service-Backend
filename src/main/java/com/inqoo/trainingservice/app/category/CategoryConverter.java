@@ -1,7 +1,5 @@
-package com.inqoo.trainingservice.app.converter;
+package com.inqoo.trainingservice.app.category;
 
-import com.inqoo.trainingservice.app.DTO.CategoryDTO;
-import com.inqoo.trainingservice.app.models.Category;
 import org.springframework.stereotype.Component;
 
 @Component

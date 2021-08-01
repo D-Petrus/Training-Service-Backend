@@ -1,4 +1,4 @@
-package com.inqoo.trainingservice.app.DTO;
+package com.inqoo.trainingservice.app.course;
 
 import java.math.BigDecimal;
 import java.util.UUID;

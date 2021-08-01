@@ -1,12 +1,12 @@
-package com.inqoo.trainingservice.app.service;
+package com.inqoo.trainingservice.app.course;
 
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
-import com.inqoo.trainingservice.app.exception.SubcategoryNotFoundException;
+import com.inqoo.trainingservice.app.subcategory.Subcategory;
+import com.inqoo.trainingservice.app.subcategory.SubcategoryNotFoundException;
 import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
-import com.inqoo.trainingservice.app.models.Course;
-import com.inqoo.trainingservice.app.models.Subcategory;
-import com.inqoo.trainingservice.app.repository.CourseRepository;
-import com.inqoo.trainingservice.app.repository.SubcategoryRepository;
+import com.inqoo.trainingservice.app.course.Course;
+import com.inqoo.trainingservice.app.course.CourseRepository;
+import com.inqoo.trainingservice.app.subcategory.SubcategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,7 +51,7 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-    Optional<Course> findByName(String name) {
+    public Optional<Course> findByName(String name) {
         return courseRepository.findByName(name);
     }
 

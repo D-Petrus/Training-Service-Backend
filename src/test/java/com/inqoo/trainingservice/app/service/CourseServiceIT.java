@@ -1,14 +1,16 @@
 package com.inqoo.trainingservice.app.service;
 
-import com.inqoo.trainingservice.app.DTO.CategoryDTO;
-import com.inqoo.trainingservice.app.DTO.CourseDTO;
-import com.inqoo.trainingservice.app.converter.CategoryConverter;
-import com.inqoo.trainingservice.app.converter.CourseConverter;
+import com.inqoo.trainingservice.app.category.CategoryDTO;
+import com.inqoo.trainingservice.app.course.CourseDTO;
+import com.inqoo.trainingservice.app.category.CategoryConverter;
+import com.inqoo.trainingservice.app.category.CategoryService;
+import com.inqoo.trainingservice.app.course.CourseConverter;
+import com.inqoo.trainingservice.app.course.CourseService;
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
 import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
-import com.inqoo.trainingservice.app.models.Category;
-import com.inqoo.trainingservice.app.models.Course;
-import com.inqoo.trainingservice.app.models.Subcategory;
+import com.inqoo.trainingservice.app.course.Course;
+import com.inqoo.trainingservice.app.subcategory.Subcategory;
+import com.inqoo.trainingservice.app.subcategory.SubcategoryService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -66,7 +68,7 @@ class CourseServiceIT {
         Course savedCourse2 = courseService.saveNewCourse(subcategory.getName(), courseConverter.dtoToEntity(course2));
 
         //then
-        assertThat(List.of(savedCourse1,savedCourse2)).isEqualTo(courseService.getAllCoursesList());
+        assertThat(List.of(savedCourse1, savedCourse2)).isEqualTo(courseService.getAllCoursesList());
     }
 
     @Test
@@ -120,6 +122,7 @@ class CourseServiceIT {
         //then
         assertThat(savedCourse).isEqualTo(courseService.findByName("Spring Boot w Javie").get());
     }
+
     @Test
     public void shouldSaveIfDescriptionTooLong() {
         //given
@@ -149,6 +152,7 @@ class CourseServiceIT {
         //then
         assertThat(savedCourse.getDescription()).isEqualTo(course.getDescription());
     }
+
     @Test
     public void shouldNotSaveIfDescriptionTooLong() {
         //given
@@ -197,7 +201,7 @@ class CourseServiceIT {
         //then
         courseService.saveNewCourse(subcategory.getName(), courseConverter.dtoToEntity(course));
         Assertions.assertThrows(NameAlreadyTakenException.class, () -> {
-           courseService.saveNewCourse(subcategory.getName(), courseConverter.dtoToEntity(course));
+            courseService.saveNewCourse(subcategory.getName(), courseConverter.dtoToEntity(course));
         });
     }
 

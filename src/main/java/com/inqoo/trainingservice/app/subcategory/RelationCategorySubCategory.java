@@ -1,5 +1,10 @@
-package com.inqoo.trainingservice.app.models;
-import javax.persistence.*;
+package com.inqoo.trainingservice.app.subcategory;
+
+import com.inqoo.trainingservice.app.category.Category;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 
 public class RelationCategorySubCategory {

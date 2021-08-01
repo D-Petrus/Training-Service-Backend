@@ -1,4 +1,6 @@
-package com.inqoo.trainingservice.app.models;
+package com.inqoo.trainingservice.app.subcategory;
+
+import com.inqoo.trainingservice.app.course.Course;
 
 import javax.persistence.*;
 import java.util.ArrayList;
