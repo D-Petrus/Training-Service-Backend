@@ -7,7 +7,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/subcategories")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class SubcategoryController {
+class SubcategoryController {
     private SubcategoryService subcategoryService;
 
     public SubcategoryController(SubcategoryService subcategoryService) {

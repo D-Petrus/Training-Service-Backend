@@ -3,6 +3,9 @@ package com.inqoo.trainingservice.app.customer;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
+import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,9 +21,10 @@ public class CustomerService {
     }
 
     public Customer saveNewCustomer(Customer customer) {
-        if (customerRepository.findByEmailAddress(customer.getEmailAddress()).isPresent())
-        {throw new CustomerIsAlreadyExistsException();
-        };
+        Optional<Customer> foundedCustomer = customerRepository.findByEmailAddress(customer.getEmailAddress());
+        if (foundedCustomer.isPresent()) {
+            throw new CustomerIsAlreadyExistsException();
+        }
         if (!validateEmailAddress(customer.getEmailAddress())) {
             throw new EmailNotValidException();
         };
@@ -34,6 +38,9 @@ public class CustomerService {
         };
 
         return customerRepository.save(customer);
+    }
+    public List<Customer> getAllCustomerList(){
+        return customerRepository.findAll();
     }
 
     private boolean validateEmailAddress(String emailAddress) {
