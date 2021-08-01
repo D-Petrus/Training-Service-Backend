@@ -1,6 +1,7 @@
 package com.inqoo.trainingservice.app.customer;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 public class Customer {
@@ -14,6 +15,7 @@ public class Customer {
     private String homeNumber;
     @Column(unique = true)
     private String emailAddress;
+    private UUID customerUUID;
 
     public String getHomeNumber() {
         return homeNumber;
@@ -23,11 +25,12 @@ public class Customer {
         this.homeNumber = homeNumber;
     }
 
-    public Customer(String name, String mobileNumber, String homeNumber, String emailAddress) {
+    public Customer(String name, String mobileNumber, String homeNumber, String emailAddress, UUID customerUUID) {
         this.name = name;
         this.mobileNumber = mobileNumber;
         this.homeNumber = homeNumber;
         this.emailAddress = emailAddress;
+        this.customerUUID = customerUUID;
     }
 
     public Customer() {
@@ -55,5 +58,13 @@ public class Customer {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public UUID getCustomerUUID() {
+        return customerUUID;
+    }
+
+    public void setCustomerUUID(UUID customerUUID) {
+        this.customerUUID = customerUUID;
     }
 }
