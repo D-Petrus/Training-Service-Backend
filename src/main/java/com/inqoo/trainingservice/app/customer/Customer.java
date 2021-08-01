@@ -9,12 +9,13 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String mobileNumber;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String homeNumber;
     @Column(unique = true)
     private String emailAddress;
+    @Column(unique = true)
     private UUID customerUUID;
 
     public String getHomeNumber() {
