@@ -1,4 +1,4 @@
-package com.inqoo.trainingservice.app.exception;
+package com.inqoo.trainingservice.app.subcategory;
 
 public class SubcategoryNotFoundException extends RuntimeException {
     public SubcategoryNotFoundException(String message) {

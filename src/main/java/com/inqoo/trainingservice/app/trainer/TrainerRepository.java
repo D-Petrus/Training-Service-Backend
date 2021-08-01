@@ -1,6 +1,6 @@
-package com.inqoo.trainingservice.app.repository;
+package com.inqoo.trainingservice.app.trainer;
 
-import com.inqoo.trainingservice.app.models.Trainer;
+import com.inqoo.trainingservice.app.trainer.Trainer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

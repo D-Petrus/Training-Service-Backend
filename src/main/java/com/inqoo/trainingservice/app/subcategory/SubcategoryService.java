@@ -1,12 +1,10 @@
-package com.inqoo.trainingservice.app.service;
+package com.inqoo.trainingservice.app.subcategory;
 
-import com.inqoo.trainingservice.app.exception.CategoryNotFoundException;
+import com.inqoo.trainingservice.app.category.CategoryNotFoundException;
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
 import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
-import com.inqoo.trainingservice.app.models.Category;
-import com.inqoo.trainingservice.app.models.Subcategory;
-import com.inqoo.trainingservice.app.repository.CategoryRepository;
-import com.inqoo.trainingservice.app.repository.SubcategoryRepository;
+import com.inqoo.trainingservice.app.category.Category;
+import com.inqoo.trainingservice.app.category.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,9 +1,11 @@
 package com.inqoo.trainingservice.app.service;
 
-import com.inqoo.trainingservice.app.DTO.CategoryDTO;
-import com.inqoo.trainingservice.app.converter.CategoryConverter;
+import com.inqoo.trainingservice.app.category.CategoryDTO;
+import com.inqoo.trainingservice.app.category.CategoryConverter;
+import com.inqoo.trainingservice.app.category.CategoryService;
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
-import com.inqoo.trainingservice.app.models.Category;
+import com.inqoo.trainingservice.app.category.Category;
+import com.inqoo.trainingservice.app.subcategory.SubcategoryService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

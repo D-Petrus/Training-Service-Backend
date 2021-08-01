@@ -1,7 +1,5 @@
-package com.inqoo.trainingservice.app.controller;
+package com.inqoo.trainingservice.app.subcategory;
 
-import com.inqoo.trainingservice.app.models.Subcategory;
-import com.inqoo.trainingservice.app.service.SubcategoryService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

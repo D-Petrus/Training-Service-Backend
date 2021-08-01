@@ -1,4 +1,4 @@
-package com.inqoo.trainingservice.app.models;
+package com.inqoo.trainingservice.app.trainer;
 
 import javax.persistence.*;
 import java.util.ArrayList;
