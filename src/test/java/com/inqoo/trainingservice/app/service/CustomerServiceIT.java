@@ -62,4 +62,38 @@ public class CustomerServiceIT {
             customerService.saveNewCustomer(customer1);
         });
     }
+    @Test
+    public void shouldAddCustomerWhenEmailAddressExist(){
+        //given
+        Customer customer1 = new Customer(
+                "Google",
+                "500-500-500",
+                "32-346-22-22",
+                "test@gmail.com");
+
+        //then
+        final Customer saveNewCustomer = customerService.saveNewCustomer(customer1);
+        assertThat(saveNewCustomer).isEqualTo(customer1);
+    }
+    @Test
+    public void shouldNotAddCustomerWhenEmailIsExist() {
+        //given
+        Customer customer1 = new Customer(
+                "Google",
+                "500-500-500",
+                "32-346-22-22",
+                "test@gmail.com");
+        Customer customer2 = new Customer(
+                "Google2",
+                "500-500-600",
+                "32-346-22-62",
+                "test@gmail.com");
+
+        //then
+        customerService.saveNewCustomer(customer1);
+        Assertions.assertThrows(CustomerIsAlreadyExistsException.class, () -> {
+            customerService.saveNewCustomer(customer2);
+        });
+    }
+
 }
