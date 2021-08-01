@@ -13,11 +13,14 @@ class CustomerController {
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
+
     @GetMapping
-    private List<Customer> getList(){ return customerService.getAllCustomerList();};
+    private List<Customer> getList() {
+        return customerService.getAllCustomerList();
+    };
 
     @PostMapping
-    private Customer saveNew(@RequestBody Customer customer){
-        return  customerService.saveNewCustomer(customer);
+    private Customer saveNew(@RequestBody Customer customer) {
+        return customerService.saveNewCustomer(customer);
     }
 }
