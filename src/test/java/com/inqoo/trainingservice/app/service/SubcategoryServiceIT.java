@@ -1,8 +1,13 @@
 package com.inqoo.trainingservice.app.service;
 
+import com.inqoo.trainingservice.app.category.CategoryConverter;
+import com.inqoo.trainingservice.app.category.CategoryDTO;
 import com.inqoo.trainingservice.app.category.CategoryService;
+import com.inqoo.trainingservice.app.course.CourseConverter;
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
 import com.inqoo.trainingservice.app.category.Category;
+import com.inqoo.trainingservice.app.subcategory.SubCategoryConverter;
+import com.inqoo.trainingservice.app.subcategory.SubCategoryDTO;
 import com.inqoo.trainingservice.app.subcategory.Subcategory;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryService;
 import org.junit.jupiter.api.Assertions;
@@ -17,6 +22,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 @Transactional
 class SubcategoryServiceIT {
@@ -24,86 +30,129 @@ class SubcategoryServiceIT {
     private SubcategoryService subcategoryService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private CategoryConverter categoryConverter;
+    @Autowired
+    private CourseConverter courseConverter;
+    @Autowired
+    private SubCategoryConverter subCategoryConverter;
 
     @Test
-    public void shouldReturnListOfCategory() {
+    public void shouldReturnListOfSubCategory() {
         //given
-        Category category = new Category( "test", "test", UUID.randomUUID());
-        categoryService.saveNewCategory(category);
-        Subcategory subcategory1 = new Subcategory(
+        CategoryDTO category = new CategoryDTO(
+                "test",
+                "test",
+                UUID.randomUUID()
+        );
+        categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
+        SubCategoryDTO subcategory1 = new SubCategoryDTO(
                 "JavaBasic",
-                "Podstawy Javy");
+                "Podstawy Javy",
+                UUID.randomUUID()
+        );
 
 
-        Subcategory subcategory2 = new Subcategory(
+        SubCategoryDTO subcategory2 = new SubCategoryDTO(
                 "Java Advanced",
-                "Java dla zaawansowanych");
+                "Java dla zaawansowanych",
+                UUID.randomUUID()
+        );
         //when
-        Subcategory savedSubcategory1 = subcategoryService.saveNewSubcategory(subcategory1, category.getName());
-        Subcategory savedSubcategory2 = subcategoryService.saveNewSubcategory(subcategory2, category.getName());
+        Subcategory savedSubcategory1 = subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory1), category.getName());
+        Subcategory savedSubcategory2 = subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory2), category.getName());
 
         //then
-        assertThat(List.of(savedSubcategory1,savedSubcategory2)).isEqualTo(subcategoryService.getAllSubcategoryList());
+        assertThat(List.of(savedSubcategory1, savedSubcategory2)).isEqualTo(subcategoryService.getAllSubcategoryList());
     }
 
 
     @Test
     public void shouldReturnCategoryGivenByName() {
         //given
-        Category category = new Category( "test", "test", UUID.randomUUID());
-        categoryService.saveNewCategory(category);
-        Subcategory subcategory = new Subcategory(
+        CategoryDTO category = new CategoryDTO(
+                "test",
+                "test",
+                UUID.randomUUID()
+        );
+        categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
+        SubCategoryDTO subcategory = new SubCategoryDTO(
                 "JavaBasic",
-                "Podstawy Javy");
+                "Podstawy Javy",
+                UUID.randomUUID()
+        );
 
         //when
-        Subcategory savedSubcategory = subcategoryService.saveNewSubcategory(subcategory, category.getName());
+        Subcategory savedSubcategory = subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory), category.getName());
 
         //then
         assertThat(savedSubcategory.getName()).isEqualTo(subcategory.getName());
     }
+
     @Test
     public void shouldSaveIfDescriptionOfCategoryIsTooLong() {
         //given
-        Category category = new Category( "test", "test", UUID.randomUUID());
-        categoryService.saveNewCategory(category);
+        CategoryDTO category = new CategoryDTO(
+                "test",
+                "test",
+                UUID.randomUUID()
+        );
+        categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
         String txt = "";
         int numberOfChars = 300;
         for (int i = 0; i < numberOfChars; i++) {
             txt += "a";
         }
-        Subcategory subcategory = new Subcategory(
-                "JavaBasic", txt);
+        SubCategoryDTO subcategory = new SubCategoryDTO(
+                "JavaBasic",
+                txt,
+                UUID.randomUUID()
+        );
         //when
-        Subcategory savedSubcategory = subcategoryService.saveNewSubcategory(subcategory, category.getName());
+        Subcategory savedSubcategory = subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory), category.getName());
         //then
         assertThat(savedSubcategory.getDescription()).isEqualTo(subcategory.getDescription());
     }
+
     @Test
     public void shouldThrowExceptionIfNameCategoryAlreadyTaken() {
         //given
-        Category category = new Category( "test", "test", UUID.randomUUID());
-        categoryService.saveNewCategory(category);
-        Subcategory subcategory = new Subcategory(
+        CategoryDTO category = new CategoryDTO(
+                "test",
+                "test",
+                UUID.randomUUID()
+        );
+        categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
+        SubCategoryDTO subcategory = new SubCategoryDTO(
                 "JavaBasic",
-                "Podstawy Javy");
+                "Podstawy Javy",
+                UUID.randomUUID()
+        );
 
         //then
-        subcategoryService.saveNewSubcategory(subcategory, category.getName());
+        subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory), category.getName());
         Assertions.assertThrows(NameAlreadyTakenException.class, () -> {
-            subcategoryService.saveNewSubcategory(subcategory, category.getName());
+            subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory), category.getName());
         });
     }
 
     @Test
     public void shouldCheckIfSubcategoryIsAssignToCategory() {
         //given
-        Category category = new Category("Java", "Java Courses", UUID.randomUUID());
-        categoryService.saveNewCategory(category);
-        Subcategory subcategory = new Subcategory("Spring", "Spring Courses");
+        CategoryDTO category = new CategoryDTO(
+                "Java",
+                "Java Courses",
+                UUID.randomUUID()
+        );
+        categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
+        SubCategoryDTO subcategory = new SubCategoryDTO(
+                "Spring",
+                "Spring Courses",
+                UUID.randomUUID()
+        );
 
         //when
-        subcategoryService.saveNewSubcategory(subcategory, category.getName());
+        subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory), category.getName());
 
         //then
         Optional<String> first = categoryService.findByName("Java").map(Category::getSubcategoryList)

@@ -5,6 +5,7 @@ import com.inqoo.trainingservice.app.course.Course;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class Subcategory {
@@ -15,13 +16,16 @@ public class Subcategory {
     private String name;
     @Column(length = 300)
     private String description;
+    @Column
+    private UUID subCategoryUUID;
 
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Course> courseList = new ArrayList<>();
 
-    public Subcategory(String name, String description) {
+    public Subcategory(String name, String description, UUID subCategoryUUID) {
         this.name = name;
         this.description = description;
+        this.subCategoryUUID = subCategoryUUID;
     }
 
     public Subcategory() {
@@ -53,5 +57,13 @@ public class Subcategory {
 
     public void addCourse(Course course) {
         courseList.add(course);
+    }
+
+    public UUID getSubCategoryUUID() {
+        return subCategoryUUID;
+    }
+
+    public void setSubCategoryUUID(UUID subCategoryUUID) {
+        this.subCategoryUUID = subCategoryUUID;
     }
 }
