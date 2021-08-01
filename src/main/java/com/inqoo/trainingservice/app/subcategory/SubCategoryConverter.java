@@ -1,8 +1,5 @@
 package com.inqoo.trainingservice.app.subcategory;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class SubCategoryConverter {
     public SubCategoryDTO entityToDTO(Subcategory subcategory){
         SubCategoryDTO subCategoryDTO = new SubCategoryDTO(

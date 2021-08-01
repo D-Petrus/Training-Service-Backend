@@ -30,12 +30,9 @@ class SubcategoryServiceIT {
     private SubcategoryService subcategoryService;
     @Autowired
     private CategoryService categoryService;
-    @Autowired
-    private CategoryConverter categoryConverter;
-    @Autowired
-    private CourseConverter courseConverter;
-    @Autowired
-    private SubCategoryConverter subCategoryConverter;
+
+    private CategoryConverter categoryConverter = new CategoryConverter();
+    private SubCategoryConverter subCategoryConverter = new SubCategoryConverter();
 
     @Test
     public void shouldReturnListOfSubCategory() {
