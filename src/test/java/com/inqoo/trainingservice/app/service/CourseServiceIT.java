@@ -9,6 +9,8 @@ import com.inqoo.trainingservice.app.course.CourseService;
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
 import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
 import com.inqoo.trainingservice.app.course.Course;
+import com.inqoo.trainingservice.app.subcategory.SubCategoryConverter;
+import com.inqoo.trainingservice.app.subcategory.SubCategoryDTO;
 import com.inqoo.trainingservice.app.subcategory.Subcategory;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryService;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -33,10 +35,10 @@ class CourseServiceIT {
     private CategoryService categoryService;
     @Autowired
     private SubcategoryService subcategoryService;
-    @Autowired
-    private CategoryConverter categoryConverter;
-    @Autowired
-    private CourseConverter courseConverter;
+
+    private CategoryConverter categoryConverter = new CategoryConverter();
+    private CourseConverter courseConverter = new CourseConverter();
+    private SubCategoryConverter subCategoryConverter = new SubCategoryConverter();
 
     @Test
     public void shouldReturnListOfCourses() {
@@ -46,10 +48,12 @@ class CourseServiceIT {
                 "Kurs Java",
                 UUID.randomUUID());
         categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
-        Subcategory subcategory = new Subcategory(
+        SubCategoryDTO subcategory = new SubCategoryDTO(
                 "Spring",
-                "Kurs Spring");
-        subcategoryService.saveNewSubcategory(subcategory, category.getName());
+                "Kurs Spring",
+                UUID.randomUUID()
+        );
+        subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory), category.getName());
         CourseDTO course1 = new CourseDTO(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
@@ -79,16 +83,19 @@ class CourseServiceIT {
                 "Kurs Java",
                 UUID.randomUUID());
         categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
-        Subcategory subcategory = new Subcategory(
+        SubCategoryDTO subcategory = new SubCategoryDTO(
                 "Spring",
-                "Kurs Spring");
-        subcategoryService.saveNewSubcategory(subcategory, category.getName());
+                "Kurs Spring",
+                UUID.randomUUID()
+        );
+        subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory), category.getName());
         CourseDTO course = new CourseDTO(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
                 2L,
                 BigDecimal.valueOf(2000),
-                UUID.randomUUID());
+                UUID.randomUUID()
+        );
 
         //when
         Course savedCourse = courseService.saveNewCourse(subcategory.getName(), courseConverter.dtoToEntity(course));
@@ -105,10 +112,12 @@ class CourseServiceIT {
                 "Kurs Java",
                 UUID.randomUUID());
         categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
-        Subcategory subcategory = new Subcategory(
+        SubCategoryDTO subcategory = new SubCategoryDTO(
                 "Spring",
-                "Kurs Spring");
-        subcategoryService.saveNewSubcategory(subcategory, category.getName());
+                "Kurs Spring",
+                UUID.randomUUID()
+        );
+        subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory), category.getName());
         CourseDTO course = new CourseDTO(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
@@ -131,10 +140,12 @@ class CourseServiceIT {
                 "Kurs Java",
                 UUID.randomUUID());
         categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
-        Subcategory subcategory = new Subcategory(
+        SubCategoryDTO subcategory = new SubCategoryDTO(
                 "Spring",
-                "Kurs Spring");
-        subcategoryService.saveNewSubcategory(subcategory, category.getName());
+                "Kurs Spring",
+                UUID.randomUUID()
+        );
+        subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory), category.getName());
         String txt = "";
         int numberOfChars = 200;
         for (int i = 0; i < numberOfChars; i++) {
@@ -161,10 +172,12 @@ class CourseServiceIT {
                 "Kurs Java",
                 UUID.randomUUID());
         categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
-        Subcategory subcategory = new Subcategory(
+        SubCategoryDTO subcategory = new SubCategoryDTO(
                 "Spring",
-                "Kurs Spring");
-        subcategoryService.saveNewSubcategory(subcategory, category.getName());
+                "Kurs Spring",
+                UUID.randomUUID()
+        );
+        subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory), category.getName());
         String generatedTxt = RandomStringUtils.randomAlphanumeric(201);
         CourseDTO course = new CourseDTO(
                 "Spring Boot w Javie",
@@ -187,10 +200,12 @@ class CourseServiceIT {
                 "Kurs Java",
                 UUID.randomUUID());
         categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
-        Subcategory subcategory = new Subcategory(
+        SubCategoryDTO subcategory = new SubCategoryDTO(
                 "Spring",
-                "Kurs Spring");
-        subcategoryService.saveNewSubcategory(subcategory, category.getName());
+                "Kurs Spring",
+                UUID.randomUUID()
+        );
+        subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory), category.getName());
         CourseDTO course = new CourseDTO(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
@@ -213,10 +228,12 @@ class CourseServiceIT {
                 "Kurs Java",
                 UUID.randomUUID());
         categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
-        Subcategory subcategory = new Subcategory(
+        SubCategoryDTO subcategory = new SubCategoryDTO(
                 "Spring",
-                "Kurs Spring");
-        subcategoryService.saveNewSubcategory(subcategory, category.getName());
+                "Kurs Spring",
+                UUID.randomUUID()
+        );
+        subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory), category.getName());
         CourseDTO course = new CourseDTO(
                 "Kurs",
                 "Opis",

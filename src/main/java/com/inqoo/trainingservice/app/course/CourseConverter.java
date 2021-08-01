@@ -1,8 +1,6 @@
 package com.inqoo.trainingservice.app.course;
 
-import org.springframework.stereotype.Component;
 
-@Component
 public class CourseConverter {
     public CourseDTO entityToDTO(Course course) {
         CourseDTO courseDTO = new CourseDTO(

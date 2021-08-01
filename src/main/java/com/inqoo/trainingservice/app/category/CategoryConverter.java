@@ -1,8 +1,6 @@
 package com.inqoo.trainingservice.app.category;
 
-import org.springframework.stereotype.Component;
 
-@Component
 public class CategoryConverter {
     public CategoryDTO entityToDTO(Category category) {
         CategoryDTO categoryDTO = new CategoryDTO(

@@ -24,8 +24,8 @@ class CategoryServiceIT {
     private CategoryService categoryService;
     @Autowired
     private SubcategoryService subcategoryService;
-    @Autowired
-    private CategoryConverter categoryConverter;
+
+    private CategoryConverter categoryConverter = new CategoryConverter();
 
     @Test
     public void shouldReturnListOfCategory() {
