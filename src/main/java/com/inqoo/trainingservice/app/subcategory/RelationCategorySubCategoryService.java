@@ -1,11 +1,7 @@
 package com.inqoo.trainingservice.app.subcategory;
 
 import com.inqoo.trainingservice.app.category.Category;
-import com.inqoo.trainingservice.app.subcategory.RelationCategorySubCategory;
 import com.inqoo.trainingservice.app.category.CategoryRepository;
-import com.inqoo.trainingservice.app.subcategory.RelationCategorySubCategoryRepository;
-import com.inqoo.trainingservice.app.subcategory.Subcategory;
-import com.inqoo.trainingservice.app.subcategory.SubcategoryRepository;
 
 import java.util.List;
 import java.util.Optional;
