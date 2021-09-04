@@ -13,12 +13,12 @@ public class Course {
     private String name;
     @Column(length = 200)
     private String description;
-    private Long duration;
+    private int duration;
     private BigDecimal price;
     @Column
     private UUID courseUUID;
     
-    public Course(String name, String description, Long duration, BigDecimal price, UUID courseUUID) {
+    public Course(String name, String description, int duration, BigDecimal price, UUID courseUUID) {
         this.name = name;
         this.description = description;
         this.duration = duration;
@@ -45,11 +45,11 @@ public class Course {
         this.description = description;
     }
 
-    public Long getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(Long duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 

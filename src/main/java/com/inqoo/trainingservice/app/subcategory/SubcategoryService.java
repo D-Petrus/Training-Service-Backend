@@ -33,7 +33,7 @@ public class SubcategoryService {
                     .findFirst()
                     .get();
         } else {
-            throw new CategoryNotFoundException("Category Not Found");
+            throw new CategoryNotFoundException();
         }
 
     }

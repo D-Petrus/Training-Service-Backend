@@ -1,5 +1,7 @@
 package com.inqoo.trainingservice.app.offer;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,14 +18,14 @@ class OfferController {
     }
 
     @GetMapping
-    private List<Offer> getAllOffers() {
+    private List<OfferDTO> getAllOffers() {
         return offerService.getAll();
     }
 
-    @PostMapping(value = "/{catId}/{subCatId}/{courseId}/{customerId}")
-    private Offer saveNew(@PathVariable("catId") Long catId, @PathVariable("subCatId") Long subCatId, @PathVariable(
-            "courseId") Long courseId, @PathVariable("customerId") Long customerId) {
-        return offerService.save(customerId, catId, subCatId, courseId);
-
+    @PostMapping
+    ResponseEntity<OfferDTO> createOffer(@RequestBody OfferDTO offerDTO) {
+        OfferDTO createdOffer = offerService.create(offerDTO);
+        return new ResponseEntity<>(createdOffer, HttpStatus.CREATED);
     }
+
 }

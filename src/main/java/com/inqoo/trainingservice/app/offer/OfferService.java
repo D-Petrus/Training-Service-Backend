@@ -1,21 +1,15 @@
 package com.inqoo.trainingservice.app.offer;
 
-import com.inqoo.trainingservice.app.category.Category;
-import com.inqoo.trainingservice.app.category.CategoryNotFoundException;
 import com.inqoo.trainingservice.app.category.CategoryRepository;
 import com.inqoo.trainingservice.app.course.Course;
-import com.inqoo.trainingservice.app.course.CourseNotFoundException;
 import com.inqoo.trainingservice.app.course.CourseRepository;
-import com.inqoo.trainingservice.app.customer.Customer;
-import com.inqoo.trainingservice.app.customer.CustomerNotFoundException;
 import com.inqoo.trainingservice.app.customer.CustomerRepository;
-import com.inqoo.trainingservice.app.subcategory.Subcategory;
-import com.inqoo.trainingservice.app.subcategory.SubcategoryNotFoundException;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 class OfferService {
@@ -24,40 +18,59 @@ class OfferService {
     private final CourseRepository courseRepository;
     private final CustomerRepository customerRepository;
     private final OfferRepository offerRepository;
+    private final OfferConverter offerConverter;
 
     public OfferService(CategoryRepository categoryRepository,
                         SubcategoryRepository subcategoryRepository,
                         CourseRepository courseRepository,
-                        CustomerRepository customerRepository, OfferRepository offerRepository) {
+                        CustomerRepository customerRepository,
+                        OfferRepository offerRepository,
+                        OfferConverter offerConverter) {
         this.categoryRepository = categoryRepository;
         this.subcategoryRepository = subcategoryRepository;
         this.courseRepository = courseRepository;
         this.customerRepository = customerRepository;
         this.offerRepository = offerRepository;
+        this.offerConverter = offerConverter;
     }
 
-    public Offer save(Long customerId, Long catId, Long subCatId, Long courseId) {
-        Optional<Customer> foundedCustomer = customerRepository.findById(customerId);
-        if (foundedCustomer.isEmpty()) {
-            throw new CustomerNotFoundException();
-        }
-        Optional<Category> foundedCat = categoryRepository.findById(catId);
-        if (foundedCat.isEmpty()) {
-            throw new CategoryNotFoundException("Category Not Found");
-        }
-        Optional<Subcategory> foundedSubCat = subcategoryRepository.findById(subCatId);
-        if (foundedSubCat.isEmpty()) {
-            throw new SubcategoryNotFoundException("Subcategory Not Found");
-        }
-        Optional<Course> foundedCourse = courseRepository.findById(courseId);
-        if (foundedCourse.isEmpty()) {
-            throw new CourseNotFoundException("Course Not Found");
-        }
-        return offerRepository.save(new Offer(foundedCat.get(), foundedSubCat.get(),
-                List.of(courseRepository.getById(courseId)), foundedCustomer.get()));
+
+
+    public List<OfferDTO> getAll() {
+        return offerRepository.findAll().stream()
+                .map(offerConverter::convertOfferToDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Offer> getAll() {
-        return offerRepository.findAll();
+    public List<OfferDTO> getAllByMail(String mail) {
+        return offerRepository.findByCustomerEmailAddress(mail)
+                .stream()
+                .map(offerConverter::convertOfferToDTO)
+                .collect(Collectors.toList());
     }
+
+    private BigDecimal sumPriceOfOffer(List<Course> courses) {
+        return courses.stream()
+                .map(Course::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    private int sumDurationOfCourses(List<Course> courses) {
+        return courses.stream()
+                .mapToInt(Course::getDuration)
+                .sum();
+    }
+
+    OfferDTO create(OfferDTO offerDTO) {
+        Offer offer = offerRepository.save(offerConverter.convertDTOToOffer(offerDTO));
+        List<Course> courses = offer.getCourse();
+        BigDecimal priceTotal = sumPriceOfOffer(courses);
+        int durationTotal = sumDurationOfCourses(courses);
+        offer.setSummaryPrice(priceTotal);
+        offer.setSummaryDuration(durationTotal);
+        offerRepository.save(offer);
+        return offerConverter.convertOfferToDTO(offer);
+    }
+
+
 }

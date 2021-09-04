@@ -57,14 +57,14 @@ class CourseServiceIT {
         CourseDTO course1 = new CourseDTO(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
-                2L,
+                2,
                 BigDecimal.valueOf(2000),
                 UUID.randomUUID());
 
         CourseDTO course2 = new CourseDTO(
                 "Hibernate w Javie",
                 "Kurs na temat Hibernate w Javie",
-                2L,
+                2,
                 BigDecimal.valueOf(3000),
                 UUID.randomUUID());
         //when
@@ -92,7 +92,7 @@ class CourseServiceIT {
         CourseDTO course = new CourseDTO(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
-                2L,
+                2,
                 BigDecimal.valueOf(2000),
                 UUID.randomUUID()
         );
@@ -121,7 +121,7 @@ class CourseServiceIT {
         CourseDTO course = new CourseDTO(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
-                2L,
+                2,
                 BigDecimal.valueOf(2000),
                 UUID.randomUUID());
 
@@ -154,7 +154,7 @@ class CourseServiceIT {
         CourseDTO course = new CourseDTO(
                 "Spring Boot w Javie",
                 txt,
-                2L,
+                2,
                 BigDecimal.valueOf(2000),
                 UUID.randomUUID());
         //when
@@ -182,7 +182,7 @@ class CourseServiceIT {
         CourseDTO course = new CourseDTO(
                 "Spring Boot w Javie",
                 generatedTxt,
-                2L,
+                2,
                 BigDecimal.valueOf(2000),
                 UUID.randomUUID());
 
@@ -209,7 +209,7 @@ class CourseServiceIT {
         CourseDTO course = new CourseDTO(
                 "Spring Boot w Javie",
                 "Kurs na temat Spring Boot w Javie",
-                2L,
+                2,
                 BigDecimal.valueOf(2000),
                 UUID.randomUUID());
 
@@ -237,7 +237,7 @@ class CourseServiceIT {
         CourseDTO course = new CourseDTO(
                 "Kurs",
                 "Opis",
-                250L,
+                250,
                 BigDecimal.valueOf(2000),
                 UUID.randomUUID());
         courseService.saveNewCourse(
