@@ -7,10 +7,10 @@ public class CourseDTO {
     private final String name;
     private final String description;
     private final UUID courseUUID;
-    private final Long duration;
+    private final int duration;
     private BigDecimal price;
 
-    public CourseDTO(String name, String description,  Long duration, BigDecimal price, UUID courseUUID) {
+    public CourseDTO(String name, String description, int duration, BigDecimal price, UUID courseUUID) {
         this.name = name;
         this.description = description;
         this.duration = duration;
@@ -34,7 +34,7 @@ public class CourseDTO {
         return price;
     }
 
-    public Long getDuration() {
+    public int getDuration() {
         return duration;
     }
 }

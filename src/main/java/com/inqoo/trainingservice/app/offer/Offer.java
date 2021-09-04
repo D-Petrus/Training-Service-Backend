@@ -6,27 +6,47 @@ import com.inqoo.trainingservice.app.customer.Customer;
 import com.inqoo.trainingservice.app.subcategory.Subcategory;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
 class Offer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @OneToOne
-    private final Category category;
+    private Category category;
     @OneToOne
-    private final Subcategory subcategory;
+    private Subcategory subcategory;
     @OneToMany
-    private final List<Course> courseList;
+    private List<Course> courses;
     @OneToOne
-    private final Customer customer;
+    private Customer customer;
+    private BigDecimal summaryPrice;
+    private int summaryDuration;
 
-    public Offer(Category category, Subcategory subcategory, List<Course> courseList, Customer customer) {
+    public Offer(Category category,
+                 Subcategory subcategory,
+                 List<Course> courseList,
+                 Customer customer,
+                 BigDecimal summaryPrice,
+                 int summaryDuration) {
         this.category = category;
         this.subcategory = subcategory;
-        this.courseList = courseList;
+        this.courses = courseList;
         this.customer = customer;
+        this.summaryPrice = summaryPrice;
+        this.summaryDuration = summaryDuration;
+    }
+
+    public Offer(Category category, Subcategory subcategory, List<Course> course, Customer customer) {
+        this.category = category;
+        this.subcategory = subcategory;
+        this.courses = course;
+        this.customer = customer;
+    }
+
+    public Offer() {
     }
 
     public Category getCategory() {
@@ -37,11 +57,27 @@ class Offer {
         return subcategory;
     }
 
-    public List<Course> getCourseList() {
-        return courseList;
+    public List<Course> getCourses() {
+        return courses;
     }
 
     public Customer getCustomer() {
         return customer;
+    }
+
+    public BigDecimal getSummaryPrice() {
+        return summaryPrice;
+    }
+
+    public void setSummaryPrice(BigDecimal summaryPrice) {
+        this.summaryPrice = summaryPrice;
+    }
+
+    public int getSummaryDuration() {
+        return summaryDuration;
+    }
+
+    public void setSummaryDuration(int summaryDuration) {
+        this.summaryDuration = summaryDuration;
     }
 }
