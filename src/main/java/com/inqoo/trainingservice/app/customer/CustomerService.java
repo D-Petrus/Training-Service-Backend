@@ -55,9 +55,9 @@ public class CustomerService {
         return regMatcher.matches();
     }
 
-    private boolean validateHomeNumber(String mobileNumber) {
+    private boolean validateHomeNumber(String homeNumber) {
         regexPatternHomeNumber = Pattern.compile("[0-9]{2}-[0-9]{3}-[0-9]{2}-[0-9]{2}$");
-        regMatcher = regexPatternHomeNumber.matcher(mobileNumber);
+        regMatcher = regexPatternHomeNumber.matcher(homeNumber);
         return regMatcher.matches();
     }
 

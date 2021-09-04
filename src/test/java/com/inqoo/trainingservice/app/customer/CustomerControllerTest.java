@@ -30,7 +30,7 @@ class CustomerControllerTest {
     @Test
     public void shouldAddACustomer() throws Exception {
         //given
-        Customer customer = new Customer(1, "Marcin", "505-009-546", "33-864-22-68", "mbutora@gmail.com",
+        Customer customer = new Customer("Marcin", "505-009-546", "33-864-22-68", "mbutora@gmail.com",
                 UUID.fromString("e7b3ccde-26ff-4df0-b571-04f473a3aa93"));
         String content = object.writeValueAsString(customer);
         //expect

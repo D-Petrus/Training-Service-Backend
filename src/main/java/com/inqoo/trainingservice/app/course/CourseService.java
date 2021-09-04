@@ -33,7 +33,7 @@ public class CourseService {
             subcategoryRepository.save(subcategory);
             return courseRepository.findByName(course.getName()).get();
         } else {
-            throw new SubcategoryNotFoundException("Subcategory not found");
+            throw new SubcategoryNotFoundException();
         }
     }
 

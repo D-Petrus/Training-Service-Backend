@@ -6,12 +6,12 @@ import java.util.UUID;
 @Entity
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private String name;
     @Column(unique = true, nullable = false)
     private String mobileNumber;
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String homeNumber;
     @Column(unique = true)
     private String emailAddress;
@@ -26,8 +26,7 @@ public class Customer {
         this.homeNumber = homeNumber;
     }
 
-    public Customer(long id, String name, String mobileNumber, String homeNumber, String emailAddress, UUID customerUUID) {
-        this.id = id;
+    public Customer(String name, String mobileNumber, String homeNumber, String emailAddress, UUID customerUUID) {
         this.name = name;
         this.mobileNumber = mobileNumber;
         this.homeNumber = homeNumber;
