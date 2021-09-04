@@ -4,6 +4,7 @@ import com.inqoo.trainingservice.app.category.CategoryRepository;
 import com.inqoo.trainingservice.app.course.Course;
 import com.inqoo.trainingservice.app.course.CourseRepository;
 import com.inqoo.trainingservice.app.customer.CustomerRepository;
+import com.inqoo.trainingservice.app.email.EmailService;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,19 +20,21 @@ class OfferService {
     private final CustomerRepository customerRepository;
     private final OfferRepository offerRepository;
     private final OfferConverter offerConverter;
+    private final EmailService emailService;
 
     public OfferService(CategoryRepository categoryRepository,
                         SubcategoryRepository subcategoryRepository,
                         CourseRepository courseRepository,
                         CustomerRepository customerRepository,
                         OfferRepository offerRepository,
-                        OfferConverter offerConverter) {
+                        OfferConverter offerConverter, EmailService emailService) {
         this.categoryRepository = categoryRepository;
         this.subcategoryRepository = subcategoryRepository;
         this.courseRepository = courseRepository;
         this.customerRepository = customerRepository;
         this.offerRepository = offerRepository;
         this.offerConverter = offerConverter;
+        this.emailService = emailService;
     }
 
 
@@ -69,6 +72,7 @@ class OfferService {
         offer.setSummaryPrice(priceTotal);
         offer.setSummaryDuration(durationTotal);
         offerRepository.save(offer);
+        emailService.sendMail(offerDTO.getMail(),"Oferta INQOO",offerDTO.getCategoryName(),true);
         return offerConverter.convertOfferToDTO(offer);
     }
 }
