@@ -1,7 +1,6 @@
 package com.inqoo.trainingservice.app.subcategory;
 
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -14,14 +13,20 @@ class SubcategoryController {
         this.subcategoryService = subcategoryService;
     }
 
+    @PostMapping("/{categoryName}")
+    private Subcategory saveNew(@RequestBody Subcategory subcategory, @PathVariable String categoryName) {
+        return subcategoryService.saveNewSubcategory(subcategory, categoryName);
+    }
+
     @GetMapping
     private List<Subcategory> getList() {
         return subcategoryService.getAllSubcategoryList();
     }
 
-    @PostMapping("/{categoryName}")
-    private Subcategory saveNew(@RequestBody Subcategory subcategory, @PathVariable String categoryName) {
-        return subcategoryService.saveNewSubcategory(subcategory, categoryName);
+    @GetMapping("/names")
+    private List<String> findByNameIn() {
+        return subcategoryService.getAllSubcategoryName();
     }
+
 
 }
