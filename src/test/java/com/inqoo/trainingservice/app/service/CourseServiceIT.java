@@ -11,13 +11,14 @@ import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
 import com.inqoo.trainingservice.app.course.Course;
 import com.inqoo.trainingservice.app.subcategory.SubCategoryConverter;
 import com.inqoo.trainingservice.app.subcategory.SubCategoryDTO;
-import com.inqoo.trainingservice.app.subcategory.Subcategory;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
@@ -25,9 +26,12 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @Transactional
+@AutoConfigureMockMvc
 class CourseServiceIT {
     @Autowired
     private CourseService courseService;
@@ -35,10 +39,13 @@ class CourseServiceIT {
     private CategoryService categoryService;
     @Autowired
     private SubcategoryService subcategoryService;
+    @Autowired
+    private MockMvc mockMvc;
 
     private CategoryConverter categoryConverter = new CategoryConverter();
     private CourseConverter courseConverter = new CourseConverter();
     private SubCategoryConverter subCategoryConverter = new SubCategoryConverter();
+
 
     @Test
     public void shouldReturnListOfCourses() {
@@ -247,5 +254,36 @@ class CourseServiceIT {
         //then
         assertThat(courseService.findByName("Kurs")).isPresent();
     }
+    @Test
+    public void shouldReturnCourseNameList() throws Exception {
+        //given
+        CategoryDTO category = new CategoryDTO(
+                "Java",
+                "Kurs Java",
+                UUID.randomUUID());
+        categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
+        SubCategoryDTO subcategory = new SubCategoryDTO(
+                "Spring",
+                "Kurs Spring",
+                UUID.randomUUID()
+        );
+        subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory), category.getName());
+        CourseDTO course = new CourseDTO(
+                "Kurs",
+                "Opis",
+                250L,
+                BigDecimal.valueOf(2000),
+                UUID.randomUUID());
+        courseService.saveNewCourse(
+                "Spring",
+                courseConverter.dtoToEntity(course));
+        //then
+        String content = this.mockMvc.perform(get("/courses/names"))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
 
+        assertThat(content).contains("Kurs");
+    }
 }

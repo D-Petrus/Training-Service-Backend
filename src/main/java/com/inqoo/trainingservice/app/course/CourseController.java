@@ -15,13 +15,18 @@ class CourseController {
         this.courseService = courseService;
     }
 
+    @PostMapping("/{subcategoryName}")
+    private Course saveNew(@RequestBody Course course, @PathVariable String subcategoryName) {
+       return courseService.saveNewCourse(subcategoryName, course);
+    }
+
     @GetMapping
     private List<Course> getList() {
         return courseService.getAllCoursesList();
     }
 
-    @PostMapping("/{subcategoryName}")
-    private Course saveNew(@RequestBody Course course, @PathVariable String subcategoryName) {
-       return courseService.saveNewCourse(subcategoryName, course);
+    @GetMapping("/names")
+    private List<String> findByNameIn() {
+        return courseService.getAllCourseName();
     }
 }

@@ -57,5 +57,7 @@ public class CategoryService {
         }
         return false;
     }
-
+    List<String> getAllCategoryName() {
+        return categoryRepository.getAllCategoryName();
+    }
 }
