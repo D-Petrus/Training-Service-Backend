@@ -37,8 +37,6 @@ class OfferService {
         this.emailService = emailService;
     }
 
-
-
     public List<OfferDTO> getAll() {
         return offerRepository.findAll().stream()
                 .map(offerConverter::convertOfferToDTO)
@@ -64,7 +62,7 @@ class OfferService {
                 .sum();
     }
 
-    OfferDTO create(OfferDTO offerDTO) {
+    OfferDTO create(OfferDTO offerDTO) {;
         Offer offer = offerRepository.save(offerConverter.convertDTOToOffer(offerDTO));
         List<Course> courses = offer.getCourses();
         BigDecimal priceTotal = sumPriceOfOffer(courses);
@@ -72,7 +70,26 @@ class OfferService {
         offer.setSummaryPrice(priceTotal);
         offer.setSummaryDuration(durationTotal);
         offerRepository.save(offer);
-        emailService.sendMail(offerDTO.getMail(),"Oferta INQOO",offerDTO.getCategoryName(),true);
+        emailService.sendMail(offerDTO.getMail(),
+                "Oferta szkolenia z obszaru ["+offerDTO.getCategoryName()+"]",
+                "<html>" +
+                        "<head>" +
+                        "</head>" +
+                        "<body>" +
+                        "<h2>Dzień dobry</h2>" +
+                        "<p>Przesyłamy ofertę Twoich kursów z kategorii: <b>" + offerDTO.getCategoryName() + "</b></p" +
+                        ">" +
+                        "<ul>" +
+                        "<li>"+ String.join("</li><li>", offerDTO.getCourses()) + "</li>" +
+                        "</ul>" +
+                        "<p>Koszt: <b>" + offer.getSummaryPrice() +"</b></p>" +
+                        "<p>Czas trwania: <b>" + offer.getSummaryDuration() +"</b></p>" +
+                        "<br />" +
+                        "<p>Pozdrawiamy,</p>" +
+                        "<p><b>Zespół INQOO</b></p>" +
+                        "</body>" +
+                        "</html>",
+                true);
         return offerConverter.convertOfferToDTO(offer);
     }
 }
