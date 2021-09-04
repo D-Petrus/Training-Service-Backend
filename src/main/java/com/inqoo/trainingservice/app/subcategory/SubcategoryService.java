@@ -63,5 +63,4 @@ public class SubcategoryService {
     List<String> getAllSubcategoryName() {
         return subcategoryRepository.getAllSubcategoryName();
     }
-
 }
