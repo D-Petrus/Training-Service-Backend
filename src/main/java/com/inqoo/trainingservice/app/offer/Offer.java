@@ -15,13 +15,13 @@ class Offer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
-    private final Category category;
+    private Category category;
     @OneToOne
-    private final Subcategory subcategory;
+    private Subcategory subcategory;
     @OneToMany
-    private final List<Course> course;
+    private List<Course> course;
     @OneToOne
-    private final Customer customer;
+    private Customer customer;
     private BigDecimal summaryPrice;
     private int summaryDuration;
 
@@ -37,6 +37,16 @@ class Offer {
         this.customer = customer;
         this.summaryPrice = summaryPrice;
         this.summaryDuration = summaryDuration;
+    }
+
+    public Offer(Category category, Subcategory subcategory, List<Course> course, Customer customer) {
+        this.category = category;
+        this.subcategory = subcategory;
+        this.course = course;
+        this.customer = customer;
+    }
+
+    public Offer() {
     }
 
     public Category getCategory() {
