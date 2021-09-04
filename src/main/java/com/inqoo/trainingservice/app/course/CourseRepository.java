@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
     Optional<Course> findByName(String name);
-    List<Course> findByNameIn(List<String> names);
+    List<Course> findByNameIn(List<String> name);
 }

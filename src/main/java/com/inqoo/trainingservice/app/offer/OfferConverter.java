@@ -64,7 +64,7 @@ public class OfferConverter {
         Subcategory subcategory =
                 subcategoryRepository.findByName(offerDTO.getSubcategoryName())
                         .orElseThrow(SubcategoryNotFoundException::new);
-        List<Course> courses = findAllCoursesWithNames(offerDTO.getCoursesList());
+        List<Course> courses = findAllCoursesWithNames(offerDTO.getCourses());
         BigDecimal summaryPrice = offerDTO.getSumPrice();
         int summaryDuration = offerDTO.getSumDuration();
         return new Offer(
@@ -77,7 +77,7 @@ public class OfferConverter {
         );
     }
 
-        private List<Course> findAllCoursesWithNames(List<String> coursesNames) {
+    private List<Course> findAllCoursesWithNames(List<String> coursesNames) {
         List<Course> courseList = courseRepository.findByNameIn(coursesNames);
         if (courseList.isEmpty()) {
             throw new CourseListEmptyException();

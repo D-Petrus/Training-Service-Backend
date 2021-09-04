@@ -1,14 +1,16 @@
 package com.inqoo.trainingservice.app.offer;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 public class OfferDTO {
     private String mail;
     private String subcategoryName;
     private String categoryName;
-    private List<String> coursesList = new ArrayList<>();
+    private List<String> courses;
     private BigDecimal sumPrice;
     private int sumDuration;
 
@@ -21,19 +23,20 @@ public class OfferDTO {
         this.mail = mail;
         this.subcategoryName = subcategoryName;
         this.categoryName = categoryName;
-        this.coursesList = coursesList;
+        this.courses = coursesList;
         this.sumPrice = sumPrice;
         this.sumDuration = sumDuration;
     }
 
-    public OfferDTO(String mail,
-                    String subcategoryName,
-                    String categoryName,
-                    List<String> coursesList) {
+    @JsonCreator
+    public OfferDTO(@JsonProperty("mail") String mail,
+                    @JsonProperty("subcategoryName") String subcategoryName,
+                    @JsonProperty("categoryName") String categoryName,
+                    @JsonProperty("courses") List<String> coursesList) {
         this.mail = mail;
         this.subcategoryName = subcategoryName;
         this.categoryName = categoryName;
-        this.coursesList = coursesList;
+        this.courses = coursesList;
     }
 
     public String getMail() {
@@ -60,12 +63,12 @@ public class OfferDTO {
         this.categoryName = categoryName;
     }
 
-    public List<String> getCoursesList() {
-        return coursesList;
+    public List<String> getCourses() {
+        return courses;
     }
 
-    public void setCoursesList(List<String> coursesList) {
-        this.coursesList = coursesList;
+    public void setCourses(List<String> courses) {
+        this.courses = courses;
     }
 
     public BigDecimal getSumPrice() {

@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 class Offer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @OneToOne
     private Category category;

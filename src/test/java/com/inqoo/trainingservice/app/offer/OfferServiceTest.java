@@ -1,7 +1,6 @@
 package com.inqoo.trainingservice.app.offer;
 
 import com.inqoo.trainingservice.app.category.Category;
-import com.inqoo.trainingservice.app.category.CategoryDTO;
 import com.inqoo.trainingservice.app.category.CategoryService;
 import com.inqoo.trainingservice.app.course.Course;
 import com.inqoo.trainingservice.app.course.CourseService;
@@ -91,7 +90,7 @@ class OfferServiceTest {
         assertThat(offerSavedInDB.getMail()).isEqualTo(customer.getEmailAddress());
         assertThat(offerSavedInDB.getCategoryName()).isEqualTo(category.getName());
         assertThat(offerSavedInDB.getSubcategoryName()).isEqualTo(subcategory.getName());
-        assertThat(offerSavedInDB.getCoursesList()).containsAll(coursesNames);
+        assertThat(offerSavedInDB.getCourses()).containsAll(coursesNames);
         assertThat(offerSavedInDB.getSumPrice()).isEqualTo(BigDecimal.valueOf(4000));
         assertThat(offerSavedInDB.getSumDuration()).isEqualTo(290);
     }

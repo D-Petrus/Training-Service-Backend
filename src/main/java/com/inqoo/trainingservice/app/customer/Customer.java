@@ -6,12 +6,12 @@ import java.util.UUID;
 @Entity
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private String name;
     @Column(unique = true, nullable = false)
     private String mobileNumber;
-    @Column(unique = true, nullable = true)
+    @Column(unique = true)
     private String homeNumber;
     @Column(unique = true)
     private String emailAddress;
