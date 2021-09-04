@@ -14,14 +14,19 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping
-    private List<Category> getList() {
-        return categoryService.getAllCategoryList();
-    }
 
     @PostMapping
     private Category saveNew(@RequestBody Category category) {
         return categoryService.saveNewCategory(category);
     }
 
+    @GetMapping
+    private List<Category> getList() {
+        return categoryService.getAllCategoryList();
+    }
+
+    @GetMapping("/names")
+    private List<String> findByNameIn() {
+        return categoryService.getAllCategoryName();
+    }
 }
