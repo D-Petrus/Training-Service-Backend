@@ -24,4 +24,5 @@ public class SubCategoryDTO {
     public UUID getSubCategoryUUID() {
         return subCategoryUUID;
     }
+
 }

@@ -60,4 +60,8 @@ public class SubcategoryService {
         return description.length() < limitDescription;
     }
 
+    List<String> getAllSubcategoryName() {
+        return subcategoryRepository.getAllSubcategoryName();
+    }
+
 }
