@@ -19,7 +19,7 @@ class Offer {
     @OneToOne
     private Subcategory subcategory;
     @OneToMany
-    private List<Course> course;
+    private List<Course> courses;
     @OneToOne
     private Customer customer;
     private BigDecimal summaryPrice;
@@ -33,7 +33,7 @@ class Offer {
                  int summaryDuration) {
         this.category = category;
         this.subcategory = subcategory;
-        this.course = courseList;
+        this.courses = courseList;
         this.customer = customer;
         this.summaryPrice = summaryPrice;
         this.summaryDuration = summaryDuration;
@@ -42,7 +42,7 @@ class Offer {
     public Offer(Category category, Subcategory subcategory, List<Course> course, Customer customer) {
         this.category = category;
         this.subcategory = subcategory;
-        this.course = course;
+        this.courses = course;
         this.customer = customer;
     }
 
@@ -57,8 +57,8 @@ class Offer {
         return subcategory;
     }
 
-    public List<Course> getCourse() {
-        return course;
+    public List<Course> getCourses() {
+        return courses;
     }
 
     public Customer getCustomer() {

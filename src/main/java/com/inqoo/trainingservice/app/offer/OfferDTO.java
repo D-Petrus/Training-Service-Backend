@@ -26,9 +26,6 @@ public class OfferDTO {
         this.sumDuration = sumDuration;
     }
 
-    public OfferDTO() {
-    }
-
     public OfferDTO(String mail,
                     String subcategoryName,
                     String categoryName,

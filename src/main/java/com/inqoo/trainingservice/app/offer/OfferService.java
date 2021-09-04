@@ -63,7 +63,7 @@ class OfferService {
 
     OfferDTO create(OfferDTO offerDTO) {
         Offer offer = offerRepository.save(offerConverter.convertDTOToOffer(offerDTO));
-        List<Course> courses = offer.getCourse();
+        List<Course> courses = offer.getCourses();
         BigDecimal priceTotal = sumPriceOfOffer(courses);
         int durationTotal = sumDurationOfCourses(courses);
         offer.setSummaryPrice(priceTotal);
@@ -71,6 +71,4 @@ class OfferService {
         offerRepository.save(offer);
         return offerConverter.convertOfferToDTO(offer);
     }
-
-
 }

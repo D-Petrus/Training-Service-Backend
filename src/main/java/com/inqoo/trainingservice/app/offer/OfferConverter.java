@@ -16,7 +16,8 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Component
 public class OfferConverter {
@@ -36,17 +37,18 @@ public class OfferConverter {
         this.courseRepository = courseRepository;
     }
 
-
     OfferDTO convertOfferToDTO(Offer offer) {
         Customer customer = offer.getCustomer();
         Category category = offer.getCategory();
         Subcategory subcategory = offer.getSubcategory();
-        List<Course> courseList = offer.getCourse();
+        List<Course> courses = offer.getCourses();
         return new OfferDTO(
                 customer.getEmailAddress(),
                 subcategory.getName(),
                 category.getName(),
-                courseList.stream().map(Course::getName).collect(Collectors.toList()),
+                courses.stream()
+                        .map(Course::getName)
+                        .collect(toList()),
                 offer.getSummaryPrice(),
                 offer.getSummaryDuration()
         );
@@ -54,12 +56,15 @@ public class OfferConverter {
 
     Offer convertDTOToOffer(OfferDTO offerDTO) {
         Customer customer =
-                customerRepository.findByEmailAddress(offerDTO.getMail()).orElseThrow(CustomerNotFoundException::new);
+                customerRepository.findByEmailAddress(offerDTO.getMail())
+                        .orElseThrow(CustomerNotFoundException::new);
         Category category =
-                categoryRepository.findByName(offerDTO.getCategoryName()).orElseThrow(CategoryNotFoundException::new);
+                categoryRepository.findByName(offerDTO.getCategoryName())
+                        .orElseThrow(CategoryNotFoundException::new);
         Subcategory subcategory =
-                subcategoryRepository.findByName(offerDTO.getSubcategoryName()).orElseThrow(SubcategoryNotFoundException::new);
-        List<Course> courses = findAllCoursesWithGivenMails(offerDTO.getCoursesList());
+                subcategoryRepository.findByName(offerDTO.getSubcategoryName())
+                        .orElseThrow(SubcategoryNotFoundException::new);
+        List<Course> courses = findAllCoursesWithNames(offerDTO.getCoursesList());
         BigDecimal summaryPrice = offerDTO.getSumPrice();
         int summaryDuration = offerDTO.getSumDuration();
         return new Offer(
@@ -72,8 +77,8 @@ public class OfferConverter {
         );
     }
 
-    private List<Course> findAllCoursesWithGivenMails(List<String> courses) {
-        List<Course> courseList = courseRepository.findByNameIn(courses);
+        private List<Course> findAllCoursesWithNames(List<String> coursesNames) {
+        List<Course> courseList = courseRepository.findByNameIn(coursesNames);
         if (courseList.isEmpty()) {
             throw new CourseListEmptyException();
         }
