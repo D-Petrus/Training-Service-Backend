@@ -28,10 +28,10 @@ class TimetableServiceTest {
         Timetable savedTimetable = timetableService.saveNewTimetable(timetable);
 
         //when
-        boolean ifAvailable = timetableService.checkIfNotAvailable(savedTimetable.getDayOfAbsence(), "Marcin", "Butora");
+        boolean ifNotAvailable = timetableService.checkIfNotAvailable(savedTimetable.getDayOfAbsence(), "Marcin", "Butora");
 
         //then
-        assertThat(ifAvailable).isTrue();
+        assertThat(ifNotAvailable).isTrue();
     }
 
 }
