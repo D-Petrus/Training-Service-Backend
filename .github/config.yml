@@ -15,7 +15,4 @@ jobs:
         with:
           java-version: '11'
       - name: Build project with Maven
-      run: |
-        mvn clean
-        mvn install
-        mvn package --file pom.xml
+          run: mvn -B package --file pom.xml
