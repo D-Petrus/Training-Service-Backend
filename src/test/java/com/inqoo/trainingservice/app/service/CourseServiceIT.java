@@ -256,6 +256,7 @@ class CourseServiceIT {
         //then
         assertThat(courseService.findByName("Kurs")).isPresent();
     }
+
     @Test
     public void shouldReturnCourseNameList() throws Exception {
         //given
@@ -287,8 +288,11 @@ class CourseServiceIT {
         String requestJson = ow.writeValueAsString(courseNamesList);
 
         //then
-        String content = this.mockMvc.perform(get("/courses/names").contentType(MediaType.APPLICATION_JSON)
-                        .content(requestJson))
+        String content = this.mockMvc
+                .perform(
+                        get("/courses/names")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestJson))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
