@@ -86,7 +86,7 @@ class OfferServiceTest {
         //then
         List<OfferDTO> allOffers = offerService.getAll();
         OfferDTO offerSavedInDB = allOffers.get(0);
-        assertThat(allOffers.size()).isEqualTo(22);
+        assertThat(allOffers.size()).isEqualTo(1);
         assertThat(offerSavedInDB.getMail()).isEqualTo(customer.getEmailAddress());
         assertThat(offerSavedInDB.getCategoryName()).isEqualTo(category.getName());
         assertThat(offerSavedInDB.getSubcategoryName()).isEqualTo(subcategory.getName());
