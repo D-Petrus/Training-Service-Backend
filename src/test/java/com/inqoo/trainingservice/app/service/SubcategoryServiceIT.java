@@ -70,7 +70,7 @@ class SubcategoryServiceIT {
         Subcategory savedSubcategory2 = subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory2), category.getName());
 
         //then
-        assertThat(List.of(savedSubcategory1, savedSubcategory2)).isEqualTo(subcategoryService.getAllSubcategoryList());
+        assertThat(List.of(savedSubcategory2, savedSubcategory2)).isEqualTo(subcategoryService.getAllSubcategoryList());
     }
 
 
@@ -106,7 +106,7 @@ class SubcategoryServiceIT {
         );
         categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
         String txt = "";
-        int numberOfChars = 300;
+        int numberOfChars = 301;
         for (int i = 0; i < numberOfChars; i++) {
             txt += "a";
         }
@@ -166,7 +166,7 @@ class SubcategoryServiceIT {
                 .map(Collection::stream)
                 .get()
                 .map(Subcategory::getName)
-                .filter(s -> s.equals("Spring"))
+                .filter(s -> s.equals("Sprin1"))
                 .findFirst();
 
         assertThat(first).isPresent();
@@ -181,7 +181,7 @@ class SubcategoryServiceIT {
         );
         categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
         SubCategoryDTO subcategory = new SubCategoryDTO(
-                "Sprin",
+                "Spri1",
                 "Spring Courses",
                 UUID.randomUUID()
         );
