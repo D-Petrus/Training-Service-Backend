@@ -59,7 +59,7 @@ public class CourseService {
         int limitDescription = 201;
         return description.length() < limitDescription;
     }
-    List<String> getAllCourseName() {
-        return courseRepository.getAllCourseName();
+    List<String> getAllCourseName(List<String> courseNames) {
+        return courseRepository.getAllCourseName(courseNames);
     }
 }
