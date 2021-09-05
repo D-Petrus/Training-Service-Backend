@@ -181,7 +181,7 @@ class SubcategoryServiceIT {
         );
         categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
         SubCategoryDTO subcategory = new SubCategoryDTO(
-                "Spring",
+                "Sprin",
                 "Spring Courses",
                 UUID.randomUUID()
         );

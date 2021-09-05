@@ -156,7 +156,7 @@ class CourseServiceIT {
         );
         subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory), category.getName());
         String txt = "";
-        int numberOfChars = 201;
+        int numberOfChars = 200;
         for (int i = 0; i < numberOfChars; i++) {
             txt += "a";
         }
