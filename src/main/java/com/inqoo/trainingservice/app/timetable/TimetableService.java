@@ -17,7 +17,7 @@ public class TimetableService {
         return timetableRepository.save(timetable);
     }
 
-    boolean checkIfAvailable(LocalDate dayToCheck, String firstName, String lastName) {
+    boolean checkIfNotAvailable(LocalDate dayToCheck, String firstName, String lastName) {
         Optional<Timetable> foundedAbsence = timetableRepository.checkAvaibilityForTrainer(dayToCheck, firstName, lastName);
         return foundedAbsence.isPresent();
     }
