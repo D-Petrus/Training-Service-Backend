@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface TimetableRepository extends JpaRepository<Timetable, Long> {
     @Query("select t from Timetable t where t.trainer.firstName = :firstName and t.trainer.lastName = :lastName and dayOfAbsence = :dayToCheck")
-    Optional<Timetable> checkAvaibilityForTrainer(LocalDate dayToCheck, String firstName, String lastName);
+    Optional<Timetable> checkAvailabilityForTrainer(LocalDate dayToCheck, String firstName, String lastName);
 
 }
