@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+public
 class OfferService {
     private final CategoryRepository categoryRepository;
     private final SubcategoryRepository subcategoryRepository;
@@ -62,7 +63,7 @@ class OfferService {
                 .sum();
     }
 
-    OfferDTO create(OfferDTO offerDTO) {;
+    public OfferDTO create(OfferDTO offerDTO) {;
         Offer offer = offerRepository.save(offerConverter.convertDTOToOffer(offerDTO));
         List<Course> courses = offer.getCourses();
         BigDecimal priceTotal = sumPriceOfOffer(courses);

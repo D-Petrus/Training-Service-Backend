@@ -37,7 +37,7 @@ public class OfferConverter {
         this.courseRepository = courseRepository;
     }
 
-    OfferDTO convertOfferToDTO(Offer offer) {
+    public OfferDTO convertOfferToDTO(Offer offer) {
         Customer customer = offer.getCustomer();
         Category category = offer.getCategory();
         Subcategory subcategory = offer.getSubcategory();
@@ -54,7 +54,7 @@ public class OfferConverter {
         );
     }
 
-    Offer convertDTOToOffer(OfferDTO offerDTO) {
+    public Offer convertDTOToOffer(OfferDTO offerDTO) {
         Customer customer =
                 customerRepository.findByEmailAddress(offerDTO.getMail())
                         .orElseThrow(CustomerNotFoundException::new);

@@ -1,4 +1,4 @@
-package com.inqoo.trainingservice.app.timetable;
+package com.inqoo.trainingservice.app.unavailability;
 
 import com.inqoo.trainingservice.app.trainer.Trainer;
 
@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class Timetable {
+public class Unavailability {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
@@ -14,7 +14,7 @@ public class Timetable {
     private Trainer trainer;
     private LocalDate dayOfAbsence;
 
-    public Timetable(Trainer trainer, LocalDate dayOfAbsence) {
+    public Unavailability(Trainer trainer, LocalDate dayOfAbsence) {
         this.trainer = trainer;
         this.dayOfAbsence = dayOfAbsence;
     }
