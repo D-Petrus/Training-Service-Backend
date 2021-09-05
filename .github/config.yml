@@ -1,8 +1,10 @@
 name: GitHub Actions Demo
 on:
-  push:
-    branches:
-      - master
+    push:
+      branches: [master]
+    pull_request:
+      branches: [master]
+
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -12,6 +14,5 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'adopt'
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
