@@ -25,8 +25,8 @@ class CourseController {
         return courseService.getAllCoursesList();
     }
 
-    @GetMapping("/names")
-    private List<String> findByNameIn() {
-        return courseService.getAllCourseName();
+    @GetMapping(value = "/names")
+    private List<String> findByNameIn(@RequestBody CourseNamesList courseNames) {
+        return courseService.getAllCourseName(courseNames.getCourseNames());
     }
 }

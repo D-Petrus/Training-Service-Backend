@@ -1,14 +1,14 @@
 package com.inqoo.trainingservice.app.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.inqoo.trainingservice.app.category.CategoryDTO;
-import com.inqoo.trainingservice.app.course.CourseDTO;
+import com.inqoo.trainingservice.app.course.*;
 import com.inqoo.trainingservice.app.category.CategoryConverter;
 import com.inqoo.trainingservice.app.category.CategoryService;
-import com.inqoo.trainingservice.app.course.CourseConverter;
-import com.inqoo.trainingservice.app.course.CourseService;
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
 import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
-import com.inqoo.trainingservice.app.course.Course;
 import com.inqoo.trainingservice.app.subcategory.SubCategoryConverter;
 import com.inqoo.trainingservice.app.subcategory.SubCategoryDTO;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryService;
@@ -18,10 +18,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -254,6 +256,7 @@ class CourseServiceIT {
         //then
         assertThat(courseService.findByName("Kurs")).isPresent();
     }
+
     @Test
     public void shouldReturnCourseNameList() throws Exception {
         //given
@@ -271,14 +274,25 @@ class CourseServiceIT {
         CourseDTO course = new CourseDTO(
                 "Kurs",
                 "Opis",
-                250L,
+                250,
                 BigDecimal.valueOf(2000),
                 UUID.randomUUID());
         courseService.saveNewCourse(
                 "Spring",
                 courseConverter.dtoToEntity(course));
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        CourseNamesList courseNamesList = new CourseNamesList();
+        courseNamesList.add("Kurs");
+        ObjectWriter ow = objectMapper.writer().withDefaultPrettyPrinter();
+        String requestJson = ow.writeValueAsString(courseNamesList);
+
         //then
-        String content = this.mockMvc.perform(get("/courses/names"))
+        String content = this.mockMvc
+                .perform(
+                        get("/courses/names")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestJson))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
