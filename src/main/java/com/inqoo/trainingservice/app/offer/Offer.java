@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-class Offer {
+public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
