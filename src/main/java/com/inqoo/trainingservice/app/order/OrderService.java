@@ -1,4 +1,4 @@
-package com.inqoo.trainingservice.app.job;
+package com.inqoo.trainingservice.app.order;
 
 import com.inqoo.trainingservice.app.offer.Offer;
 import com.inqoo.trainingservice.app.offer.OfferRepository;
@@ -18,22 +18,22 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 
 @Service
-public class JobService {
+public class OrderService {
     private final AbsenceRepository absenceRepository;
-    private final JobRepository jobRepository;
+    private final OrderRepository orderRepository;
     private final OfferRepository offerRepository;
     private final TrainerRepository trainerRepository;
 
-    public JobService(AbsenceRepository unavailabilityRepository,
-                      JobRepository jobRepository,
-                      OfferRepository offerRepository, TrainerRepository trainerRepository) {
+    public OrderService(AbsenceRepository unavailabilityRepository,
+                        OrderRepository jobRepository,
+                        OfferRepository offerRepository, TrainerRepository trainerRepository) {
         this.absenceRepository = unavailabilityRepository;
-        this.jobRepository = jobRepository;
+        this.orderRepository = jobRepository;
         this.offerRepository = offerRepository;
         this.trainerRepository = trainerRepository;
     }
 
-    public Job saveNewJob(Job job) {
+    public Order saveNewJob(Order job) {
         Optional<Trainer> trainer = trainerRepository.findByFirstNameAndLastName(job.getTrainer().getFirstName(),
                 job.getTrainer().getLastName());
         if (trainer.isPresent()) {
@@ -48,8 +48,8 @@ public class JobService {
                 }
             }
             Optional<Offer> offerForEmail = offerRepository.findByCustomerEmailAddress(job.getOffer().getCustomer().getEmailAddress());
-            Job jobs = new Job(offerForEmail.get(), trainer.get(), job.getStartCourse(), job.getEndCourse());
-            return jobRepository.save(jobs);
+            Order jobs = new Order(offerForEmail.get(), trainer.get(), job.getStartCourse(), job.getEndCourse());
+            return orderRepository.save(jobs);
         }
         throw new RuntimeException("Could not create a order for trainer!");
     }

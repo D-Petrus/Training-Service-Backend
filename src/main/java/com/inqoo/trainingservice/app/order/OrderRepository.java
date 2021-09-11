@@ -1,8 +1,8 @@
-package com.inqoo.trainingservice.app.job;
+package com.inqoo.trainingservice.app.order;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface JobRepository extends JpaRepository<Job, Long> {
+public interface OrderRepository extends JpaRepository<Order, Long> {
 }

@@ -1,4 +1,4 @@
-package com.inqoo.trainingservice.app.job;
+package com.inqoo.trainingservice.app.order;
 
 import com.inqoo.trainingservice.app.category.Category;
 import com.inqoo.trainingservice.app.category.CategoryService;
@@ -44,7 +44,7 @@ class JobServiceTest {
     @Autowired
     private OfferConverter converter;
     @Autowired
-    private JobService jobService;
+    private OrderService jobService;
     @Autowired
     private TrainerService trainerService;
     @Autowired
@@ -89,15 +89,15 @@ class JobServiceTest {
         return trainer;
     }
 
-    private Job newJob(Offer offer, Trainer trainer, LocalDate startCourse, LocalDate endCourse) {
-        Job job = new Job(offer, trainer, startCourse, endCourse);
+    private Order newJob(Offer offer, Trainer trainer, LocalDate startCourse, LocalDate endCourse) {
+        Order job = new Order(offer, trainer, startCourse, endCourse);
         jobService.saveNewJob(job);
         return job;
     }
 
     private Absence newUnavailability(Trainer trainer, LocalDate startVacation, LocalDate endVacation, AbsenceType type) {
         Absence unavailability = new Absence(trainer, startVacation, endVacation, type);
-        unavailabilityService.saveNewUnavailability(unavailability);
+        unavailabilityService.saveNewAbsence(unavailability);
         return unavailability;
     }
 
@@ -113,10 +113,10 @@ class JobServiceTest {
         Offer offer = newOffer(category, subcategory, List.of(course), customer);
         Trainer trainer = newTrainer("Janek", "Kowalski", "hfhfhf", 324536424L, "janek@kowalski.pl");
         Absence unavailability = newUnavailability(trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,19), AbsenceType.URLOP);
-        Job job = newJob(offer, trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,20));
+        Order job = newJob(offer, trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,20));
 
         //when
-        Job savedJob = jobService.saveNewJob(job);
+        Order savedJob = jobService.saveNewJob(job);
 
         //then
         assertThat(savedJob).isNotNull();

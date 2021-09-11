@@ -13,16 +13,12 @@ public class AbsenceService {
         this.absenceRepository = unavailabilityRepository;
     }
 
-    Absence saveNewTimetable(Absence timetable) {
-        return absenceRepository.save(timetable);
-    }
-
     public boolean checkIfNotAvailable(LocalDate dayToCheck, String firstName, String lastName) {
         Optional<Absence> foundedAbsence = absenceRepository.checkAvailabilityForTrainer(dayToCheck, firstName, lastName);
         return foundedAbsence.isPresent();
     }
 
-    public void saveNewUnavailability(Absence unavailability) {
-        absenceRepository.save(unavailability);
+    public Absence saveNewAbsence(Absence absence) {
+        return absenceRepository.save(absence);
     }
 }
