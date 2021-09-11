@@ -1,4 +1,4 @@
-package com.inqoo.trainingservice.app.trainer;
+package com.inqoo.trainingservice.app.exception;
 
 public class TrainerNotFoundException extends RuntimeException {
     public TrainerNotFoundException() {

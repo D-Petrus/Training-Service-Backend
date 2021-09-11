@@ -27,10 +27,10 @@ public class CategoryService {
 
     private void validateInputs(Category category, String name) {
         if (!validateCharacters(category.getDescription())) {
-            throw new TooLongDescriptionException("Too long description");
+            throw new TooLongDescriptionException();
         }
         if (categoryRepository.findByName(name).isPresent()) {
-            throw new NameAlreadyTakenException("name already taken");
+            throw new NameAlreadyTakenException();
         }
     }
 

@@ -40,10 +40,10 @@ public class SubcategoryService {
 
     private void validateInputs(Subcategory subcategory, String name) {
         if (!validateCharacters(subcategory.getDescription())) {
-            throw new TooLongDescriptionException("Too long description");
+            throw new TooLongDescriptionException();
         }
         if (subcategoryRepository.findByName(name).isPresent()) {
-            throw new NameAlreadyTakenException("name already taken");
+            throw new NameAlreadyTakenException();
         }
     }
 
