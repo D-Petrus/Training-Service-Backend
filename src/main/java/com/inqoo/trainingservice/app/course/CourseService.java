@@ -39,10 +39,10 @@ public class CourseService {
 
     private void validateInputs(Course course, String name) {
         if (!validateCharacters(course.getDescription())) {
-            throw new TooLongDescriptionException("Too long description");
+            throw new TooLongDescriptionException();
         }
         if (courseRepository.findByName(name).isPresent()) {
-            throw new NameAlreadyTakenException("name already taken");
+            throw new NameAlreadyTakenException();
         }
 
     }

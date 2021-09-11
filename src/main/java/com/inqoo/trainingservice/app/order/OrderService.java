@@ -1,5 +1,6 @@
 package com.inqoo.trainingservice.app.order;
 
+import com.inqoo.trainingservice.app.exception.CouldNotCreateAnOrderForTrainerException;
 import com.inqoo.trainingservice.app.offer.Offer;
 import com.inqoo.trainingservice.app.offer.OfferRepository;
 import com.inqoo.trainingservice.app.trainer.Trainer;
@@ -51,6 +52,6 @@ public class OrderService {
             Order jobs = new Order(offerForEmail.get(), trainer.get(), job.getStartCourse(), job.getEndCourse());
             return orderRepository.save(jobs);
         }
-        throw new RuntimeException("Could not create a order for trainer!");
+        throw new CouldNotCreateAnOrderForTrainerException();
     }
 }
