@@ -12,10 +12,12 @@ import com.inqoo.trainingservice.app.offer.OfferService;
 import com.inqoo.trainingservice.app.subcategory.Subcategory;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryService;
 import com.inqoo.trainingservice.app.trainer.Trainer;
+import com.inqoo.trainingservice.app.trainer.TrainerNotFoundException;
 import com.inqoo.trainingservice.app.trainer.TrainerService;
 import com.inqoo.trainingservice.app.absence.Absence;
 import com.inqoo.trainingservice.app.absence.AbsenceService;
 import com.inqoo.trainingservice.app.absence.AbsenceType;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -112,17 +114,14 @@ class OrderServiceTest {
                 UUID.randomUUID(), subcategory.getName());
         Offer offer = newOffer(category, subcategory, List.of(course), customer);
         Trainer trainer = newTrainer("Janek", "Kowalski", "hfhfhf", 324536424L, "janek@kowalski.pl");
-        Absence absence = newAbsence(trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,19), AbsenceType.URLOP);
+        newAbsence(trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,19), AbsenceType.URLOP);
         Order job = newJob(offer, trainer, LocalDate.of(2021,11,10), LocalDate.of(2021,11,20));
 
-        //when
-        Order savedJob = orderService.saveNewJob(job);
-
         //then
-        assertThat(savedJob).isNotNull();
+        assertThat(job).isNotNull();
     }
     @Test
-    public void shouldNotCreateAJobForTrainer() {
+    public void shouldThrowNoTrainerException() {
         //given
         Customer customer = newCustomer("Marcin Butora", "505-009-546", "22-322-22-22", "marcin@butora.pl",
                 UUID.randomUUID());
@@ -132,14 +131,9 @@ class OrderServiceTest {
                 UUID.randomUUID(), subcategory.getName());
         Offer offer = newOffer(category, subcategory, List.of(course), customer);
         Trainer trainer = newTrainer("Janek", "Kowalski", "hfhfhf", 324536424L, "janek@kowalski.pl");
-        Absence unavailability = newUnavailability(trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,19), AbsenceType.URLOP);
-        Order job = newJob(offer, trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,20));
-
-        //when
-        Order savedJob = jobService.saveNewJob(job);
+        newAbsence(trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,19), AbsenceType.URLOP);
 
         //then
-        assertThat(savedJob).isNotNull();
+        Assertions.assertThrows(TrainerNotFoundException.class, () -> newJob(offer, trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,20)));
     }
-
 }
