@@ -1,16 +1,10 @@
 package com.inqoo.trainingservice.app.order;
 
 import com.inqoo.trainingservice.app.category.Category;
-import com.inqoo.trainingservice.app.category.CategoryService;
 import com.inqoo.trainingservice.app.course.Course;
-import com.inqoo.trainingservice.app.course.CourseService;
 import com.inqoo.trainingservice.app.customer.Customer;
-import com.inqoo.trainingservice.app.customer.CustomerService;
 import com.inqoo.trainingservice.app.offer.Offer;
-import com.inqoo.trainingservice.app.offer.OfferConverter;
-import com.inqoo.trainingservice.app.offer.OfferService;
 import com.inqoo.trainingservice.app.subcategory.Subcategory;
-import com.inqoo.trainingservice.app.subcategory.SubcategoryService;
 import com.inqoo.trainingservice.app.trainer.Trainer;
 import com.inqoo.trainingservice.app.trainer.TrainerNotFoundException;
 import com.inqoo.trainingservice.app.trainer.TrainerService;
@@ -34,88 +28,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Transactional
 class OrderServiceTest {
     @Autowired
-    private CategoryService categoryService;
-    @Autowired
-    private SubcategoryService subcategoryService;
-    @Autowired
-    private CourseService courseService;
-    @Autowired
-    private CustomerService customerService;
-    @Autowired
-    private OfferService offerService;
-    @Autowired
-    private OfferConverter converter;
+    private ObjectFixture objectFixture;
     @Autowired
     private OrderService orderService;
-    @Autowired
-    private TrainerService trainerService;
-    @Autowired
-    private AbsenceService absenceService;
-
-    private Category newCategory(String name, String description, UUID randomUUID) {
-        Category category = new Category(name, description, randomUUID);
-        categoryService.saveNewCategory(category);
-        return category;
-    }
-
-    private Subcategory newSubcategory(String name, String description, UUID randomUUID, String categoryName) {
-        Subcategory subcategory = new Subcategory(name, description, randomUUID);
-        subcategoryService.saveNewSubcategory(subcategory, categoryName);
-        return subcategory;
-    }
-
-    private Course newCourse(String name, String description, int duration, BigDecimal price, UUID randomUUID,
-                             String subcategoryName) {
-        Course course = new Course(name, description, duration, price, randomUUID);
-        courseService.saveNewCourse(subcategoryName, course);
-        return course;
-    }
-
-    private Customer newCustomer(String name, String mobileNumber, String homeNumber, String emailAddress,
-                                 UUID randomUUID) {
-        Customer customer = new Customer(name, mobileNumber, homeNumber, emailAddress, randomUUID);
-        customerService.saveNewCustomer(customer);
-        return customer;
-    }
-
-    private Offer newOffer(Category category, Subcategory subcategory, List<Course> courses, Customer customer) {
-        Offer offer = new Offer(category, subcategory, courses, customer);
-        offerService.create(converter.convertOfferToDTO(offer));
-        return offer;
-    }
-
-    private Trainer newTrainer(String firstName, String lastName, String experience, Long phoneNumber,
-                               String emailAddress) {
-        Trainer trainer = new Trainer(firstName, lastName, experience, phoneNumber, emailAddress);
-        trainerService.saveNewTrainer(trainer);
-        return trainer;
-    }
-
-    private Order newJob(Offer offer, Trainer trainer, LocalDate startCourse, LocalDate endCourse) {
-        Order job = new Order(offer, trainer, startCourse, endCourse);
-        orderService.saveNewJob(job);
-        return job;
-    }
-
-    private Absence newAbsence(Trainer trainer, LocalDate startVacation, LocalDate endVacation, AbsenceType type) {
-        Absence unavailability = new Absence(trainer, startVacation, endVacation, type);
-        absenceService.saveNewAbsence(unavailability);
-        return unavailability;
-    }
 
     @Test
     public void shouldCreateAJobForTrainer() {
         //given
-        Customer customer = newCustomer("Marcin Butora", "505-009-546", "22-322-22-22", "marcin@butora.pl",
+        Customer customer = objectFixture.newCustomer("Marcin Butora", "505-009-546", "22-322-22-22", "marcin@butora.pl",
                 UUID.randomUUID());
-        Category category = newCategory("IT", "Kursy IT", UUID.randomUUID());
-        Subcategory subcategory = newSubcategory("Java", "Kursy Java", UUID.randomUUID(), category.getName());
-        Course course = newCourse("Spring Kurs", "Kurs z wiedzy o Spring", 150, BigDecimal.valueOf(2000),
+        Category category = objectFixture.newCategory("IT", "Kursy IT", UUID.randomUUID());
+        Subcategory subcategory = objectFixture.newSubcategory("Java", "Kursy Java", UUID.randomUUID(), category.getName());
+        Course course = objectFixture.newCourse("Spring Kurs", "Kurs z wiedzy o Spring", 150, BigDecimal.valueOf(2000),
                 UUID.randomUUID(), subcategory.getName());
-        Offer offer = newOffer(category, subcategory, List.of(course), customer);
-        Trainer trainer = newTrainer("Janek", "Kowalski", "hfhfhf", 324536424L, "janek@kowalski.pl");
-        newAbsence(trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,19), AbsenceType.URLOP);
-        Order job = newJob(offer, trainer, LocalDate.of(2021,11,10), LocalDate.of(2021,11,20));
+        Offer offer = objectFixture.newOffer(category, subcategory, List.of(course), customer);
+        Trainer trainer = objectFixture.newTrainer("Janek", "Kowalski", "hfhfhf", 324536424L, "janek@kowalski.pl");
+        AbsenceProjection absenceProjection = objectFixture.newAbsenceProjection(trainer, LocalDate.of(2021, 10, 21), LocalDate.of(2021, 10, 22));
+        Order job = objectFixture.newJob(offer, trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,20));
 
         //then
         assertThat(job).isNotNull();

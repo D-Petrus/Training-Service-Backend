@@ -5,7 +5,6 @@ import com.inqoo.trainingservice.app.offer.OfferRepository;
 import com.inqoo.trainingservice.app.trainer.Trainer;
 import com.inqoo.trainingservice.app.exception.TrainerNotFoundException;
 import com.inqoo.trainingservice.app.trainer.TrainerRepository;
-import com.inqoo.trainingservice.app.absence.Absence;
 import com.inqoo.trainingservice.app.absence.AbsenceRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,36 +18,37 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 public class OrderService {
-    private final AbsenceRepository absenceRepository;
+    private final AbsenceProjectionRepository absenceProjectionRepository;
     private final OrderRepository orderRepository;
     private final OfferRepository offerRepository;
     private final TrainerRepository trainerRepository;
 
-    public OrderService(AbsenceRepository unavailabilityRepository,
-                        OrderRepository jobRepository,
-                        OfferRepository offerRepository, TrainerRepository trainerRepository) {
-        this.absenceRepository = unavailabilityRepository;
-        this.orderRepository = jobRepository;
+    public OrderService(AbsenceProjectionRepository absenceProjectionRepository,
+                        OrderRepository orderRepository,
+                        OfferRepository offerRepository,
+                        TrainerRepository trainerRepository) {
+        this.absenceProjectionRepository = absenceProjectionRepository;
+        this.orderRepository = orderRepository;
         this.offerRepository = offerRepository;
         this.trainerRepository = trainerRepository;
     }
 
-    public Order saveNewJob(Order job) {
-        Optional<Trainer> trainer = trainerRepository.findByFirstNameAndLastName(job.getTrainer().getFirstName(),
-                job.getTrainer().getLastName());
+    public Order saveNewJob(Order order) {
+        Optional<Trainer> trainer = trainerRepository.findByFirstNameAndLastName(order.getTrainer().getFirstName(),
+                order.getTrainer().getLastName());
         if (trainer.isPresent()) {
-            List<LocalDate> dates = Stream.iterate(job.getStartCourse(), d -> d.plusDays(1))
-                    .limit(ChronoUnit.DAYS.between(job.getStartCourse(), job.getEndCourse()) + 1)
+            List<LocalDate> dates = Stream.iterate(order.getStartCourse(), d -> d.plusDays(1))
+                    .limit(ChronoUnit.DAYS.between(order.getStartCourse(), order.getEndCourse()) + 1)
                     .collect(toList());
             for (LocalDate date : dates) {
-                Optional<Absence> absence = absenceRepository.checkAvailabilityForTrainer(date,
-                        job.getTrainer().getFirstName(), job.getTrainer().getLastName());
+                Optional<AbsenceProjection> absence = absenceProjectionRepository.checkAvailabilityForTrainer(date,
+                        order.getTrainer().getFirstName(), order.getTrainer().getLastName());
                 if (absence.isPresent()) {
                     throw new TrainerNotFoundException();
                 }
             }
-            Optional<Offer> offerForEmail = offerRepository.findByCustomerEmailAddress(job.getOffer().getCustomer().getEmailAddress());
-            Order jobs = new Order(offerForEmail.get(), trainer.get(), job.getStartCourse(), job.getEndCourse());
+            Optional<Offer> offerForEmail = offerRepository.findByCustomerEmailAddress(order.getOffer().getCustomer().getEmailAddress());
+            Order jobs = new Order(offerForEmail.get(), trainer.get(), order.getStartCourse(), order.getEndCourse());
             return orderRepository.save(jobs);
         }
         throw new CouldNotCreateAnOrderForTrainerException();
