@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 public class AbsenceService {
@@ -30,7 +32,10 @@ public class AbsenceService {
 
     public Absence saveNewAbsence(Trainer trainer, LocalDate startAbsence, LocalDate endAbsence, AbsenceType absenceType) {
         LocalDate now = LocalDate.now();
-        List<Absence> allAbsences = absenceRepository.countHowManyAbsencesHaveTrainerInCurrentYear(trainer.getFirstName(), trainer.getLastName(), LocalDate.now());
+        List<Absence> allAbsences =
+                absenceRepository.countHowManyAbsencesHaveTrainerInCurrentYear(trainer.getFirstName(),
+                        trainer.getLastName(),
+                        LocalDate.now());
 
         Absence absence = new Absence(trainer, startAbsence, endAbsence, absenceType);
         absenceRepository.save(absence);
