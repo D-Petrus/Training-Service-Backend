@@ -1,4 +1,4 @@
-package com.inqoo.trainingservice.app.job;
+package com.inqoo.trainingservice.app.order;
 
 import com.inqoo.trainingservice.app.category.Category;
 import com.inqoo.trainingservice.app.category.CategoryService;
@@ -13,8 +13,9 @@ import com.inqoo.trainingservice.app.subcategory.Subcategory;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryService;
 import com.inqoo.trainingservice.app.trainer.Trainer;
 import com.inqoo.trainingservice.app.trainer.TrainerService;
-import com.inqoo.trainingservice.app.unavailability.Unavailability;
-import com.inqoo.trainingservice.app.unavailability.UnavailabilityService;
+import com.inqoo.trainingservice.app.absence.Absence;
+import com.inqoo.trainingservice.app.absence.AbsenceService;
+import com.inqoo.trainingservice.app.absence.AbsenceType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,11 +44,11 @@ class JobServiceTest {
     @Autowired
     private OfferConverter converter;
     @Autowired
-    private JobService jobService;
+    private OrderService jobService;
     @Autowired
     private TrainerService trainerService;
     @Autowired
-    private UnavailabilityService unavailabilityService;
+    private AbsenceService unavailabilityService;
 
     private Category newCategory(String name, String description, UUID randomUUID) {
         Category category = new Category(name, description, randomUUID);
@@ -88,15 +89,15 @@ class JobServiceTest {
         return trainer;
     }
 
-    private Job newJob(Offer offer, Trainer trainer, LocalDate startCourse, LocalDate endCourse) {
-        Job job = new Job(offer, trainer, startCourse, endCourse);
+    private Order newJob(Offer offer, Trainer trainer, LocalDate startCourse, LocalDate endCourse) {
+        Order job = new Order(offer, trainer, startCourse, endCourse);
         jobService.saveNewJob(job);
         return job;
     }
 
-    private Unavailability newUnavailability(Trainer trainer, LocalDate dayOfAbsence) {
-        Unavailability unavailability = new Unavailability(trainer, dayOfAbsence);
-        unavailabilityService.saveNewUnavailability(unavailability);
+    private Absence newUnavailability(Trainer trainer, LocalDate startVacation, LocalDate endVacation, AbsenceType type) {
+        Absence unavailability = new Absence(trainer, startVacation, endVacation, type);
+        unavailabilityService.saveNewAbsence(unavailability);
         return unavailability;
     }
 
@@ -111,11 +112,11 @@ class JobServiceTest {
                 UUID.randomUUID(), subcategory.getName());
         Offer offer = newOffer(category, subcategory, List.of(course), customer);
         Trainer trainer = newTrainer("Janek", "Kowalski", "hfhfhf", 324536424L, "janek@kowalski.pl");
-        Unavailability unavailability = newUnavailability(trainer, LocalDate.of(2021,10,21));
-        Job job = newJob(offer, trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,20));
+        Absence unavailability = newUnavailability(trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,19), AbsenceType.URLOP);
+        Order job = newJob(offer, trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,20));
 
         //when
-        Job savedJob = jobService.saveNewJob(job);
+        Order savedJob = jobService.saveNewJob(job);
 
         //then
         assertThat(savedJob).isNotNull();

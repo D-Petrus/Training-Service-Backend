@@ -1,4 +1,4 @@
-package com.inqoo.trainingservice.app.job;
+package com.inqoo.trainingservice.app.order;
 
 import com.inqoo.trainingservice.app.offer.Offer;
 import com.inqoo.trainingservice.app.trainer.Trainer;
@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class Job {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,11 +18,14 @@ public class Job {
     private LocalDate startCourse;
     private LocalDate endCourse;
 
-    public Job(Offer offer, Trainer trainer, LocalDate startCourse, LocalDate endCourse) {
+    public Order(Offer offer, Trainer trainer, LocalDate startCourse, LocalDate endCourse) {
         this.offer = offer;
         this.trainer = trainer;
         this.startCourse = startCourse;
         this.endCourse = endCourse;
+    }
+
+    public Order() {
     }
 
     public Offer getOffer() {
