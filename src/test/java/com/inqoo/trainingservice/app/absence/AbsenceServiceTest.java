@@ -24,8 +24,8 @@ class AbsenceServiceTest {
         //given
         Trainer trainer = new Trainer("Marcin", "Butora", "none", 505009546L, "mbutora@gmail.com");
         Trainer savedTrainerToDB = trainerService.saveNewTrainer(trainer);
-        Absence timetable = new Absence(savedTrainerToDB, LocalDate.of(2021,10,10), LocalDate.of(2021,10,15), AbsenceType.NIEOBECNOŚĆ);
-        Absence savedTimetable = absenceService.saveNewAbsence(timetable);
+        Absence absence = new Absence(savedTrainerToDB, LocalDate.of(2021,10,10), LocalDate.of(2021,10,15), AbsenceType.NIEOBECNOŚĆ);
+        Absence savedTimetable = absenceService.saveNewAbsence(absence.getTrainer(), absence.getStartVacation(), absence.getEndVacation(), absence.getVacationType());
 
         //when
         boolean ifNotAvailable = absenceService.checkIfNotAvailable(savedTimetable.getStartVacation(), "Marcin", "Butora");
