@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
-class JobServiceTest {
+class OrderServiceTest {
     @Autowired
     private CategoryService categoryService;
     @Autowired
@@ -44,11 +44,11 @@ class JobServiceTest {
     @Autowired
     private OfferConverter converter;
     @Autowired
-    private OrderService jobService;
+    private OrderService orderService;
     @Autowired
     private TrainerService trainerService;
     @Autowired
-    private AbsenceService unavailabilityService;
+    private AbsenceService absenceService;
 
     private Category newCategory(String name, String description, UUID randomUUID) {
         Category category = new Category(name, description, randomUUID);
@@ -91,13 +91,13 @@ class JobServiceTest {
 
     private Order newJob(Offer offer, Trainer trainer, LocalDate startCourse, LocalDate endCourse) {
         Order job = new Order(offer, trainer, startCourse, endCourse);
-        jobService.saveNewJob(job);
+        orderService.saveNewJob(job);
         return job;
     }
 
-    private Absence newUnavailability(Trainer trainer, LocalDate startVacation, LocalDate endVacation, AbsenceType type) {
+    private Absence newAbsence(Trainer trainer, LocalDate startVacation, LocalDate endVacation, AbsenceType type) {
         Absence unavailability = new Absence(trainer, startVacation, endVacation, type);
-        unavailabilityService.saveNewAbsence(unavailability);
+        absenceService.saveNewAbsence(unavailability);
         return unavailability;
     }
 
@@ -112,11 +112,11 @@ class JobServiceTest {
                 UUID.randomUUID(), subcategory.getName());
         Offer offer = newOffer(category, subcategory, List.of(course), customer);
         Trainer trainer = newTrainer("Janek", "Kowalski", "hfhfhf", 324536424L, "janek@kowalski.pl");
-        Absence unavailability = newUnavailability(trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,19), AbsenceType.URLOP);
-        Order job = newJob(offer, trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,20));
+        Absence absence = newAbsence(trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,19), AbsenceType.URLOP);
+        Order job = newJob(offer, trainer, LocalDate.of(2021,11,10), LocalDate.of(2021,11,20));
 
         //when
-        Order savedJob = jobService.saveNewJob(job);
+        Order savedJob = orderService.saveNewJob(job);
 
         //then
         assertThat(savedJob).isNotNull();
