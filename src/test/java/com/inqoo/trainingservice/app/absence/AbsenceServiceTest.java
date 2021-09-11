@@ -56,6 +56,7 @@ class AbsenceServiceTest {
 
         //when
         Absence absence2 = new Absence(savedTrainerToDB, LocalDate.of(2021,11,2), LocalDate.of(2021,11,28), AbsenceType.URLOP);
+        absenceService.saveNewAbsence(absence2.getTrainer(), absence2.getStartVacation(), absence2.getEndVacation(), absence2.getVacationType());
 
         //then
         assertThat(absenceService.checkIfNotAvailable(LocalDate.of(2021,11,3),"Marcin", "Butora")).isTrue();
