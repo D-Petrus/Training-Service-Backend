@@ -47,4 +47,18 @@ class AbsenceServiceTest {
         //then
         Assertions.assertThrows(VacationLimitEndException.class, () -> absenceService.saveNewAbsence(absence2.getTrainer(), absence2.getStartVacation(), absence2.getEndVacation(), absence2.getVacationType()));
     }
+    @Test
+    public void shouldAddVacationTrainerByGivenDate() {
+        Trainer trainer = new Trainer("Marcin", "Butora", "none", 505009546L, "mbutora@gmail.com");
+        Trainer savedTrainerToDB = trainerService.saveNewTrainer(trainer);
+        Absence absence = new Absence(savedTrainerToDB, LocalDate.of(2021,10,2), LocalDate.of(2021,10,28), AbsenceType.NIEOBECNOŚĆ);
+        Absence saveNewAbsence = absenceService.saveNewAbsence(absence.getTrainer(), absence.getStartVacation(), absence.getEndVacation(), absence.getVacationType());
+
+        //when
+        Absence absence2 = new Absence(savedTrainerToDB, LocalDate.of(2021,11,2), LocalDate.of(2021,11,28), AbsenceType.URLOP);
+        absenceService.saveNewAbsence(absence2.getTrainer(), absence2.getStartVacation(), absence2.getEndVacation(), absence2.getVacationType());
+
+        //then
+        assertThat(absenceService.checkIfNotAvailable(LocalDate.of(2021,11,3),"Marcin", "Butora")).isTrue();
+    }
 }

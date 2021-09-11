@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,13 +25,31 @@ public class AbsenceService {
     }
 
     public boolean checkIfNotAvailable(LocalDate dayToCheck, String firstName, String lastName) {
-        Optional<Absence> foundedAbsence = absenceRepository.checkAvailabilityForTrainer(dayToCheck, firstName, lastName);
+        Optional<Absence> foundedAbsence = absenceRepository.checkAbsenceForTrainer(dayToCheck, firstName, lastName);
         return foundedAbsence.isPresent();
     }
 
     public Absence saveNewAbsence(Trainer trainer, LocalDate startAbsence, LocalDate endAbsence, AbsenceType absenceType) {
         LocalDate now = LocalDate.now();
-        List<Absence> allAbsences = absenceRepository.countHowManyAbsencesHaveTrainerInCurrentYear(trainer.getFirstName(), trainer.getLastName(), LocalDate.now());
+        List<Absence> allAbsences =
+                absenceRepository.countHowManyAbsencesHaveTrainerInCurrentYear(trainer.getFirstName(),
+                        trainer.getLastName(),
+                        LocalDate.of(now.getYear(),1,1),
+                        absenceType);
+
+        int sumOfDays = 0;
+        Optional<Period> reduce = allAbsences.stream()
+                .map(absence -> Period.between(absence.getStartVacation(), absence.getEndVacation()).plusDays(1))
+                .reduce(Period::plus);
+        if (reduce.isPresent()) {
+            sumOfDays = reduce
+                    .get()
+                    .getDays();
+        }
+
+        if (sumOfDays > vacationDays) {
+            throw new VacationLimitEndException();
+        }
 
         Absence absence = new Absence(trainer, startAbsence, endAbsence, absenceType);
         absenceRepository.save(absence);
