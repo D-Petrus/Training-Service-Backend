@@ -1,22 +1,25 @@
 package com.inqoo.trainingservice.app.absence;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.inqoo.trainingservice.app.trainer.Trainer;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class Absence {
+class Absence {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     @ManyToOne
     private Trainer trainer;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate startVacation;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate endVacation;
     private AbsenceType vacationType;
 
-    public Absence(Trainer trainer, LocalDate startVacation, LocalDate endVacation, AbsenceType vacationType) {
+    Absence(Trainer trainer, LocalDate startVacation, LocalDate endVacation, AbsenceType vacationType) {
         this.trainer = trainer;
         this.startVacation = startVacation;
         this.endVacation = endVacation;
@@ -26,7 +29,8 @@ public class Absence {
     public Absence() {
     }
 
-    public Trainer getTrainer() {
+
+     Trainer getTrainer() {
         return trainer;
     }
 

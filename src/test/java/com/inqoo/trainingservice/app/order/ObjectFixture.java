@@ -1,5 +1,6 @@
 package com.inqoo.trainingservice.app.order;
 
+import com.inqoo.trainingservice.app.absence.AbsenceService;
 import com.inqoo.trainingservice.app.category.Category;
 import com.inqoo.trainingservice.app.category.CategoryService;
 import com.inqoo.trainingservice.app.course.Course;
@@ -13,24 +14,16 @@ import com.inqoo.trainingservice.app.subcategory.Subcategory;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryService;
 import com.inqoo.trainingservice.app.trainer.Trainer;
 import com.inqoo.trainingservice.app.trainer.TrainerService;
-import com.inqoo.trainingservice.app.absence.Absence;
-import com.inqoo.trainingservice.app.absence.AbsenceService;
-import com.inqoo.trainingservice.app.absence.AbsenceType;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-@SpringBootTest
-@Transactional
-class JobServiceTest {
+@Component
+public class ObjectFixture {
     @Autowired
     private CategoryService categoryService;
     @Autowired
@@ -48,78 +41,58 @@ class JobServiceTest {
     @Autowired
     private TrainerService trainerService;
     @Autowired
-    private AbsenceService unavailabilityService;
+    private AbsenceService absenceService;
+    @Autowired
+    private OrderFacade orderFacade;
 
-    private Category newCategory(String name, String description, UUID randomUUID) {
+    public Category newCategory(String name, String description, UUID randomUUID) {
         Category category = new Category(name, description, randomUUID);
         categoryService.saveNewCategory(category);
         return category;
     }
 
-    private Subcategory newSubcategory(String name, String description, UUID randomUUID, String categoryName) {
+    public Subcategory newSubcategory(String name, String description, UUID randomUUID, String categoryName) {
         Subcategory subcategory = new Subcategory(name, description, randomUUID);
         subcategoryService.saveNewSubcategory(subcategory, categoryName);
         return subcategory;
     }
 
-    private Course newCourse(String name, String description, int duration, BigDecimal price, UUID randomUUID,
+    public Course newCourse(String name, String description, int duration, BigDecimal price, UUID randomUUID,
                              String subcategoryName) {
         Course course = new Course(name, description, duration, price, randomUUID);
         courseService.saveNewCourse(subcategoryName, course);
         return course;
     }
 
-    private Customer newCustomer(String name, String mobileNumber, String homeNumber, String emailAddress,
+    public Customer newCustomer(String name, String mobileNumber, String homeNumber, String emailAddress,
                                  UUID randomUUID) {
         Customer customer = new Customer(name, mobileNumber, homeNumber, emailAddress, randomUUID);
         customerService.saveNewCustomer(customer);
         return customer;
     }
 
-    private Offer newOffer(Category category, Subcategory subcategory, List<Course> courses, Customer customer) {
+    public Offer newOffer(Category category, Subcategory subcategory, List<Course> courses, Customer customer) {
         Offer offer = new Offer(category, subcategory, courses, customer);
         offerService.create(converter.convertOfferToDTO(offer));
         return offer;
     }
 
-    private Trainer newTrainer(String firstName, String lastName, String experience, Long phoneNumber,
+    public Trainer newTrainer(String firstName, String lastName, String experience, Long phoneNumber,
                                String emailAddress) {
         Trainer trainer = new Trainer(firstName, lastName, experience, phoneNumber, emailAddress);
         trainerService.saveNewTrainer(trainer);
         return trainer;
     }
 
-    private Order newJob(Offer offer, Trainer trainer, LocalDate startCourse, LocalDate endCourse) {
+    public Order newJob(Offer offer, Trainer trainer, LocalDate startCourse, LocalDate endCourse) {
         Order job = new Order(offer, trainer, startCourse, endCourse);
         jobService.saveNewJob(job);
         return job;
     }
 
-    private Absence newUnavailability(Trainer trainer, LocalDate startVacation, LocalDate endVacation, AbsenceType type) {
-        Absence unavailability = new Absence(trainer, startVacation, endVacation, type);
-        unavailabilityService.saveNewAbsence(unavailability);
-        return unavailability;
+    public AbsenceProjection newAbsenceProjection(Trainer trainer, LocalDate startAbsence, LocalDate endAbsence) {
+        AbsenceProjection absenceProjection = new AbsenceProjection(trainer, startAbsence, endAbsence);
+        orderFacade.createNew(absenceProjection.getTrainer().getFirstName(), absenceProjection.getTrainer().getLastName(), absenceProjection.getStartAbsence(), absenceProjection.getEndDate());
+        return absenceProjection;
     }
-
-    @Test
-    public void shouldCreateAJobForTrainer() {
-        //given
-        Customer customer = newCustomer("Marcin Butora", "505-009-546", "22-322-22-22", "marcin@butora.pl",
-                UUID.randomUUID());
-        Category category = newCategory("IT", "Kursy IT", UUID.randomUUID());
-        Subcategory subcategory = newSubcategory("Java", "Kursy Java", UUID.randomUUID(), category.getName());
-        Course course = newCourse("Spring Kurs", "Kurs z wiedzy o Spring", 150, BigDecimal.valueOf(2000),
-                UUID.randomUUID(), subcategory.getName());
-        Offer offer = newOffer(category, subcategory, List.of(course), customer);
-        Trainer trainer = newTrainer("Janek", "Kowalski", "hfhfhf", 324536424L, "janek@kowalski.pl");
-        Absence unavailability = newUnavailability(trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,19), AbsenceType.URLOP);
-        Order job = newJob(offer, trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,20));
-
-        //when
-        Order savedJob = jobService.saveNewJob(job);
-
-        //then
-        assertThat(savedJob).isNotNull();
-    }
-
 }
