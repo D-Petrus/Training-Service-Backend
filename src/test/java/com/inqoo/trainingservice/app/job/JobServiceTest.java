@@ -13,8 +13,9 @@ import com.inqoo.trainingservice.app.subcategory.Subcategory;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryService;
 import com.inqoo.trainingservice.app.trainer.Trainer;
 import com.inqoo.trainingservice.app.trainer.TrainerService;
-import com.inqoo.trainingservice.app.unavailability.Unavailability;
-import com.inqoo.trainingservice.app.unavailability.UnavailabilityService;
+import com.inqoo.trainingservice.app.absence.Absence;
+import com.inqoo.trainingservice.app.absence.AbsenceService;
+import com.inqoo.trainingservice.app.absence.AbsenceType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -47,7 +48,7 @@ class JobServiceTest {
     @Autowired
     private TrainerService trainerService;
     @Autowired
-    private UnavailabilityService unavailabilityService;
+    private AbsenceService unavailabilityService;
 
     private Category newCategory(String name, String description, UUID randomUUID) {
         Category category = new Category(name, description, randomUUID);
@@ -94,8 +95,8 @@ class JobServiceTest {
         return job;
     }
 
-    private Unavailability newUnavailability(Trainer trainer, LocalDate dayOfAbsence) {
-        Unavailability unavailability = new Unavailability(trainer, dayOfAbsence);
+    private Absence newUnavailability(Trainer trainer, LocalDate startVacation, LocalDate endVacation, AbsenceType type) {
+        Absence unavailability = new Absence(trainer, startVacation, endVacation, type);
         unavailabilityService.saveNewUnavailability(unavailability);
         return unavailability;
     }
@@ -111,7 +112,7 @@ class JobServiceTest {
                 UUID.randomUUID(), subcategory.getName());
         Offer offer = newOffer(category, subcategory, List.of(course), customer);
         Trainer trainer = newTrainer("Janek", "Kowalski", "hfhfhf", 324536424L, "janek@kowalski.pl");
-        Unavailability unavailability = newUnavailability(trainer, LocalDate.of(2021,10,21));
+        Absence unavailability = newUnavailability(trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,19), AbsenceType.URLOP);
         Job job = newJob(offer, trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,20));
 
         //when

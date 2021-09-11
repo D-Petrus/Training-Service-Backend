@@ -5,8 +5,8 @@ import com.inqoo.trainingservice.app.offer.OfferRepository;
 import com.inqoo.trainingservice.app.trainer.Trainer;
 import com.inqoo.trainingservice.app.trainer.TrainerNotFoundException;
 import com.inqoo.trainingservice.app.trainer.TrainerRepository;
-import com.inqoo.trainingservice.app.unavailability.Unavailability;
-import com.inqoo.trainingservice.app.unavailability.UnavailabilityRepository;
+import com.inqoo.trainingservice.app.absence.Absence;
+import com.inqoo.trainingservice.app.absence.AbsenceRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,15 +19,15 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 public class JobService {
-    private final UnavailabilityRepository unavailabilityRepository;
+    private final AbsenceRepository absenceRepository;
     private final JobRepository jobRepository;
     private final OfferRepository offerRepository;
     private final TrainerRepository trainerRepository;
 
-    public JobService(UnavailabilityRepository unavailabilityRepository,
+    public JobService(AbsenceRepository unavailabilityRepository,
                       JobRepository jobRepository,
                       OfferRepository offerRepository, TrainerRepository trainerRepository) {
-        this.unavailabilityRepository = unavailabilityRepository;
+        this.absenceRepository = unavailabilityRepository;
         this.jobRepository = jobRepository;
         this.offerRepository = offerRepository;
         this.trainerRepository = trainerRepository;
@@ -41,9 +41,9 @@ public class JobService {
                     .limit(ChronoUnit.DAYS.between(job.getStartCourse(), job.getEndCourse()) + 1)
                     .collect(toList());
             for (LocalDate date : dates) {
-                Optional<Unavailability> unavailability = unavailabilityRepository.checkAvailabilityForTrainer(date,
+                Optional<Absence> absence = absenceRepository.checkAvailabilityForTrainer(date,
                         job.getTrainer().getFirstName(), job.getTrainer().getLastName());
-                if (unavailability.isPresent()) {
+                if (absence.isPresent()) {
                     throw new TrainerNotFoundException();
                 }
             }

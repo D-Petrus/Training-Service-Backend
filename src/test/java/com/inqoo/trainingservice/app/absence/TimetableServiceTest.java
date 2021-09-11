@@ -1,4 +1,4 @@
-package com.inqoo.trainingservice.app.unavailability;
+package com.inqoo.trainingservice.app.absence;
 
 import com.inqoo.trainingservice.app.trainer.Trainer;
 import com.inqoo.trainingservice.app.trainer.TrainerService;
@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Transactional
 class TimetableServiceTest {
     @Autowired
-    private UnavailabilityService timetableService;
+    private AbsenceService timetableService;
     @Autowired
     private TrainerService trainerService;
 
@@ -24,11 +24,11 @@ class TimetableServiceTest {
         //given
         Trainer trainer = new Trainer("Marcin", "Butora", "none", 505009546L, "mbutora@gmail.com");
         Trainer savedTrainerToDB = trainerService.saveNewTrainer(trainer);
-        Unavailability timetable = new Unavailability(savedTrainerToDB, LocalDate.of(2021,10,10));
-        Unavailability savedTimetable = timetableService.saveNewTimetable(timetable);
+        Absence timetable = new Absence(savedTrainerToDB, LocalDate.of(2021,10,10), LocalDate.of(2021,10,15), AbsenceType.NIEOBECNOŚĆ);
+        Absence savedTimetable = timetableService.saveNewTimetable(timetable);
 
         //when
-        boolean ifNotAvailable = timetableService.checkIfNotAvailable(savedTimetable.getDayOfAbsence(), "Marcin", "Butora");
+        boolean ifNotAvailable = timetableService.checkIfNotAvailable(savedTimetable.getStartVacation(), "Marcin", "Butora");
 
         //then
         assertThat(ifNotAvailable).isTrue();
