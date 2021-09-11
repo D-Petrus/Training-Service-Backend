@@ -121,5 +121,25 @@ class JobServiceTest {
         //then
         assertThat(savedJob).isNotNull();
     }
+    @Test
+    public void shouldNotCreateAJobForTrainer() {
+        //given
+        Customer customer = newCustomer("Marcin Butora", "505-009-546", "22-322-22-22", "marcin@butora.pl",
+                UUID.randomUUID());
+        Category category = newCategory("IT", "Kursy IT", UUID.randomUUID());
+        Subcategory subcategory = newSubcategory("Java", "Kursy Java", UUID.randomUUID(), category.getName());
+        Course course = newCourse("Spring Kurs", "Kurs z wiedzy o Spring", 150, BigDecimal.valueOf(2000),
+                UUID.randomUUID(), subcategory.getName());
+        Offer offer = newOffer(category, subcategory, List.of(course), customer);
+        Trainer trainer = newTrainer("Janek", "Kowalski", "hfhfhf", 324536424L, "janek@kowalski.pl");
+        Absence unavailability = newUnavailability(trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,19), AbsenceType.URLOP);
+        Order job = newJob(offer, trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,20));
+
+        //when
+        Order savedJob = jobService.saveNewJob(job);
+
+        //then
+        assertThat(savedJob).isNotNull();
+    }
 
 }
