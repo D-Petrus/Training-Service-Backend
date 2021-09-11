@@ -7,7 +7,6 @@ import com.inqoo.trainingservice.app.exception.TrainerNotFoundException;
 import com.inqoo.trainingservice.app.offer.Offer;
 import com.inqoo.trainingservice.app.subcategory.Subcategory;
 import com.inqoo.trainingservice.app.trainer.Trainer;
-import com.inqoo.trainingservice.app.absence.AbsenceType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
