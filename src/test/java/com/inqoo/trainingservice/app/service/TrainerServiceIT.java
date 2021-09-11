@@ -1,8 +1,9 @@
 package com.inqoo.trainingservice.app.service;
 
+import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
 import com.inqoo.trainingservice.app.trainer.TrainerDTO;
 import com.inqoo.trainingservice.app.trainer.TrainerConverter;
-import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
+
 import com.inqoo.trainingservice.app.trainer.Trainer;
 import com.inqoo.trainingservice.app.trainer.TrainerService;
 import org.apache.commons.lang3.RandomStringUtils;

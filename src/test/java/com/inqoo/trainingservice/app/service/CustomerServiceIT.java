@@ -2,6 +2,7 @@ package com.inqoo.trainingservice.app.service;
 
 
 import com.inqoo.trainingservice.app.customer.*;
+import com.inqoo.trainingservice.app.customer.EmailNotValidException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
