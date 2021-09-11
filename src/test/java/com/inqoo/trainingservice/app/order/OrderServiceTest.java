@@ -3,13 +3,10 @@ package com.inqoo.trainingservice.app.order;
 import com.inqoo.trainingservice.app.category.Category;
 import com.inqoo.trainingservice.app.course.Course;
 import com.inqoo.trainingservice.app.customer.Customer;
+import com.inqoo.trainingservice.app.exception.TrainerNotFoundException;
 import com.inqoo.trainingservice.app.offer.Offer;
 import com.inqoo.trainingservice.app.subcategory.Subcategory;
 import com.inqoo.trainingservice.app.trainer.Trainer;
-import com.inqoo.trainingservice.app.trainer.TrainerNotFoundException;
-import com.inqoo.trainingservice.app.trainer.TrainerService;
-import com.inqoo.trainingservice.app.absence.Absence;
-import com.inqoo.trainingservice.app.absence.AbsenceService;
 import com.inqoo.trainingservice.app.absence.AbsenceType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -52,17 +49,17 @@ class OrderServiceTest {
     @Test
     public void shouldThrowNoTrainerException() {
         //given
-        Customer customer = newCustomer("Marcin Butora", "505-009-546", "22-322-22-22", "marcin@butora.pl",
+        Customer customer = objectFixture.newCustomer("Marcin Butora", "505-009-546", "22-322-22-22", "marcin@butora.pl",
                 UUID.randomUUID());
-        Category category = newCategory("IT", "Kursy IT", UUID.randomUUID());
-        Subcategory subcategory = newSubcategory("Java", "Kursy Java", UUID.randomUUID(), category.getName());
-        Course course = newCourse("Spring Kurs", "Kurs z wiedzy o Spring", 150, BigDecimal.valueOf(2000),
+        Category category = objectFixture.newCategory("IT", "Kursy IT", UUID.randomUUID());
+        Subcategory subcategory = objectFixture.newSubcategory("Java", "Kursy Java", UUID.randomUUID(), category.getName());
+        Course course = objectFixture.newCourse("Spring Kurs", "Kurs z wiedzy o Spring", 150, BigDecimal.valueOf(2000),
                 UUID.randomUUID(), subcategory.getName());
-        Offer offer = newOffer(category, subcategory, List.of(course), customer);
-        Trainer trainer = newTrainer("Janek", "Kowalski", "hfhfhf", 324536424L, "janek@kowalski.pl");
-        newAbsence(trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,19), AbsenceType.URLOP);
+        Offer offer = objectFixture.newOffer(category, subcategory, List.of(course), customer);
+        Trainer trainer = objectFixture.newTrainer("Janek", "Kowalski", "hfhfhf", 324536424L, "janek@kowalski.pl");
+        AbsenceProjection absenceProjection = objectFixture.newAbsenceProjection(trainer, LocalDate.of(2021, 10, 10), LocalDate.of(2021, 10, 19));
 
         //then
-        Assertions.assertThrows(TrainerNotFoundException.class, () -> newJob(offer, trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,20)));
+        Assertions.assertThrows(TrainerNotFoundException.class, () -> objectFixture.newJob(offer, trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,20)));
     }
 }
