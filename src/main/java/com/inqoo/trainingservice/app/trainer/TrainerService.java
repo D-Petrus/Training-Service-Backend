@@ -1,5 +1,6 @@
 package com.inqoo.trainingservice.app.trainer;
 
+import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class TrainerService {
         }
 
         if (trainer.getExperience().length() > 4000) {
-            throw new TooLongDescriptionOfExperienceException();
+            throw new TooLongDescriptionException();
         }
     }
 }

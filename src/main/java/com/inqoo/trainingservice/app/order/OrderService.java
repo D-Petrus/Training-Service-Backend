@@ -3,7 +3,7 @@ package com.inqoo.trainingservice.app.order;
 import com.inqoo.trainingservice.app.offer.Offer;
 import com.inqoo.trainingservice.app.offer.OfferRepository;
 import com.inqoo.trainingservice.app.trainer.Trainer;
-import com.inqoo.trainingservice.app.trainer.TrainerNotFoundException;
+import com.inqoo.trainingservice.app.exception.TrainerNotFoundException;
 import com.inqoo.trainingservice.app.trainer.TrainerRepository;
 import com.inqoo.trainingservice.app.absence.Absence;
 import com.inqoo.trainingservice.app.absence.AbsenceRepository;
