@@ -1,5 +1,6 @@
 package com.inqoo.trainingservice.app.order;
 
+import com.inqoo.trainingservice.app.absence.AbsenceType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
