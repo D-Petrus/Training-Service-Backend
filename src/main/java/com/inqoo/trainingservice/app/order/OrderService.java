@@ -1,6 +1,5 @@
 package com.inqoo.trainingservice.app.order;
 
-import com.inqoo.trainingservice.app.exception.CouldNotCreateAnOrderForTrainerException;
 import com.inqoo.trainingservice.app.offer.Offer;
 import com.inqoo.trainingservice.app.offer.OfferRepository;
 import com.inqoo.trainingservice.app.trainer.Trainer;

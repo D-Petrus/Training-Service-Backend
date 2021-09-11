@@ -1,9 +1,5 @@
 package com.inqoo.trainingservice.app.trainer;
 
-import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
-import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
-import com.inqoo.trainingservice.app.exception.TooLongDescriptionOfExperienceException;
-import com.inqoo.trainingservice.app.exception.TrainerIsAlreadySavedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
