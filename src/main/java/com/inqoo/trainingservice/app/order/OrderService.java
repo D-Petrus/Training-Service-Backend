@@ -52,4 +52,8 @@ public class OrderService {
         }
         throw new OrderForTrainerNotCreatedException();
     }
+
+    public List<Order> findAllOrder(){
+        return orderRepository.findAll();
+    }
 }
