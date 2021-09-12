@@ -5,6 +5,7 @@ import com.inqoo.trainingservice.app.offer.OfferRepository;
 import com.inqoo.trainingservice.app.trainer.Trainer;
 import com.inqoo.trainingservice.app.trainer.TrainerNotFoundException;
 import com.inqoo.trainingservice.app.trainer.TrainerRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 
 @Service
+@Slf4j
 public class OrderService {
     private final AbsenceProjectionRepository absenceProjectionRepository;
     private final OrderRepository orderRepository;
@@ -43,13 +45,15 @@ public class OrderService {
                 Optional<AbsenceProjection> absence = absenceProjectionRepository.checkAvailabilityForTrainer(date,
                         order.getTrainer().getFirstName(), order.getTrainer().getLastName());
                 if (absence.isPresent()) {
-                    throw new TrainerNotFoundException();
+                    log.warn("Trainer not found!");
+                    throw new TrainerNotFoundException("Trainer not found!");
                 }
             }
             Optional<Offer> offerForEmail = offerRepository.findByCustomerEmailAddress(order.getOffer().getCustomer().getEmailAddress());
             Order jobs = new Order(offerForEmail.get(), trainer.get(), order.getStartCourse(), order.getEndCourse());
             return orderRepository.save(jobs);
         }
-        throw new OrderForTrainerNotCreatedException();
+        log.warn("Could not create an order for trainer");
+        throw new OrderForTrainerNotCreatedException("Could not create an order for trainer");
     }
 }

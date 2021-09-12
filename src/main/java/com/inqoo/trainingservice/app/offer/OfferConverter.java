@@ -12,6 +12,7 @@ import com.inqoo.trainingservice.app.customer.CustomerRepository;
 import com.inqoo.trainingservice.app.subcategory.Subcategory;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryNotFoundException;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -20,6 +21,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @Component
+@Slf4j
 public class OfferConverter {
 
     private final CustomerRepository customerRepository;
@@ -57,13 +59,13 @@ public class OfferConverter {
     public Offer convertDTOToOffer(OfferDTO offerDTO) {
         Customer customer =
                 customerRepository.findByEmailAddress(offerDTO.getMail())
-                        .orElseThrow(CustomerNotFoundException::new);
+                        .orElseThrow(() -> new CustomerNotFoundException("Customer Not Found!"));
         Category category =
                 categoryRepository.findByName(offerDTO.getCategoryName())
-                        .orElseThrow(CategoryNotFoundException::new);
+                        .orElseThrow(() -> new CategoryNotFoundException("Category Not Found!"));
         Subcategory subcategory =
                 subcategoryRepository.findByName(offerDTO.getSubcategoryName())
-                        .orElseThrow(SubcategoryNotFoundException::new);
+                        .orElseThrow(() -> new SubcategoryNotFoundException("Subcategory Not Found!"));
         List<Course> courses = findAllCoursesWithNames(offerDTO.getCourses());
         BigDecimal summaryPrice = offerDTO.getSumPrice();
         int summaryDuration = offerDTO.getSumDuration();
@@ -80,7 +82,8 @@ public class OfferConverter {
     private List<Course> findAllCoursesWithNames(List<String> coursesNames) {
         List<Course> courseList = courseRepository.findByNameIn(coursesNames);
         if (courseList.isEmpty()) {
-            throw new CourseListEmptyException();
+            log.warn("Courses not found!");
+            throw new CourseListEmptyException("Courses not found!");
         }
         return courseList;
     }

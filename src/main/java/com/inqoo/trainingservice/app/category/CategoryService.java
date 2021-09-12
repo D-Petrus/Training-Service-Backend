@@ -4,12 +4,14 @@ import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
 import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
 import com.inqoo.trainingservice.app.subcategory.Subcategory;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
@@ -27,10 +29,12 @@ public class CategoryService {
 
     private void validateInputs(Category category, String name) {
         if (!validateCharacters(category.getDescription())) {
-            throw new TooLongDescriptionException();
+            log.info("Too long description of category!");
+            throw new TooLongDescriptionException("Too long description of category!");
         }
         if (categoryRepository.findByName(name).isPresent()) {
-            throw new NameAlreadyTakenException();
+            log.info("Category name is already taken!");
+            throw new NameAlreadyTakenException("Category name is already taken!");
         }
     }
 
@@ -55,6 +59,7 @@ public class CategoryService {
             categoryRepository.save(categoryFounded.get());
             return true;
         }
+        log.warn("Subcategory is not assigned to category!");
         return false;
     }
     List<String> getAllCategoryName() {
