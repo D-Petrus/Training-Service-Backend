@@ -9,14 +9,18 @@ import java.util.List;
 @RestController
 @CrossOrigin(allowedHeaders = "*", origins = "*")
 @RequestMapping("/order")
-public class OrderController {
+class OrderController {
     private final OrderService orderService;
 
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
+
     @GetMapping
-    private List<Order> getAllOrders() { return orderService.getAll();}
+    List<Order> getAllOrders() {
+        return orderService.getAll();
+    }
+
     @PostMapping
     ResponseEntity<Order> saveNewOrder(@RequestBody Order order){
         Order saveNewOrder = orderService.saveNewJob(order);

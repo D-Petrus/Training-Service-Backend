@@ -53,6 +53,7 @@ public class OrderService {
         }
         throw new CouldNotCreateAnOrderForTrainerException();
     }
+
     public List<Order> getAll(){
         return orderRepository.findAll();
     }

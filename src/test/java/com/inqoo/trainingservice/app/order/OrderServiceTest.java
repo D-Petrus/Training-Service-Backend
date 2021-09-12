@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.transaction.Transactional;
@@ -37,7 +36,7 @@ class OrderServiceTest {
     private MockMvc mockMvc;
 
     @Test
-    public void shouldCreateAJobForTrainer() {
+    public void shouldCreateOrderForTrainer() {
         //given
         Customer customer = objectFixture.newCustomer("Marcin Butora", "505-009-546", "22-322-22-22", "marcin@butora.pl",
                 UUID.randomUUID());
@@ -85,6 +84,5 @@ class OrderServiceTest {
         //then
         this.mockMvc.perform(get("/order"))
                 .andExpect(status().isOk());
-
     }
 }
