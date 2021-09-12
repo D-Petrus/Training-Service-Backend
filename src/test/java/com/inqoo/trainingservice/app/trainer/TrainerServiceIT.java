@@ -1,11 +1,6 @@
 package com.inqoo.trainingservice.app.trainer;
 
 import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
-import com.inqoo.trainingservice.app.trainer.TrainerDTO;
-import com.inqoo.trainingservice.app.trainer.TrainerConverter;
-
-import com.inqoo.trainingservice.app.trainer.Trainer;
-import com.inqoo.trainingservice.app.trainer.TrainerService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -72,4 +67,27 @@ public class TrainerServiceIT {
         });
     }
 
+    @Test
+    public void shouldNotSaveTrainerIfIsAlreadySaved(){
+        //given
+
+        String generatedTxt = RandomStringUtils.randomAlphanumeric(4000);
+        TrainerDTO trainer1 = new TrainerDTO(
+                "Jan",
+                "Kowalski",
+                generatedTxt);
+        trainerService.saveNewTrainer(trainerConverter.dtoToEntity(trainer1));
+
+        //given
+        String generatedTxt2 = RandomStringUtils.randomAlphanumeric(4000);
+        TrainerDTO trainer2 = new TrainerDTO(
+                "Jan",
+                "Kowalski",
+                generatedTxt2);
+
+        //then
+        Assertions.assertThrows(TrainerIsAlreadySavedException.class, () -> {
+            trainerService.saveNewTrainer(trainerConverter.dtoToEntity(trainer2));
+        });
+    }
 }

@@ -3,7 +3,6 @@ package com.inqoo.trainingservice.app.service;
 import com.inqoo.trainingservice.app.category.CategoryConverter;
 import com.inqoo.trainingservice.app.category.CategoryDTO;
 import com.inqoo.trainingservice.app.category.CategoryService;
-import com.inqoo.trainingservice.app.course.CourseConverter;
 import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
 import com.inqoo.trainingservice.app.category.Category;
 import com.inqoo.trainingservice.app.subcategory.SubCategoryConverter;
@@ -16,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
@@ -27,7 +24,6 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
