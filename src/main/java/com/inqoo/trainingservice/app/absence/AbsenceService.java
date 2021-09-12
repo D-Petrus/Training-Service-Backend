@@ -48,7 +48,7 @@ public class AbsenceService {
         }
 
         if (sumOfDays > vacationDays) {
-            throw new VacationLimitEndException();
+            throw new VacationLimitEndException("Vacation limit exceeded");
         }
 
         Absence absence = new Absence(trainer, startAbsence, endAbsence, absenceType);
