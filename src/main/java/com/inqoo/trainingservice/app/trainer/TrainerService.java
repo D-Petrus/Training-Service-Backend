@@ -33,12 +33,10 @@ public class TrainerService {
 
     private void validateInputs(Trainer trainer) {
         if (trainerRepository.findByFirstNameAndLastName(trainer.getFirstName(), trainer.getLastName()).isPresent()) {
-            log.info("Trainer is already exist!");
             throw new TrainerIsAlreadySavedException("Trainer is already exist!");
         }
 
         if (trainer.getExperience().length() > 4000) {
-            log.info("Too long description of experience!");
             throw new TooLongDescriptionException("Too long description of experience!");
         }
     }
