@@ -23,8 +23,7 @@ public class CustomerService {
 
     public Customer saveNewCustomer(Customer customer) {
         if (customerRepository.findByEmailAddress(customer.getEmailAddress()).isPresent()) {
-            throw new CustomerIsAlreadyExistsException();
-        }
+            throw new CustomerIsAlreadyExistsException();}
 
         if (!validateEmailAddress(customer.getEmailAddress())) {
             throw new EmailNotValidException();

@@ -2,9 +2,9 @@ package com.inqoo.trainingservice.app.exception;
 
 import java.time.LocalDateTime;
 
-public class ApiExceptionDetails {
+class ApiExceptionDetails {
     private LocalDateTime timestamp;
-    private String message;
+    private final String message;
 
     public ApiExceptionDetails(LocalDateTime timestamp, String message) {
         this.timestamp = timestamp;
@@ -17,13 +17,5 @@ public class ApiExceptionDetails {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }
