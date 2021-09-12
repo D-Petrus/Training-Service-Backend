@@ -37,7 +37,7 @@ public class ObjectFixture {
     @Autowired
     private OfferConverter converter;
     @Autowired
-    private OrderService jobService;
+    private OrderService orderService;
     @Autowired
     private TrainerService trainerService;
     @Autowired
@@ -84,10 +84,10 @@ public class ObjectFixture {
         return trainer;
     }
 
-    public Order newJob(Offer offer, Trainer trainer, LocalDate startCourse, LocalDate endCourse) {
-        Order job = new Order(offer, trainer, startCourse, endCourse);
-        jobService.saveNewJob(job);
-        return job;
+    public Order newOrder(Offer offer, Trainer trainer, LocalDate startCourse, LocalDate endCourse) {
+        Order order = new Order(offer, trainer, startCourse, endCourse);
+        orderService.saveNewOrder(order);
+        return order;
     }
 
     public AbsenceProjection newAbsenceProjection(Trainer trainer, LocalDate startAbsence, LocalDate endAbsence) {

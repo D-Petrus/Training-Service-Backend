@@ -26,8 +26,11 @@ class OrderController {
 
     @PostMapping
     ResponseEntity<Order> saveNewOrder(@RequestBody Order order){
-        Order saveNewOrder = orderService.saveNewJob(order);
+
+        Order saveNewOrder = orderService.saveNewOrder(order);
+
         log.info("Saving new order: "+order.getOffer());
+
         return new ResponseEntity<>(saveNewOrder, HttpStatus.CREATED);
     }
 }

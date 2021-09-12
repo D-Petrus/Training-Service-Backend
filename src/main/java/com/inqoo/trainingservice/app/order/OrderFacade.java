@@ -3,7 +3,9 @@ package com.inqoo.trainingservice.app.order;
 import com.inqoo.trainingservice.app.absence.AbsenceNotCreatedException;
 import com.inqoo.trainingservice.app.trainer.Trainer;
 import com.inqoo.trainingservice.app.trainer.TrainerRepository;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
