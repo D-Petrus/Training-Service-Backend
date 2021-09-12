@@ -18,7 +18,7 @@ class OrderController {
 
     @GetMapping
     List<Order> getAllOrders() {
-        return orderService.getAll();
+        return orderService.findAllOrder();
     }
 
     @PostMapping
