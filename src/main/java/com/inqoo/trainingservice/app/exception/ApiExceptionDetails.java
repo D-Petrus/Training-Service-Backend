@@ -11,6 +11,10 @@ class ApiExceptionDetails {
         this.message = message;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
     public LocalDateTime getTimestamp() {
         return timestamp;
     }

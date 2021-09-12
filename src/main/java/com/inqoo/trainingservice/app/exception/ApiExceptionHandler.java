@@ -1,5 +1,6 @@
 package com.inqoo.trainingservice.app.exception;
 
+import com.inqoo.trainingservice.app.absence.VacationLimitEndException;
 import com.inqoo.trainingservice.app.category.CategoryNotFoundException;
 import com.inqoo.trainingservice.app.course.CourseListEmptyException;
 import com.inqoo.trainingservice.app.course.CourseNotFoundException;
@@ -9,14 +10,18 @@ import com.inqoo.trainingservice.app.order.OrderForTrainerNotCreatedException;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryNotFoundException;
 import com.inqoo.trainingservice.app.trainer.TrainerIsAlreadySavedException;
 import com.inqoo.trainingservice.app.trainer.TrainerNotFoundException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @ControllerAdvice
+@Slf4j
 public class ApiExceptionHandler {
 
     @ExceptionHandler(value = {NameAlreadyTakenException.class,
@@ -27,9 +32,11 @@ public class ApiExceptionHandler {
             CourseListEmptyException.class,
             EmailNotValidException.class,
             HomeNumberNotValidException.class,
-            MobileNumberNotValidException.class})
-    ResponseEntity<ApiExceptionDetails> handleBadRequestExceptions(RuntimeException exception) {
-        ApiExceptionDetails apiExceptionDetails = new ApiExceptionDetails(LocalDateTime.now(), exception.getMessage());
+            MobileNumberNotValidException.class,
+            VacationLimitEndException.class})
+    ResponseEntity<ApiExceptionDetails> handleBadRequestExceptions(RuntimeException e) {
+        ApiExceptionDetails apiExceptionDetails = new ApiExceptionDetails(LocalDateTime.now(), e.getMessage());
+        log.info(e.getMessage());
         return new ResponseEntity<>(apiExceptionDetails, HttpStatus.BAD_REQUEST);
     }
 
@@ -38,8 +45,9 @@ public class ApiExceptionHandler {
             CategoryNotFoundException.class,
             CustomerNotFoundException.class,
             CourseNotFoundException.class})
-    ResponseEntity<ApiExceptionDetails> handleNotFoundExceptions(RuntimeException exception) {
-        ApiExceptionDetails apiExceptionDetails = new ApiExceptionDetails(LocalDateTime.now(), exception.getMessage());
+    ResponseEntity<ApiExceptionDetails> handleNotFoundExceptions(RuntimeException e) {
+        ApiExceptionDetails apiExceptionDetails = new ApiExceptionDetails(LocalDateTime.now(), e.getMessage());
+        log.info(e.getMessage());
         return new ResponseEntity<>(apiExceptionDetails, HttpStatus.NOT_FOUND);
     }
 }

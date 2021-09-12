@@ -1,12 +1,15 @@
 package com.inqoo.trainingservice.app.trainer;
 
 import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
+import lombok.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class TrainerService {
     private final TrainerRepository trainerRepository;
 
@@ -30,11 +33,13 @@ public class TrainerService {
 
     private void validateInputs(Trainer trainer) {
         if (trainerRepository.findByFirstNameAndLastName(trainer.getFirstName(), trainer.getLastName()).isPresent()) {
-            throw new TrainerIsAlreadySavedException();
+            log.info("Trainer is already exist!");
+            throw new TrainerIsAlreadySavedException("Trainer is already exist!");
         }
 
         if (trainer.getExperience().length() > 4000) {
-            throw new TooLongDescriptionException();
+            log.info("Too long description of experience!");
+            throw new TooLongDescriptionException("Too long description of experience!");
         }
     }
 }

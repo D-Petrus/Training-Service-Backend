@@ -1,17 +1,17 @@
 package com.inqoo.trainingservice.app.email;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
+import com.inqoo.trainingservice.app.exception.MailNotSendException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 @Service
+@Slf4j
 public class EmailService {
-    private JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender;
 
     public EmailService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
@@ -29,7 +29,7 @@ public class EmailService {
             mimeMessageHelper.setText(text, isHtmlContent);
             javaMailSender.send(mimeMessage);
         } catch (Exception exception) {
-            System.out.println(exception);
+            throw new MailNotSendException("Mail not send!");
         }
     }
 }

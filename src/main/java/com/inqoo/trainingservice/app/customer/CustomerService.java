@@ -3,6 +3,7 @@ package com.inqoo.trainingservice.app.customer;
 import com.inqoo.trainingservice.app.exception.EmailNotValidException;
 import com.inqoo.trainingservice.app.exception.HomeNumberNotValidException;
 import com.inqoo.trainingservice.app.exception.MobileNumberNotValidException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
+@Slf4j
 public class CustomerService {
     private final CustomerRepository customerRepository;
     private Pattern regexPatternMobile;
@@ -23,18 +25,19 @@ public class CustomerService {
 
     public Customer saveNewCustomer(Customer customer) {
         if (customerRepository.findByEmailAddress(customer.getEmailAddress()).isPresent()) {
-            throw new CustomerIsAlreadyExistsException();}
+            throw new CustomerIsAlreadyExistsException("Customer is already exist!");
+        }
 
         if (!validateEmailAddress(customer.getEmailAddress())) {
-            throw new EmailNotValidException();
+            throw new EmailNotValidException("Email is not valid!");
         }
 
         if (!validateHomeNumber(customer.getHomeNumber())) {
-            throw new HomeNumberNotValidException();
+            throw new HomeNumberNotValidException("Home number is not valid!");
         }
 
         if (!validateMobileNumber(customer.getMobileNumber())) {
-            throw new MobileNumberNotValidException();
+            throw new MobileNumberNotValidException("Mobile number is not valid!");
         }
 
         return customerRepository.save(customer);
