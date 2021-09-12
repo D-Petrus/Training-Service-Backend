@@ -3,9 +3,8 @@ package com.inqoo.trainingservice.app.order;
 import com.inqoo.trainingservice.app.offer.Offer;
 import com.inqoo.trainingservice.app.offer.OfferRepository;
 import com.inqoo.trainingservice.app.trainer.Trainer;
-import com.inqoo.trainingservice.app.exception.TrainerNotFoundException;
+import com.inqoo.trainingservice.app.trainer.TrainerNotFoundException;
 import com.inqoo.trainingservice.app.trainer.TrainerRepository;
-import com.inqoo.trainingservice.app.absence.AbsenceRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -51,6 +50,6 @@ public class OrderService {
             Order jobs = new Order(offerForEmail.get(), trainer.get(), order.getStartCourse(), order.getEndCourse());
             return orderRepository.save(jobs);
         }
-        throw new CouldNotCreateAnOrderForTrainerException();
+        throw new OrderForTrainerNotCreatedException();
     }
 }

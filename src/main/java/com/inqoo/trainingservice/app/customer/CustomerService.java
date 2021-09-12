@@ -1,5 +1,8 @@
 package com.inqoo.trainingservice.app.customer;
 
+import com.inqoo.trainingservice.app.exception.EmailNotValidException;
+import com.inqoo.trainingservice.app.exception.HomeNumberNotValidException;
+import com.inqoo.trainingservice.app.exception.MobileNumberNotValidException;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
 
@@ -22,21 +25,18 @@ public class CustomerService {
         if (customerRepository.findByEmailAddress(customer.getEmailAddress()).isPresent()) {
             throw new CustomerIsAlreadyExistsException();
         }
-        ;
+
         if (!validateEmailAddress(customer.getEmailAddress())) {
             throw new EmailNotValidException();
         }
-        ;
 
         if (!validateHomeNumber(customer.getHomeNumber())) {
             throw new HomeNumberNotValidException();
         }
-        ;
 
         if (!validateMobileNumber(customer.getMobileNumber())) {
             throw new MobileNumberNotValidException();
         }
-        ;
 
         return customerRepository.save(customer);
     }

@@ -2,7 +2,9 @@ package com.inqoo.trainingservice.app.service;
 
 
 import com.inqoo.trainingservice.app.customer.*;
-import com.inqoo.trainingservice.app.customer.EmailNotValidException;
+import com.inqoo.trainingservice.app.exception.EmailNotValidException;
+import com.inqoo.trainingservice.app.exception.HomeNumberNotValidException;
+import com.inqoo.trainingservice.app.exception.MobileNumberNotValidException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +32,7 @@ public class CustomerServiceIT {
                 "test@gmailCom", UUID.randomUUID());
 
         //then
-        Assertions.assertThrows(EmailNotValidException.class, () -> {
-            customerService.saveNewCustomer(CustomerConverter.dtoToEntity(customer1));
-        });
+        Assertions.assertThrows(EmailNotValidException.class, () -> customerService.saveNewCustomer(CustomerConverter.dtoToEntity(customer1)));
     }
     @Test
     public void shouldNotAddCustomerWhenInvalidMobile() {
@@ -44,9 +44,7 @@ public class CustomerServiceIT {
                 "test@gmail.com", UUID.randomUUID());
 
         //then
-        Assertions.assertThrows(MobileNumberNotValidException.class, () -> {
-            customerService.saveNewCustomer(CustomerConverter.dtoToEntity(customer1));
-        });
+        Assertions.assertThrows(MobileNumberNotValidException.class, () -> customerService.saveNewCustomer(CustomerConverter.dtoToEntity(customer1)));
     }
     @Test
     public void shouldNotAddCustomerWhenInvalidHomeNumber() {
@@ -58,9 +56,7 @@ public class CustomerServiceIT {
                 "test@gmail.com", UUID.randomUUID());
 
         //then
-        Assertions.assertThrows(HomeNumberNotValidException.class, () -> {
-            customerService.saveNewCustomer(CustomerConverter.dtoToEntity(customer1));
-        });
+        Assertions.assertThrows(HomeNumberNotValidException.class, () -> customerService.saveNewCustomer(CustomerConverter.dtoToEntity(customer1)));
     }
     @Test
     public void shouldAddCustomerWhenEmailAddressExist(){
@@ -91,9 +87,7 @@ public class CustomerServiceIT {
 
         //then
         customerService.saveNewCustomer(CustomerConverter.dtoToEntity(customer1));
-        Assertions.assertThrows(CustomerIsAlreadyExistsException.class, () -> {
-            customerService.saveNewCustomer(CustomerConverter.dtoToEntity(customer2));
-        });
+        Assertions.assertThrows(CustomerIsAlreadyExistsException.class, () -> customerService.saveNewCustomer(CustomerConverter.dtoToEntity(customer2)));
     }
 
 }

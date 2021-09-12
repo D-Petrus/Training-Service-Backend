@@ -3,7 +3,7 @@ package com.inqoo.trainingservice.app.order;
 import com.inqoo.trainingservice.app.category.Category;
 import com.inqoo.trainingservice.app.course.Course;
 import com.inqoo.trainingservice.app.customer.Customer;
-import com.inqoo.trainingservice.app.exception.TrainerNotFoundException;
+import com.inqoo.trainingservice.app.trainer.TrainerNotFoundException;
 import com.inqoo.trainingservice.app.offer.Offer;
 import com.inqoo.trainingservice.app.subcategory.Subcategory;
 import com.inqoo.trainingservice.app.trainer.Trainer;
