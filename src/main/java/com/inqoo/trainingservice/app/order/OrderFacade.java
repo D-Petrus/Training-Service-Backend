@@ -2,7 +2,6 @@ package com.inqoo.trainingservice.app.order;
 
 import com.inqoo.trainingservice.app.trainer.Trainer;
 import com.inqoo.trainingservice.app.trainer.TrainerRepository;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;

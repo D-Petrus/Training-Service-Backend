@@ -22,7 +22,6 @@ class AbsenceProjection {
         this.endDate = endDate;
     }
 
-
     public AbsenceProjection() {
     }
 

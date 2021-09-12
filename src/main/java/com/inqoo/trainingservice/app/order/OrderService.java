@@ -32,7 +32,7 @@ public class OrderService {
         this.trainerRepository = trainerRepository;
     }
 
-    public Order saveNewJob(Order order) {
+    public Order saveNewOrder(Order order) {
         Optional<Trainer> trainer = trainerRepository.findByFirstNameAndLastName(order.getTrainer().getFirstName(),
                 order.getTrainer().getLastName());
         if (trainer.isPresent()) {
@@ -47,8 +47,8 @@ public class OrderService {
                 }
             }
             Optional<Offer> offerForEmail = offerRepository.findByCustomerEmailAddress(order.getOffer().getCustomer().getEmailAddress());
-            Order jobs = new Order(offerForEmail.get(), trainer.get(), order.getStartCourse(), order.getEndCourse());
-            return orderRepository.save(jobs);
+            Order orders = new Order(offerForEmail.get(), trainer.get(), order.getStartCourse(), order.getEndCourse());
+            return orderRepository.save(orders);
         }
         throw new OrderForTrainerNotCreatedException();
     }
