@@ -11,7 +11,7 @@ import javax.mail.internet.MimeMessage;
 @Service
 @Slf4j
 public class EmailService {
-    private JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender;
 
     public EmailService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
@@ -29,7 +29,6 @@ public class EmailService {
             mimeMessageHelper.setText(text, isHtmlContent);
             javaMailSender.send(mimeMessage);
         } catch (Exception exception) {
-            log.info("Mail not send!");
             throw new MailNotSendException("Mail not send!");
         }
     }

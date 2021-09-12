@@ -35,18 +35,15 @@ public class CourseService {
             subcategoryRepository.save(subcategory);
             return courseRepository.findByName(course.getName()).get();
         } else {
-            log.warn("Subcategory not found!");
             throw new SubcategoryNotFoundException("Subcategory not found!");
         }
     }
 
     private void validateInputs(Course course, String name) {
         if (!validateCharacters(course.getDescription())) {
-            log.info("Too long description of course!");
             throw new TooLongDescriptionException("Too long description of course!");
         }
         if (courseRepository.findByName(name).isPresent()) {
-            log.info("Course name is already taken!");
             throw new NameAlreadyTakenException("Course name is already taken!");
         }
 

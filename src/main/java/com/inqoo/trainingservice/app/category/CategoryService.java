@@ -29,11 +29,9 @@ public class CategoryService {
 
     private void validateInputs(Category category, String name) {
         if (!validateCharacters(category.getDescription())) {
-            log.info("Too long description of category!");
             throw new TooLongDescriptionException("Too long description of category!");
         }
         if (categoryRepository.findByName(name).isPresent()) {
-            log.info("Category name is already taken!");
             throw new NameAlreadyTakenException("Category name is already taken!");
         }
     }
@@ -59,7 +57,7 @@ public class CategoryService {
             categoryRepository.save(categoryFounded.get());
             return true;
         }
-        log.warn("Subcategory is not assigned to category!");
+        log.info("Subcategory is not assigned to category!");
         return false;
     }
     List<String> getAllCategoryName() {

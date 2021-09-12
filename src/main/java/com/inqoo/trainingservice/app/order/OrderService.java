@@ -45,7 +45,6 @@ public class OrderService {
                 Optional<AbsenceProjection> absence = absenceProjectionRepository.checkAvailabilityForTrainer(date,
                         order.getTrainer().getFirstName(), order.getTrainer().getLastName());
                 if (absence.isPresent()) {
-                    log.warn("Trainer not found!");
                     throw new TrainerNotFoundException("Trainer not found!");
                 }
             }
@@ -53,7 +52,6 @@ public class OrderService {
             Order jobs = new Order(offerForEmail.get(), trainer.get(), order.getStartCourse(), order.getEndCourse());
             return orderRepository.save(jobs);
         }
-        log.warn("Could not create an order for trainer");
         throw new OrderForTrainerNotCreatedException("Could not create an order for trainer");
     }
 

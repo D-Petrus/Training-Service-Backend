@@ -25,22 +25,19 @@ public class CustomerService {
 
     public Customer saveNewCustomer(Customer customer) {
         if (customerRepository.findByEmailAddress(customer.getEmailAddress()).isPresent()) {
-            log.info("Customer is already exist!");
-            throw new CustomerIsAlreadyExistsException();}
+            throw new CustomerIsAlreadyExistsException("Customer is already exist!");
+        }
 
         if (!validateEmailAddress(customer.getEmailAddress())) {
-            log.info("Email is not valid!");
-            throw new EmailNotValidException();
+            throw new EmailNotValidException("Email is not valid!");
         }
 
         if (!validateHomeNumber(customer.getHomeNumber())) {
-            log.info("Home number is not valid!");
-            throw new HomeNumberNotValidException();
+            throw new HomeNumberNotValidException("Home number is not valid!");
         }
 
         if (!validateMobileNumber(customer.getMobileNumber())) {
-            log.info("Mobile number is not valid!");
-            throw new MobileNumberNotValidException();
+            throw new MobileNumberNotValidException("Mobile number is not valid!");
         }
 
         return customerRepository.save(customer);

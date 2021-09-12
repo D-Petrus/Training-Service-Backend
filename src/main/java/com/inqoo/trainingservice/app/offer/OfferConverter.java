@@ -82,7 +82,6 @@ public class OfferConverter {
     private List<Course> findAllCoursesWithNames(List<String> coursesNames) {
         List<Course> courseList = courseRepository.findByNameIn(coursesNames);
         if (courseList.isEmpty()) {
-            log.warn("Courses not found!");
             throw new CourseListEmptyException("Courses not found!");
         }
         return courseList;
