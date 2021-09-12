@@ -1,4 +1,4 @@
-package com.inqoo.trainingservice.app.customer;
+package com.inqoo.trainingservice.app.exception;
 
 public class HomeNumberNotValidException extends RuntimeException {
     public HomeNumberNotValidException(){
