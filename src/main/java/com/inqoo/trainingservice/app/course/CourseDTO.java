@@ -8,7 +8,7 @@ public class CourseDTO {
     private final String description;
     private final UUID courseUUID;
     private final int duration;
-    private BigDecimal price;
+    private final BigDecimal price;
 
     public CourseDTO(String name, String description, int duration, BigDecimal price, UUID courseUUID) {
         this.name = name;

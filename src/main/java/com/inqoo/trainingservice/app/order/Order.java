@@ -26,11 +26,23 @@ public class Order {
         this.endCourse = endCourse;
     }
 
+    public Order(Long id, Offer offer, Trainer trainer, LocalDate startCourse, LocalDate endCourse) {
+        this.id = id;
+        this.offer = offer;
+        this.trainer = trainer;
+        this.startCourse = startCourse;
+        this.endCourse = endCourse;
+    }
+
     public Order() {
     }
 
     public Offer getOffer() {
         return offer;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public void setOffer(Offer offer) {

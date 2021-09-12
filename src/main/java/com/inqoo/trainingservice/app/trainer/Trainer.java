@@ -18,9 +18,6 @@ public class Trainer {
     @Column(unique = true)
     private String emailAddress;
 
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private List<Trainer> trainersList = new ArrayList<>();
-
     public Trainer(String firstName, String lastName, String experience, Long phoneNumber, String emailAddress) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -77,9 +74,5 @@ public class Trainer {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
-    }
-
-    public List<Trainer> getTrainersList() {
-        return trainersList;
     }
 }
