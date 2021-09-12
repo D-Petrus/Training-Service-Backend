@@ -56,4 +56,8 @@ public class OrderService {
         log.warn("Could not create an order for trainer");
         throw new OrderForTrainerNotCreatedException("Could not create an order for trainer");
     }
+
+    public List<Order> findAllOrder(){
+        return orderRepository.findAll();
+    }
 }
