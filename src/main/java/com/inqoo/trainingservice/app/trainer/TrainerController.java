@@ -8,13 +8,16 @@ import java.util.List;
 @CrossOrigin(allowedHeaders = "*", origins = "*")
 @RequestMapping("/trainer")
 class TrainerController {
-    private TrainerService trainerService;
+    private final TrainerService trainerService;
 
-    public TrainerController(TrainerService trainerService) {this.trainerService = trainerService;}
+    private TrainerController(TrainerService trainerService) {this.trainerService = trainerService;}
 
     @GetMapping
-    private List<Trainer> geAllTrainer(){return trainerService.getAllTrainerList();}
+    List<Trainer> geAllTrainer() {
+        return trainerService.getAllTrainerList();
+    }
+
     @PostMapping
-    private Trainer saveNew(@RequestBody Trainer trainer) { return trainerService.saveNewTrainer(trainer);}
+    Trainer saveNew(@RequestBody Trainer trainer) { return trainerService.saveNewTrainer(trainer);}
 
 }

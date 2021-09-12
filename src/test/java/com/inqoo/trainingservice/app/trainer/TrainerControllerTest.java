@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import javax.transaction.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,26 +25,37 @@ class TrainerControllerTest {
     @Autowired
     private TrainerService trainerService;
 
-    ObjectMapper object = new ObjectMapper();
+    private ObjectMapper object = new ObjectMapper();
 
     @Test
-    public void shouldAddCustomer() throws Exception{
+    public void shouldAddTAndGetTrainer() throws Exception {
         //given
         Trainer trainer = new Trainer(
-                "Damian","Petrus","JAVA",
-                505-505-505L,"damianpetrus@gmail.com");
+                "Damian", "Petrus", "JAVA",
+                505 - 505 - 505L, "damianpetrus@gmail.com");
         String content = object.writeValueAsString(trainer);
         //expect
         mvc.perform(
-                post("/trainer")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(content))
-                .andDo(print())
+                        post("/trainer")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(content))
                 .andExpect(status().is(200))
+                .andDo(print())
                 .andExpect(jsonPath("$.firstName").value(trainer.getFirstName()))
                 .andExpect(jsonPath("$.lastName").value(trainer.getLastName()))
                 .andExpect(jsonPath("$.experience").value(trainer.getExperience()))
                 .andExpect(jsonPath("$.phoneNumber").value(trainer.getPhoneNumber()))
                 .andExpect(jsonPath("$.emailAddress").value(trainer.getEmailAddress()));
+
+        mvc.perform(
+                        get("/trainer/"))
+                .andDo(print())
+                .andExpect(status().is(200))
+                .andExpect(jsonPath("$[0].firstName").value(trainer.getFirstName()))
+                .andExpect(jsonPath("$[0].lastName").value(trainer.getLastName()))
+                .andExpect(jsonPath("$[0].experience").value(trainer.getExperience()))
+                .andExpect(jsonPath("$[0].phoneNumber").value(trainer.getPhoneNumber()))
+                .andExpect(jsonPath("$[0].emailAddress").value(trainer.getEmailAddress()));
     }
 }
+

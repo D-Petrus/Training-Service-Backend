@@ -1,4 +1,4 @@
-package com.inqoo.trainingservice.app.service;
+package com.inqoo.trainingservice.app.trainer;
 
 import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
 import com.inqoo.trainingservice.app.trainer.TrainerDTO;
