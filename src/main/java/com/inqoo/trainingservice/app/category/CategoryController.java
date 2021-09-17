@@ -29,9 +29,9 @@ public class CategoryController {
         return categoryService.getAllCategoryList();
     }
 
-    @GetMapping("/names")
-    private List<String> findByNameIn() {
+    @GetMapping("/{name}")
+    private List<Category> findByCategoryName(@PathVariable("name") String name) {
         log.info("Getting category by name");
-        return categoryService.getAllCategoryName();
+        return categoryService.getAllByCategoryName(name);
     }
 }

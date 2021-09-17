@@ -49,6 +49,10 @@ public class Offer {
     public Offer() {
     }
 
+    public Offer(Long id) {
+        this.id = id;
+    }
+
     public Category getCategory() {
         return category;
     }

@@ -186,7 +186,7 @@ class SubcategoryServiceIT {
         subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory), category.getName());
 
         //then
-        String content = this.mockMvc.perform(get("/subcategories/names"))
+        String content = this.mockMvc.perform(get("/subcategories/Spring"))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()

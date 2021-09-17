@@ -19,8 +19,8 @@ public class Subcategory {
     @Column
     private UUID subCategoryUUID;
 
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private List<Course> courseList = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private final List<Course> courseList = new ArrayList<>();
 
     public Subcategory(String name, String description, UUID subCategoryUUID) {
         this.name = name;
@@ -29,6 +29,10 @@ public class Subcategory {
     }
 
     public Subcategory() {
+    }
+
+    public List<Course> getCourseList() {
+        return courseList;
     }
 
     public long getId() {

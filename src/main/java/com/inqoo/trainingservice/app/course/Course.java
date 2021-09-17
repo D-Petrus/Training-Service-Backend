@@ -1,7 +1,12 @@
 package com.inqoo.trainingservice.app.course;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.inqoo.trainingservice.app.subcategory.Subcategory;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -15,7 +20,6 @@ public class Course {
     private String description;
     private int duration;
     private BigDecimal price;
-    @Column
     private UUID courseUUID;
     
     public Course(String name, String description, int duration, BigDecimal price, UUID courseUUID) {

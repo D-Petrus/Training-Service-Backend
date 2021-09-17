@@ -68,4 +68,7 @@ public class SubcategoryService {
     List<String> getAllSubcategoryName() {
         return subcategoryRepository.getAllSubcategoryName();
     }
+    List<Subcategory> getSubcategoryByName(String name) {
+        return subcategoryRepository.findSubcategoryByName(name);
+    }
 }

@@ -1,5 +1,6 @@
 package com.inqoo.trainingservice.app.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -23,7 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -258,34 +259,15 @@ class CourseServiceIT {
     }
 
     @Test
-    public void shouldReturnCourseNameList() throws Exception {
+    public void shouldReturnCourseNamesFromGivenSubcategory() throws Exception {
         //given
-        CategoryDTO category = new CategoryDTO(
-                "Java",
-                "Kurs Java",
-                UUID.randomUUID());
-        categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
-        SubCategoryDTO subcategory = new SubCategoryDTO(
-                "Spring",
-                "Kurs Spring",
-                UUID.randomUUID()
-        );
-        subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory), category.getName());
-        CourseDTO course = new CourseDTO(
-                "Kurs",
-                "Opis",
-                250,
-                BigDecimal.valueOf(2000),
-                UUID.randomUUID());
-        courseService.saveNewCourse(
-                "Spring",
-                courseConverter.dtoToEntity(course));
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
-        CourseNamesList courseNamesList = new CourseNamesList();
-        courseNamesList.add("Kurs");
-        ObjectWriter ow = objectMapper.writer().withDefaultPrettyPrinter();
-        String requestJson = ow.writeValueAsString(courseNamesList);
+        CategoryDTO category = thereIsCategory("Java", "Kurs Java");
+        SubCategoryDTO subcategory1 = thereIsSubcategory("Spring", "Kurs Spring", category.getName());
+        SubCategoryDTO subcategory2 = thereIsSubcategory("Hibernate", "Kurs Hibernate", category.getName());
+        CourseDTO course1 = thereIsCourse("Kurs", "Opis", 250, BigDecimal.valueOf(2000), subcategory1.getName());
+        CourseDTO course2 = thereIsCourse("Kurs2", "Opis2", 250, BigDecimal.valueOf(2000), subcategory1.getName());
+        CourseDTO course3 = thereIsCourse("Kurs3", "Opis3", 250, BigDecimal.valueOf(2000), subcategory2.getName());
+        String requestJson = parameterAsJson(Arrays.asList("Spring", "Hibernate"));
 
         //then
         String content = this.mockMvc
@@ -298,6 +280,35 @@ class CourseServiceIT {
                 .getResponse()
                 .getContentAsString();
 
-        assertThat(content).contains("Kurs");
+        assertThat(content).contains(course1.getName());
+        assertThat(content).contains(course2.getName());
+        assertThat(content).contains(course3.getName());
+    }
+
+    private CategoryDTO thereIsCategory(String name, String description) {
+        CategoryDTO category = new CategoryDTO(name, description, UUID.randomUUID());
+        categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
+        return category;
+    }
+
+    private SubCategoryDTO thereIsSubcategory(String name, String description, String categoryName) {
+        SubCategoryDTO subcategory = new SubCategoryDTO(name, description, UUID.randomUUID());
+        subcategoryService.saveNewSubcategory(subCategoryConverter.dtoToEntity(subcategory), categoryName);
+        return subcategory;
+    }
+
+    private CourseDTO thereIsCourse(String name, String description, int duration, BigDecimal price, String subcategoryName) {
+        CourseDTO course = new CourseDTO(name, description, duration, price, UUID.randomUUID());
+        courseService.saveNewCourse(subcategoryName, courseConverter.dtoToEntity(course));
+        return course;
+    }
+
+    String parameterAsJson(List<String> parameters) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        CourseNamesList courseNamesList = new CourseNamesList();
+        parameters.forEach(courseNamesList::add);
+        ObjectWriter ow = objectMapper.writer().withDefaultPrettyPrinter();
+        return ow.writeValueAsString(courseNamesList);
     }
 }

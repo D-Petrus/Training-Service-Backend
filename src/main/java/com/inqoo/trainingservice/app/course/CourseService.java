@@ -10,6 +10,7 @@ import com.inqoo.trainingservice.app.subcategory.SubcategoryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,7 +62,20 @@ public class CourseService {
         int limitDescription = 201;
         return description.length() < limitDescription;
     }
-    List<String> getAllCourseName(List<String> courseNames) {
-        return courseRepository.getAllCourseName(courseNames);
+//    List<String> getAllCourseName(List<String> courseNames) {
+//        return courseRepository.getAllCourseName(courseNames);
+//    }
+
+    List<String> getAllCourseName(List<String> subcategoryNames) {
+        ArrayList<String> result = new ArrayList<>();
+        subcategoryNames.forEach(s -> {
+            Optional<Subcategory> byName = subcategoryRepository.findByName(s);
+            if (byName.isPresent()) {
+                List<Course> courseList = byName.get().getCourseList();
+                courseList.forEach(course -> result.add(course.getName()));
+            }
+        });
+        return result;
     }
+
 }

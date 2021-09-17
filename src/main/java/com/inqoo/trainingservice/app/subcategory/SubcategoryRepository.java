@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface SubcategoryRepository extends JpaRepository<Subcategory, Long> {
     Optional<Subcategory> findByName(String name);
+    List<Subcategory> findSubcategoryByName(String name);
 
     @Query("select name from Subcategory")
     List<String> getAllSubcategoryName();

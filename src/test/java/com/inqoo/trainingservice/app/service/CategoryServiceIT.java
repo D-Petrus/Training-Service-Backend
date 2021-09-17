@@ -127,7 +127,7 @@ class CategoryServiceIT {
         //when
         categoryService.saveNewCategory(categoryConverter.dtoToEntity(category));
         //then
-        String content = this.mockMvc.perform(get("/categories/names"))
+        String content = this.mockMvc.perform(get("/categories/JavaBasic"))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()

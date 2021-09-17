@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     Optional<Category> findByName(String name);
+    List<Category> findCategoryByName(String name);
 
     @Query("select name from Category")
     List<String> getAllCategoryName();

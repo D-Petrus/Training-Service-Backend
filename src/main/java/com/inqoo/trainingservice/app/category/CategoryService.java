@@ -63,4 +63,5 @@ public class CategoryService {
     List<String> getAllCategoryName() {
         return categoryRepository.getAllCategoryName();
     }
+    List<Category> getAllByCategoryName(String name) { return categoryRepository.findCategoryByName(name); }
 }

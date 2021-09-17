@@ -20,7 +20,7 @@ public class Category {
     @Column
     private UUID categoryUUID;
 
-    @OneToMany(cascade = {CascadeType.MERGE , CascadeType.PERSIST})
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE , CascadeType.PERSIST})
     private final List<Subcategory> subcategoryList = new ArrayList<>();
 
 
