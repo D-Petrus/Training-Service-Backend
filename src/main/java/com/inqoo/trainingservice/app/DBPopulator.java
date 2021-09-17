@@ -28,7 +28,7 @@ class DBPopulator implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         Category it = new Category("IT", "Kursy IT", UUID.randomUUID());
         Category sport = new Category("Sport", "Kursy sportowe", UUID.randomUUID());
         Category medica = new Category("Medica", "Kursy Medyczne", UUID.randomUUID());
@@ -49,8 +49,16 @@ class DBPopulator implements CommandLineRunner {
         subcategoryService.saveNewSubcategory(fh, medica.getName());
         subcategoryService.saveNewSubcategory(football, sport.getName());
 
-        Course javaCourse = new Course("Kurs Java dla początkująych", "Kurs organizowany przez INQOO dla początkujących", 300, BigDecimal.valueOf(2500), UUID.randomUUID());
-        courseService.saveNewCourse(java.getName(), javaCourse);
+        Course course1 = new Course("Kurs 1", "Opis Kursu 1", 300, BigDecimal.valueOf(2500), UUID.randomUUID());
+        Course course2 = new Course("Kurs 2", "Opis Kursu 2", 300, BigDecimal.valueOf(2500), UUID.randomUUID());
+        Course course3 = new Course("Kurs 3", "Opis Kursu 3", 300, BigDecimal.valueOf(2500), UUID.randomUUID());
+        Course course4 = new Course("Kurs 4", "Opis Kursu 4", 300, BigDecimal.valueOf(2500), UUID.randomUUID());
+        Course course5 = new Course("Kurs 5", "Opis Kursu 5", 300, BigDecimal.valueOf(2500), UUID.randomUUID());
+        courseService.saveNewCourse(java.getName(), course1);
+        courseService.saveNewCourse(java.getName(), course2);
+        courseService.saveNewCourse(spring.getName(), course3);
+        courseService.saveNewCourse(sport.getName(), course4);
+        courseService.saveNewCourse(medica.getName(), course5);
     }
 
 }
