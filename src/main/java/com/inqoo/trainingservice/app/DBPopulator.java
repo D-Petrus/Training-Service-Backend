@@ -57,8 +57,8 @@ class DBPopulator implements CommandLineRunner {
         courseService.saveNewCourse(java.getName(), course1);
         courseService.saveNewCourse(java.getName(), course2);
         courseService.saveNewCourse(spring.getName(), course3);
-        courseService.saveNewCourse(sport.getName(), course4);
-        courseService.saveNewCourse(medica.getName(), course5);
+        courseService.saveNewCourse(hibernate.getName(), course4);
+        courseService.saveNewCourse(football.getName(), course5);
     }
 
 }
