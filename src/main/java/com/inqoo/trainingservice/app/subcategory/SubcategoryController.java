@@ -27,10 +27,10 @@ class SubcategoryController {
         return subcategoryService.getAllSubcategoryList();
     }
 
-    @GetMapping("/names")
-    private List<String> findByNameIn() {
+    @GetMapping("/{name}")
+    private List<Subcategory> findSubcategoryByName(@PathVariable("name") String name) {
         log.info("Getting subcategory by name");
-        return subcategoryService.getAllSubcategoryName();
+        return subcategoryService.getSubcategoryByName(name);
     }
 
 

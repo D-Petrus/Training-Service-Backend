@@ -1,5 +1,6 @@
 package com.inqoo.trainingservice.app.course;
 
+import com.inqoo.trainingservice.app.subcategory.Subcategory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,4 +35,5 @@ class CourseController {
         log.info("Getting course by name");
         return courseService.getAllCourseName(courseNames.getCourseNames());
     }
+
 }

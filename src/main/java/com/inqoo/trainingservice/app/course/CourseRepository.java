@@ -1,5 +1,6 @@
 package com.inqoo.trainingservice.app.course;
 
+import com.inqoo.trainingservice.app.subcategory.Subcategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,5 +16,4 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     List<String> getAllCourseName(List<String> names);
 
     List<Course> findByNameIn(List<String> names);
-
 }
