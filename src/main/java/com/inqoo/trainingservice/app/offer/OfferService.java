@@ -83,8 +83,8 @@ class   OfferService {
                         "<ul>" +
                         "<li>"+ String.join("</li><li>", offerDTO.getCourses()) + "</li>" +
                         "</ul>" +
-                        "<p>Koszt: <b>" + offer.getSummaryPrice() +"</b></p>" +
-                        "<p>Czas trwania: <b>" + offer.getSummaryDuration() +"</b></p>" +
+                        "<p>Koszt: <b>" + offer.getSummaryPrice() +" zł</b></p>" +
+                        "<p>Czas trwania: <b>" + offer.getSummaryDuration() +"h</b></p>" +
                         "<br />" +
                         "<p>Pozdrawiamy,</p>" +
                         "<p><b>Zespół INQOO</b></p>" +

@@ -4,8 +4,6 @@ import com.inqoo.trainingservice.app.exception.NameAlreadyTakenException;
 import com.inqoo.trainingservice.app.subcategory.Subcategory;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryNotFoundException;
 import com.inqoo.trainingservice.app.exception.TooLongDescriptionException;
-import com.inqoo.trainingservice.app.course.Course;
-import com.inqoo.trainingservice.app.course.CourseRepository;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,8 +17,8 @@ import java.util.Optional;
 public class CourseService {
 
     private CourseRepository courseRepository;
-
     private SubcategoryRepository subcategoryRepository;
+    private final CourseConverter courseConverter = new CourseConverter();
 
     public CourseService(CourseRepository courseRepository, SubcategoryRepository subcategoryRepository) {
         this.courseRepository = courseRepository;
@@ -66,15 +64,13 @@ public class CourseService {
 //        return courseRepository.getAllCourseName(courseNames);
 //    }
 
-    List<String> getAllCourseName(List<String> subcategoryNames) {
-        ArrayList<String> result = new ArrayList<>();
-        subcategoryNames.forEach(s -> {
-            Optional<Subcategory> byName = subcategoryRepository.findByName(s);
+    List<CourseDTO> getAllCourseName(String subcategoryName) {
+        ArrayList<CourseDTO> result = new ArrayList<>();
+            Optional<Subcategory> byName = subcategoryRepository.findByName(subcategoryName);
             if (byName.isPresent()) {
                 List<Course> courseList = byName.get().getCourseList();
-                courseList.forEach(course -> result.add(course.getName()));
+                courseList.forEach(course -> result.add(courseConverter.entityToDTO(course)));
             }
-        });
         return result;
     }
 
