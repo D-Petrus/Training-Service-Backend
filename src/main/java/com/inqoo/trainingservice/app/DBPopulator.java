@@ -4,6 +4,8 @@ import com.inqoo.trainingservice.app.category.Category;
 import com.inqoo.trainingservice.app.category.CategoryService;
 import com.inqoo.trainingservice.app.course.Course;
 import com.inqoo.trainingservice.app.course.CourseService;
+import com.inqoo.trainingservice.app.customer.Customer;
+import com.inqoo.trainingservice.app.customer.CustomerService;
 import com.inqoo.trainingservice.app.subcategory.Subcategory;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryService;
 import org.springframework.boot.CommandLineRunner;
@@ -20,11 +22,13 @@ class DBPopulator implements CommandLineRunner {
     private final CategoryService categoryService;
     private final SubcategoryService subcategoryService;
     private final CourseService courseService;
+    private final CustomerService customerService;
 
-    DBPopulator(CategoryService categoryService, SubcategoryService subcategoryService, CourseService courseService) {
+    DBPopulator(CategoryService categoryService, SubcategoryService subcategoryService, CourseService courseService, CustomerService customerService) {
         this.categoryService = categoryService;
         this.subcategoryService = subcategoryService;
         this.courseService = courseService;
+        this.customerService = customerService;
     }
 
     @Override
@@ -33,17 +37,13 @@ class DBPopulator implements CommandLineRunner {
         Category sport = new Category("Sport", "Kursy sportowe", UUID.randomUUID());
         Category medica = new Category("Medica", "Kursy Medyczne", UUID.randomUUID());
 
-        categoryService.saveNewCategory(it);
-        categoryService.saveNewCategory(sport);
-        categoryService.saveNewCategory(medica);
+        Customer customer = new Customer("Marcin Butora", "505-009-546", "33-864-22-68", "mbutora@gmail.com", UUID.randomUUID());
+
+        customerService.saveNewCustomer(customer);
 
         Subcategory beginners = new Subcategory("Dla początkujących", "Kursy dla początkujących", UUID.randomUUID());
         Subcategory advanced = new Subcategory("Dla zaawansowanych", "Kursy dla zaawansowanych", UUID.randomUUID());
         Subcategory FSD = new Subcategory("Fullstack Developer", "Kurs FSD", UUID.randomUUID());
-
-        subcategoryService.saveNewSubcategory(beginners, it.getName());
-        subcategoryService.saveNewSubcategory(advanced, it.getName());
-        subcategoryService.saveNewSubcategory(FSD, it.getName());
 
         Course course1 = new Course("JavaScript Developer", "Zostań front-end developerem - twórz przyjazne i dynamiczne strony internetowe", 300, BigDecimal.valueOf(9500), UUID.randomUUID());
         Course course2 = new Course("Java Developer", "Zostań back-end developerem – programuj logikę, która stoi za dużymi i zaawansowanymi systemami webowymi.", 420, BigDecimal.valueOf(10900), UUID.randomUUID());
@@ -52,6 +52,14 @@ class DBPopulator implements CommandLineRunner {
         Course course5 = new Course("JS, React, Redux", "Zostań specjalistą JavaScript na kursie dla średniozaawansowanych", 130, BigDecimal.valueOf(4000), UUID.randomUUID());
         Course course6 = new Course("Docker - wstęp do konteneryzacji", "Zostań zauważony przez przyszłego pracodawcę dzięki znajomości Dockera.", 20, BigDecimal.valueOf(1990), UUID.randomUUID());
         Course course7 = new Course("Fullstack Developer by INQOO", "Zostań Full-Stack Developer z INQOO", 380, BigDecimal.valueOf(1000), UUID.randomUUID());
+
+        categoryService.saveNewCategory(it);
+        categoryService.saveNewCategory(sport);
+        categoryService.saveNewCategory(medica);
+
+        subcategoryService.saveNewSubcategory(beginners, it.getName());
+        subcategoryService.saveNewSubcategory(advanced, it.getName());
+        subcategoryService.saveNewSubcategory(FSD, it.getName());
 
         courseService.saveNewCourse(beginners.getName(), course1);
         courseService.saveNewCourse(beginners.getName(), course2);

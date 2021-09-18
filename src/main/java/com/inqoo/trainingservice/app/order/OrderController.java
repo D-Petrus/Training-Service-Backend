@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -24,13 +25,14 @@ class OrderController {
         return orderService.findAllOrder();
     }
 
-    @PostMapping
-    ResponseEntity<Order> saveNewOrder(@RequestBody Order order){
-
-        Order saveNewOrder = orderService.saveNewOrder(order);
-
-        log.info("Saving new order: "+order.getOffer());
-
+    @PostMapping("/{offerId}/{firstName}/{lastName}/{start}/{end}")
+    ResponseEntity<Order> saveNewOrder(@PathVariable Long offerId,
+                                       @PathVariable String firstName,
+                                       @PathVariable String lastName,
+                                       @PathVariable LocalDate start,
+                                       @PathVariable LocalDate end){
+        Order saveNewOrder = orderService.createOrder(offerId, firstName,lastName, start, end);
+        log.info("Saving new order: "+offerId);
         return new ResponseEntity<>(saveNewOrder, HttpStatus.CREATED);
     }
 }

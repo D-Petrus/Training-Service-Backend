@@ -272,9 +272,7 @@ class CourseServiceIT {
         //then
         String content = this.mockMvc
                 .perform(
-                        get("/courses/names")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(requestJson))
+                        get("/courses/Spring"))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
@@ -282,7 +280,6 @@ class CourseServiceIT {
 
         assertThat(content).contains(course1.getName());
         assertThat(content).contains(course2.getName());
-        assertThat(content).contains(course3.getName());
     }
 
     private CategoryDTO thereIsCategory(String name, String description) {

@@ -9,6 +9,7 @@ import com.inqoo.trainingservice.app.customer.Customer;
 import com.inqoo.trainingservice.app.customer.CustomerService;
 import com.inqoo.trainingservice.app.offer.Offer;
 import com.inqoo.trainingservice.app.offer.OfferConverter;
+import com.inqoo.trainingservice.app.offer.OfferRepository;
 import com.inqoo.trainingservice.app.offer.OfferService;
 import com.inqoo.trainingservice.app.subcategory.Subcategory;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryService;
@@ -44,6 +45,8 @@ public class ObjectFixture {
     private AbsenceService absenceService;
     @Autowired
     private OrderFacade orderFacade;
+    @Autowired
+    private OfferRepository offerRepository;
 
     public Category newCategory(String name, String description, UUID randomUUID) {
         Category category = new Category(name, description, randomUUID);
@@ -74,7 +77,7 @@ public class ObjectFixture {
     public Offer newOffer(Category category, Subcategory subcategory, List<Course> courses, Customer customer) {
         Offer offer = new Offer(category, subcategory, courses, customer);
         offerService.create(converter.convertOfferToDTO(offer));
-        return offer;
+        return offerRepository.findAll().stream().findFirst().get();
     }
 
     public Trainer newTrainer(String firstName, String lastName, String experience, Long phoneNumber,
@@ -86,7 +89,7 @@ public class ObjectFixture {
 
     public Order newOrder(Offer offer, Trainer trainer, LocalDate startCourse, LocalDate endCourse) {
         Order order = new Order(offer, trainer, startCourse, endCourse);
-        orderService.saveNewOrder(order);
+        orderService.createOrder(offer.getId(), trainer.getFirstName(), trainer.getLastName(), startCourse, endCourse);
         return order;
     }
 

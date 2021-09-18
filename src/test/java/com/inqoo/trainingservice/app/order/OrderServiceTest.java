@@ -47,10 +47,10 @@ class OrderServiceTest {
         Offer offer = objectFixture.newOffer(category, subcategory, List.of(course), customer);
         Trainer trainer = objectFixture.newTrainer("Janek", "Kowalski", "hfhfhf", 324536424L, "janek@kowalski.pl");
         objectFixture.newAbsenceProjection(trainer, LocalDate.of(2021, 10, 21), LocalDate.of(2021, 10, 22));
-        Order job = objectFixture.newOrder(offer, trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,20));
+        Order order = orderService.createOrder(offer.getId(), trainer.getFirstName(), trainer.getLastName(), LocalDate.of(2021,10,10), LocalDate.of(2021,10,20));
 
         //then
-        assertThat(job).isNotNull();
+        assertThat(order).isNotNull();
     }
     @Test
     public void shouldThrowNoTrainerException() {
@@ -66,7 +66,7 @@ class OrderServiceTest {
         objectFixture.newAbsenceProjection(trainer, LocalDate.of(2021, 10, 10), LocalDate.of(2021, 10, 19));
 
         //then
-        Assertions.assertThrows(TrainerNotFoundException.class, () -> objectFixture.newOrder(offer, trainer, LocalDate.of(2021,10,10), LocalDate.of(2021,10,20)));
+        Assertions.assertThrows(TrainerNotFoundException.class, () -> orderService.createOrder(offer.getId(), "asd", "asd", LocalDate.of(2021,10,10), LocalDate.of(2021,10,20)));
     }
     @Test
     public void orderControllerCheck() throws Exception {

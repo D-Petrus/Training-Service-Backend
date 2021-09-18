@@ -8,6 +8,7 @@ import com.inqoo.trainingservice.app.subcategory.Subcategory;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class Offer {
@@ -51,6 +52,10 @@ public class Offer {
 
     public Offer(Long id) {
         this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Category getCategory() {
