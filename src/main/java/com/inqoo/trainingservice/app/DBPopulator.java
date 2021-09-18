@@ -37,27 +37,28 @@ class DBPopulator implements CommandLineRunner {
         categoryService.saveNewCategory(sport);
         categoryService.saveNewCategory(medica);
 
-        Subcategory java = new Subcategory("Java", "Kursy Java", UUID.randomUUID());
-        Subcategory spring = new Subcategory("Spring", "Kursy Spring", UUID.randomUUID());
-        Subcategory hibernate = new Subcategory("Hibernate", "Kursy Hibernate", UUID.randomUUID());
-        Subcategory fh = new Subcategory("Pierwsza pomoc", "Kurs Pierwszej Pomocy", UUID.randomUUID());
-        Subcategory football = new Subcategory("Piłka Nożna", "Kursy odnośnie Piłki Nożnej", UUID.randomUUID());
+        Subcategory beginners = new Subcategory("Dla początkujących", "Kursy dla początkujących", UUID.randomUUID());
+        Subcategory advanced = new Subcategory("Dla zaawansowanych", "Kursy dla zaawansowanych", UUID.randomUUID());
+        Subcategory FSD = new Subcategory("Fullstack Developer", "Kurs FSD", UUID.randomUUID());
 
-        subcategoryService.saveNewSubcategory(java, it.getName());
-        subcategoryService.saveNewSubcategory(spring, it.getName());
-        subcategoryService.saveNewSubcategory(hibernate, it.getName());
-        subcategoryService.saveNewSubcategory(fh, medica.getName());
-        subcategoryService.saveNewSubcategory(football, sport.getName());
+        subcategoryService.saveNewSubcategory(beginners, it.getName());
+        subcategoryService.saveNewSubcategory(advanced, it.getName());
+        subcategoryService.saveNewSubcategory(FSD, it.getName());
 
-        Course course1 = new Course("Kurs 1", "Opis Kursu 1", 300, BigDecimal.valueOf(2500), UUID.randomUUID());
-        Course course2 = new Course("Kurs 2", "Opis Kursu 2", 300, BigDecimal.valueOf(2500), UUID.randomUUID());
-        Course course3 = new Course("Kurs 3", "Opis Kursu 3", 300, BigDecimal.valueOf(2500), UUID.randomUUID());
-        Course course4 = new Course("Kurs 4", "Opis Kursu 4", 300, BigDecimal.valueOf(2500), UUID.randomUUID());
-        Course course5 = new Course("Kurs 5", "Opis Kursu 5", 300, BigDecimal.valueOf(2500), UUID.randomUUID());
-        courseService.saveNewCourse(java.getName(), course1);
-        courseService.saveNewCourse(java.getName(), course2);
-        courseService.saveNewCourse(spring.getName(), course3);
-        courseService.saveNewCourse(hibernate.getName(), course4);
-        courseService.saveNewCourse(football.getName(), course5);
+        Course course1 = new Course("JavaScript Developer", "Zostań front-end developerem - twórz przyjazne i dynamiczne strony internetowe", 300, BigDecimal.valueOf(9500), UUID.randomUUID());
+        Course course2 = new Course("Java Developer", "Zostań back-end developerem – programuj logikę, która stoi za dużymi i zaawansowanymi systemami webowymi.", 420, BigDecimal.valueOf(10900), UUID.randomUUID());
+        Course course3 = new Course("Python Developer", "Zostań Back-end Developerem - programuj logikę, która stoi za stroną www lub aplikacją internetową.", 280, BigDecimal.valueOf(9000), UUID.randomUUID());
+        Course course4 = new Course("Python - analiza danych", "Wykorzystaj programowanie do zautomatyzowania swojej codziennej pracy z dużymi bazami danych.", 120, BigDecimal.valueOf(4500), UUID.randomUUID());
+        Course course5 = new Course("JS, React, Redux", "Zostań specjalistą JavaScript na kursie dla średniozaawansowanych", 130, BigDecimal.valueOf(4000), UUID.randomUUID());
+        Course course6 = new Course("Docker - wstęp do konteneryzacji", "Zostań zauważony przez przyszłego pracodawcę dzięki znajomości Dockera.", 20, BigDecimal.valueOf(1990), UUID.randomUUID());
+        Course course7 = new Course("Fullstack Developer by INQOO", "Zostań Full-Stack Developer z INQOO", 380, BigDecimal.valueOf(1000), UUID.randomUUID());
+
+        courseService.saveNewCourse(beginners.getName(), course1);
+        courseService.saveNewCourse(beginners.getName(), course2);
+        courseService.saveNewCourse(beginners.getName(), course3);
+        courseService.saveNewCourse(advanced.getName(), course4);
+        courseService.saveNewCourse(advanced.getName(), course5);
+        courseService.saveNewCourse(advanced.getName(), course6);
+        courseService.saveNewCourse(FSD.getName(), course7);
     }
 }
