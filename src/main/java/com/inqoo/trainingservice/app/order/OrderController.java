@@ -1,6 +1,7 @@
 package com.inqoo.trainingservice.app.order;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +30,8 @@ class OrderController {
     ResponseEntity<Order> saveNewOrder(@PathVariable Long offerId,
                                        @PathVariable String firstName,
                                        @PathVariable String lastName,
-                                       @PathVariable LocalDate start,
-                                       @PathVariable LocalDate end){
+                                       @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                                       @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end){
         Order saveNewOrder = orderService.createOrder(offerId, firstName,lastName, start, end);
         log.info("Saving new order: "+offerId);
         return new ResponseEntity<>(saveNewOrder, HttpStatus.CREATED);

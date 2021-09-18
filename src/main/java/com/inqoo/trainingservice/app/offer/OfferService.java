@@ -6,6 +6,7 @@ import com.inqoo.trainingservice.app.course.CourseRepository;
 import com.inqoo.trainingservice.app.customer.CustomerRepository;
 import com.inqoo.trainingservice.app.email.EmailService;
 import com.inqoo.trainingservice.app.subcategory.SubcategoryRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public
 class   OfferService {
     private final CategoryRepository categoryRepository;
@@ -70,7 +72,8 @@ class   OfferService {
         int durationTotal = sumDurationOfCourses(courses);
         offer.setSummaryPrice(priceTotal);
         offer.setSummaryDuration(durationTotal);
-        offerRepository.save(offer);
+        Offer savedOffer = offerRepository.save(offer);
+        log.error("!!!! ID offer: "+savedOffer.getId());
         emailService.sendMail(offerDTO.getMail(),
                 "Oferta szkolenia z obszaru ["+offerDTO.getCategoryName()+"]",
                 "<html>" +
